@@ -403,6 +403,8 @@
       // Dodatkowe ulepszenia z obiektu yWingExtras (dotyczy statków Y-wing)
       if (selectedShip === "Y-wing") {
         for (let category in yWingExtras) {
+          // "Gunner" zostaw tylko dla Norra Wexley
+          if (category === "Gunner" && !isNorraWexley) continue;
           // Dla Gray Squadron Bomber dozwolone są: Bombs oraz Turret
           if (isGrayBomber) {
             if (!(category === "Bombs" || category === "Turret")) continue;
