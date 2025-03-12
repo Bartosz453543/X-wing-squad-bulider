@@ -138,21 +138,21 @@
       if (!pilotSelect.value) return;
       let selectedShip = shipDiv.querySelector("select").value;
       let pilotData = ships[selectedShip][pilotSelect.value];
-
-      // Ustalenie flag dla pilotów
-      let isLukeSkywalker = pilotSelect.value === "Luke Skywalker";
-      let isWedgeAntilles = pilotSelect.value === "Wedge Antilles";
-      let isHortonSalm = pilotSelect.value === "Horton Salm";
-      let isDutchVander = pilotSelect.value === "Dutch Vander";
-      let isNorraWexley = pilotSelect.value === "Norra Wexley";
-      let isPopsKrail = pilotSelect.value === "Pops Krail";
-      let isEvaanaVerliane = pilotSelect.value === "Evaana Verliane";
-      let isGrayBomber = pilotSelect.value === "Gray Squadron Bomber";
-      let isGoldVeteran = pilotSelect.value === "Gold Squadron Veteran";
+      
+      // Ustalenie flag dla poszczególnych pilotów
+      let isLukeSkywalker    = pilotSelect.value === "Luke Skywalker";
+      let isWedgeAntilles    = pilotSelect.value === "Wedge Antilles";
+      let isHortonSalm       = pilotSelect.value === "Horton Salm";
+      let isDutchVander      = pilotSelect.value === "Dutch Vander";
+      let isNorraWexley      = pilotSelect.value === "Norra Wexley";
+      let isPopsKrail        = pilotSelect.value === "Pops Krail";
+      let isEvaanaVerliane   = pilotSelect.value === "Evaana Verliane";
+      let isGrayBomber       = pilotSelect.value === "Gray Squadron Bomber";
+      let isGoldVeteran      = pilotSelect.value === "Gold Squadron Veteran";
       let isBiggsDarklighter = pilotSelect.value === "Biggs Darklighter";
       let isRedSquadronVeteran = pilotSelect.value === "Red Squadron Veteran";
       let isBlueSquadronEscort = pilotSelect.value === "Blue Squadron Escort";
-      let isEdrioTwoTubess = pilotSelect.value === "Edrio Two Tubes"; // zgodnie z literówką
+      let isEdrioTwoTubess   = pilotSelect.value === "Edrio Two Tubes"; // zgodnie z literówką
       let isCabernAngelsZealot = pilotSelect.value === "Cabern Angels Zealot";
 
       let totalUpgradePointsForShip = 0;
@@ -160,6 +160,11 @@
 
       // Iteracja po kategoriach z obiektu upgrades
       for (let category in upgrades) {
+        // Dla pilotów takich jak Corran Horn, Thane Kyrell, Wes Janson, Jek Porkins i Kubllbee Sperado pomijamy Modification Upgrade
+        if ((["Corran Horn", "Thane Kyrell", "Wes Janson", "Jek Porkins", "Kubllbee Sperado"].includes(pilotSelect.value)) && category === "Modification Upgrade") {
+          continue;
+        }
+
         // Dla Gray Squadron Bomber dozwolone są:
         // - Astromech Upgrade
         // - Modification Upgrade
