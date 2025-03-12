@@ -140,20 +140,20 @@
       let pilotData = ships[selectedShip][pilotSelect.value];
       
       // Ustalenie flag dla poszczególnych pilotów
-      let isLukeSkywalker    = pilotSelect.value === "Luke Skywalker";
-      let isWedgeAntilles    = pilotSelect.value === "Wedge Antilles";
-      let isHortonSalm       = pilotSelect.value === "Horton Salm";
-      let isDutchVander      = pilotSelect.value === "Dutch Vander";
-      let isNorraWexley      = pilotSelect.value === "Norra Wexley";
-      let isPopsKrail        = pilotSelect.value === "Pops Krail";
-      let isEvaanaVerliane   = pilotSelect.value === "Evaana Verliane";
-      let isGrayBomber       = pilotSelect.value === "Gray Squadron Bomber";
-      let isGoldVeteran      = pilotSelect.value === "Gold Squadron Veteran";
-      let isBiggsDarklighter = pilotSelect.value === "Biggs Darklighter";
-      let isRedSquadronVeteran = pilotSelect.value === "Red Squadron Veteran";
-      let isBlueSquadronEscort = pilotSelect.value === "Blue Squadron Escort";
-      let isEdrioTwoTubess   = pilotSelect.value === "Edrio Two Tubes"; // zgodnie z literówką
-      let isCabernAngelsZealot = pilotSelect.value === "Cabern Angels Zealot";
+      let isLukeSkywalker     = pilotSelect.value === "Luke Skywalker";
+      let isWedgeAntilles     = pilotSelect.value === "Wedge Antilles";
+      let isHortonSalm        = pilotSelect.value === "Horton Salm";
+      let isDutchVander       = pilotSelect.value === "Dutch Vander";
+      let isNorraWexley       = pilotSelect.value === "Norra Wexley";
+      let isPopsKrail         = pilotSelect.value === "Pops Krail";
+      let isEvaanaVerliane    = pilotSelect.value === "Evaana Verliane";
+      let isGrayBomber        = pilotSelect.value === "Gray Squadron Bomber";
+      let isGoldVeteran       = pilotSelect.value === "Gold Squadron Veteran";
+      let isBiggsDarklighter  = pilotSelect.value === "Biggs Darklighter";
+      let isRedSquadronVeteran= pilotSelect.value === "Red Squadron Veteran";
+      let isBlueSquadronEscort= pilotSelect.value === "Blue Squadron Escort";
+      let isEdrioTwoTubess    = pilotSelect.value === "Edrio Two Tubes"; // zgodnie z literówką
+      let isCabernAngelsZealot= pilotSelect.value === "Cabern Angels Zealot";
 
       let totalUpgradePointsForShip = 0;
       let talentSlots = pilotData.talentSlots || 1;
@@ -185,7 +185,6 @@
             };
             upgradeSection.appendChild(select);
           } else if (category === "Torpedo Upgrade") {
-            // Dodajemy opcję przekształconą na Rocket Upgrade
             let selectRocket = document.createElement("select");
             selectRocket.className = "upgrade-select";
             selectRocket.dataset.category = "Rocket Upgrade";
@@ -418,19 +417,26 @@
           else if (isGoldVeteran) {
             if (category !== "Turret") continue;
           }
-          let select = document.createElement("select");
-          select.className = "upgrade-select";
-          select.dataset.category = category;
-          select.innerHTML = `<option value=''>No ${category}</option>`;
-          for (let upgrade in yWingExtras[category]) {
-            select.innerHTML += `<option value='${upgrade}'>${upgrade} (${yWingExtras[category][upgrade]} pts)</option>`;
+          // Jeśli pilot to Dutch Vander i kategoria to Bombs, tworzymy dwa sloty
+          let slotCount = 1;
+          if (isDutchVander && category === "Bombs") {
+            slotCount = 2;
           }
-          select.onchange = function() {
-            totalUpgradePointsForShip = calculateUpgradePoints(shipDiv);
-            pointsDiv.innerHTML = `Used Points: ${totalUpgradePointsForShip}/${pilotData.upgradeLimit}`;
-            updateTotalPoints();
-          };
-          upgradeSection.appendChild(select);
+          for (let i = 0; i < slotCount; i++) {
+            let select = document.createElement("select");
+            select.className = "upgrade-select";
+            select.dataset.category = category;
+            select.innerHTML = `<option value=''>No ${category}${slotCount > 1 ? " (Slot " + (i+1) + ")" : ""}</option>`;
+            for (let upgrade in yWingExtras[category]) {
+              select.innerHTML += `<option value='${upgrade}'>${upgrade} (${yWingExtras[category][upgrade]} pts)</option>`;
+            }
+            select.onchange = function() {
+              totalUpgradePointsForShip = calculateUpgradePoints(shipDiv);
+              pointsDiv.innerHTML = `Used Points: ${totalUpgradePointsForShip}/${pilotData.upgradeLimit}`;
+              updateTotalPoints();
+            };
+            upgradeSection.appendChild(select);
+          }
         }
       }
 
