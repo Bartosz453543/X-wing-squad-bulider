@@ -51,3 +51,37 @@ footer
     text-align: center;
     clear: both;
 }
+
+.container {
+    width: 80%;
+    margin: auto;
+  }
+  
+  .ship-section {
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    padding: 10px;
+    background-color: #333;
+  }
+  
+  .pilot-select, .upgrade-select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .points {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .upgrade-limit, .upgrade-points {
+    font-size: 14px;
+    color: #bbb;
+    margin-top: 5px;
+  }
+  
+  .warning {
+    color: red;
+    font-weight: bold;
+  }
