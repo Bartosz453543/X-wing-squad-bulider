@@ -27,7 +27,7 @@
       "Astromech Upgrade": { "R2-D2": 5, "R5-D4": 3 },
       "Modification Upgrade": { "Shield Upgrade": 6, "Stealth Device": 5 },
       "Configuration Upgrade": { "S-Foils": 0 },
-      "Illegal Upgrade": { "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 }  // Przykłady nielegalnych upgrade'ów
+      "Illegal Upgrade": { "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 }  
     };
   
     // Funkcja pomocnicza do pobierania liczby slotów dla danej kategorii
@@ -51,7 +51,7 @@
           return pilotData.configurationSlots;
         }
         if (category === "Illegal Upgrade" && pilotData.illegalUpgrades) {
-            return pilotData.illegalUpgrades; // Kubllbee Sperado ma dostęp do nielegalnych upgrade'ów
+            return pilotData.illegalUpgrades; 
         }
         // Domyślnie 1 slot
         return 1;
@@ -106,7 +106,7 @@
         }
       }
       updateUpgrades(shipDiv);
-      // Zaktualizuj globalne punkty
+      // Zaktualizowane globalne punkty
       updateGlobalTotalPoints();
     }
   
@@ -123,13 +123,13 @@
       const pilotData = ships[selectedShip][pilotSelect.value];
       let totalUpgradePointsForShip = 0;
   
-      // Iterujemy po kategoriach upgrade'ów
+      // Ograniczenia Pilotów
       for (let category in upgrades) {
-        // Pomijamy Talent Upgrade dla Luke'a i Biggs Darklighter (przykładowe ograniczenie)
+       
         if ((pilotSelect.value === "Luke Skywalker" || pilotSelect.value === "Biggs Darklighter") && category === "Talent Upgrade") { 
           continue;
         }
-        // Pomijamy rakiety dla Luke'a Skywalker, Wedge Antillesa oraz Biggs Darklightera
+        
         if ((pilotSelect.value === "Luke Skywalker" || pilotSelect.value === "Wedge Antilles" || pilotSelect.value === "Biggs Darklighter"|| pilotSelect.value === "Garven Dreis" || pilotSelect.value === "Jek Porkins" || pilotSelect.value === "Red Squadron Veteran" || pilotSelect.value === "Blue Squadron Escort" || pilotSelect.value === "Cabern Angels Zealot" ) && category === "Missile Upgrade") {
           continue;
         }

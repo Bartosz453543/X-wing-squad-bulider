@@ -15,6 +15,7 @@
       <option value="">Wybierz statek</option>
       <option value="xwing">X‑Wing</option>
       <option value="ywing">Y‑Wing</option>
+      <option value="awing">A‑Wing</option>
     </select>
     <!-- Przycisk, który dodaje statek na podstawie wyboru -->
     <button onclick="addShipByType()">Dodaj statek</button>
@@ -32,6 +33,7 @@
   <!-- Dołączamy pliki z regułami -->
   <script src="xwing-rules.js"></script>
   <script src="ywing-rules.js"></script>
+  <script src="awing-rules.js"></script>
   <script>
     // Funkcja, która na podstawie wybranego typu statku wywoła odpowiednią metodę modułu
     function addShipByType() {
@@ -39,14 +41,16 @@
       const type = select.value;
       if (type === "xwing") {
         xwingRules.addShip();
+      } else if (type === "awing") {
+        awingRules.addShip();
       } else if (type === "ywing") {
         ywingRules.addShip();
       }
       // Opcjonalnie zresetuj select
       select.selectedIndex = 0;
     }
-
-    // Globalna funkcja sumująca punkty, jak w poprzednim przykładzie
+  
+    // Globalna funkcja sumująca punkty
     function updateGlobalTotalPoints() {
       let totalPilot = 0;
       let totalUpgrade = 0;
@@ -55,6 +59,9 @@
         if (section.classList.contains('xwing')) {
           totalPilot += xwingRules.getPilotPoints(section);
           totalUpgrade += xwingRules.getUpgradePoints(section);
+        } else if (section.classList.contains('awing')) {
+          totalPilot += awingRules.getPilotPoints(section);
+          totalUpgrade += awingRules.getUpgradePoints(section);
         } else if (section.classList.contains('ywing')) {
           totalPilot += ywingRules.getPilotPoints(section);
           totalUpgrade += ywingRules.getUpgradePoints(section);
