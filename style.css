@@ -4,25 +4,31 @@
   src: url('TIE-WING.ttf') format('truetype');
   /* Możesz dodać więcej formatów, jeśli posiadasz np. .woff lub .woff2 */
 }
-
-body 
-{ 
-    font-family: Arial, sans-serif; 
-    
-   
-    color: #FFE81F;
-}
 header
 {
   display: grid;
-  padding: 10px; 
-  font-family: 'Tie Wing', sans-serif;
-  font-size: 200%;
+  place-items: center; /* wyśrodkowanie poziome i pionowe */
+  height: 150px; /* lub dopasuj do potrzeb */
   background-image: url('star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c.jpg');
-  background-size: cover;        /* dopasuj do ekranu */
-  background-position: center;   /* wyśrodkuj */
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
+  color: #FFE81F;
+  font-family: 'Tie Wing', sans-serif;
+  padding: 0 20px;
+  text-align: center;
+  
 }
+header h1
+{
+ margin: 0 auto;
+}
+body 
+{ 
+    font-family: Arial, sans-serif;  
+    font-size: 120%; 
+}
+
 .bulider
 {
   text-align: center;
@@ -33,9 +39,12 @@ header
 }
 header nav
 {
-  text-align: right;
+ text-align: right;
 }
-
+header h1
+{
+  margin: 0 auto;
+}
 .content
 {
   padding: 20px;
@@ -43,46 +52,134 @@ header nav
   text-align: center;
   margin: 20px;
   border: 3px;
-  border-color: #FFE81F;
   border-style:solid ;
+  color: white;
   
 }
 .table
 {
-  padding: 20px;
-  min-height: 300px; 
+  
   text-align: center;
-  margin: 20px;
-  border: 3px;
-  border-color: #FFE81F;
-  border-style:solid ;
+  color: white;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table
+{
+  background-color: #333;
+  max-width: 10px;
+  margin: 0 auto;
   
   
 }
-table, tr, td, th
+ tr, td, th
 {
-    border: 2px;
     border-color: #fff;
     border-style: solid;
-    margin: 0 auto; 
+   
+   
 }
+
 main
 {
     
-    font-size: 40px;
     padding: 20px; 
-    background-color: #555;
+    background-color: #1C1C1C;
+    min-height: 1000px;
+    width: 100%;
+    
 }
 footer
 {
    
-    min-height: 250px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    clear: both;
+  min-height: 250px;
+  font-size: 150%;
+  font-family: 'Tie Wing', sans-serif;
+  background-image: url('star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c.jpg');     
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #FFE81F;
+  min-height: 50px;
+  text-align: center;
+  align-items: center;
+  padding: 10px 20px;
+  min-height: 120px;
+}
+.nav {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px 20px;
+  color: #FFE81F;
+  position: relative;
+  z-index: 1;
 }
 
-.container {
+/* HAMBURGER */
+.menu-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.menu-icon span {
+  display: block;
+  height: 3px;
+  background: #FFE81F;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+/* CHECKBOX UKRYTY */
+.menu-toggle {
+  display: none;
+}
+
+/* MENU – rozwijane poziomo */
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%; /* lub np. 80% jeśli chcesz mniej niż całą szerokość */
+  background-color: black;
+  color: white;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.menu li {
+  margin: 10px 0;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+/* Pokaż menu po kliknięciu */
+.menu-toggle:checked + .menu-icon + .menu {
+  display: flex;
+}
+
+
+
+
+.container 
+  {
     width: 80%;
     margin: auto;
   }
@@ -124,4 +221,72 @@ footer
       grid-gap: 20px;
     
     }
+    header
+    {
+      display: flex;
+      font-family: 'Tie Wing', sans-serif;
+      font-size: 200%;
+      background-image: url('star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c.jpg');     
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #FFE81F;
+      min-height: 50px;
+      text-align: center;
+      position: relative;
+      justify-content: flex-end; /* Nawigacja po prawej stronie */
+      align-items: center;
+      padding: 10px 20px;
+      min-height: 120px;
+    }
+    footer
+    {
+      
+      min-height: 250px;
+      font-size: 150%;
+      font-family: 'Tie Wing', sans-serif;
+      background-image: url('star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c.jpg');     
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #FFE81F;
+      min-height: 50px;
+      text-align: center;
+      align-items: center;
+      padding: 10px 20px;
+      min-height: 120px;
+    }
+    table
+    {
+      background-color: #333;
+      max-width:300px ;
+      min-height: 300px; 
+      margin: 0 auto;
+    }
+    tr, td, th
+    {
+        border-color: #fff;
+        border-style: solid;
+        min-width: 250px;
+        
+    }
+     /* Ukryj hamburgera */
+ 
+
+
+  /* Pokaż menu poziomo */
+  .menu {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    background: none;
+    color: #FFE81F;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .menu a {
+    font-size: 18px;
+    color: #FFE81F;
+  }
+  
+  
   }
