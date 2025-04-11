@@ -1,5 +1,7 @@
 <?php
 session_start();
+include 'template.php';
+
 
 // Raportowanie błędów (włączamy tylko do debugowania)
 error_reporting(E_ALL);
@@ -17,7 +19,8 @@ function db_connect()
     try 
     {
         $conn = @mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if (!$conn) {
+        if (!$conn) 
+        {
             throw new Exception("Błąd połączenia: " . mysqli_connect_error());
         }
         mysqli_set_charset($conn, "utf8");
@@ -33,31 +36,12 @@ $conn = db_connect();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strona główna</title>
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="swz-logotreatment.jpg">
+  <head>
+<?php getHead(); ?>
 </head>
 <body>
 
-  <header>
-    <h1>Dzielni Piloci Weterani</h1>
-    <nav class="nav">
-      <input type="checkbox" id="menu-toggle" class="menu-toggle">
-      <label for="menu-toggle" class="menu-icon" id="menu-icon">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-      <ul class="menu">
-        <li><a href="#">Zaloguj się</a></li>
-        <li><a href="#">Menu</a></li>
-      </ul>
-    </nav>
-  </header>
+<?php getHeader(); ?>
 
   <main>
     <section class="table">
@@ -106,9 +90,7 @@ $conn = db_connect();
     </section>
   </main>
 
-  <footer>
-    <p>Stronę stworzył Hunter</p>
-  </footer>
+  <?php getFooter(); ?>
 
   <script src="script.js"></script>
 </body>
