@@ -8,9 +8,13 @@
       "Jake Farrel": { cost: 2, upgradeLimit: 6, force: 0 },
       "Shara Bey": { cost: 3, upgradeLimit: 8, force: 0 },
       "Wedge Antilles": { cost: 6, upgradeLimit: 20, force: 0, talentSlots: 2 },
-      "Arvel Crynd": { cost: 3, upgradeLimit: 8, force: 0 },
+      "Arvel Crynyd": { cost: 3, upgradeLimit: 8, force: 0 },
       "Green Squadron Pilot": { cost: 2, upgradeLimit: 6, force: 0 },
       "Keo Venzee": { cost: 3, upgradeLimit: 8, force: 0 },
+      "Derek Klivian": { cost: 3, upgradeLimit: 6, force: 0 },
+      // Nowi piloci:
+      "Sabine Wren": { cost: 3, upgradeLimit: 8, force: 0 },
+      "Phoenix Squadron Pilot": { cost: 2, upgradeLimit: 6, force: 0 }
     }
   };
 
@@ -147,6 +151,45 @@
       createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
       createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
     }
+    // Konfiguracja specyficzna dla "Green Squadron Pilot":
+    // 2 Talenty, Missile Upgrade oraz Configuration.
+    else if (pilotSelect.value === "Green Squadron Pilot") {
+      for (let i = 1; i <= 2; i++) {
+        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
+      }
+      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
+      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    }
+    // Konfiguracja specyficzna dla "Arvel Crynyd":
+    // 2 Talenty oraz Configuration.
+    else if (pilotSelect.value === "Arvel Crynyd") {
+      for (let i = 1; i <= 2; i++) {
+        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
+      }
+      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    }
+    // Konfiguracja specyficzna dla "Derek Klivian":
+    // 1 Talent, Missile Upgrade oraz Configuration.
+    else if (pilotSelect.value === "Derek Klivian") {
+      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
+      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
+      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    }
+    // Konfiguracja specyficzna dla "Sabine Wren":
+    // 1 Talent, 2 Modification Upgrade oraz Configuration.
+    else if (pilotSelect.value === "Sabine Wren") {
+      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
+      for (let i = 1; i <= 2; i++) {
+        createUpgradeSelect(upgradeSection, "Modification Upgrade", aWingExtras["Modification Upgrade"], `No Modification Upgrade (Slot ${i})`);
+      }
+      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    }
+    // Konfiguracja specyficzna dla "Phoenix Squadron Pilot":
+    // 1 Talent oraz Configuration.
+    else if (pilotSelect.value === "Phoenix Squadron Pilot") {
+      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
+      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    }
     // Standardowa konfiguracja dla pozostałych pilotów - pomijamy Cannon Upgrade
     else {
       for (let category in aWingExtras) {
@@ -186,6 +229,7 @@
     }
   }
 
+  // Obliczanie łącznych punktów ulepszeń
   function calculateUpgradePoints(shipDiv) {
     let total = 0;
     const selects = shipDiv.querySelectorAll(".upgrade-select");
@@ -198,6 +242,7 @@
     return total;
   }
 
+  // Pobiera punkty bazowe pilota
   function getPilotPoints(shipDiv) {
     let points = 0;
     const pilotSelect = shipDiv.querySelector(".pilot-select");

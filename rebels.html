@@ -16,6 +16,9 @@
       <option value="xwing">X‑Wing</option>
       <option value="ywing">Y‑Wing</option>
       <option value="awing">A‑Wing</option>
+      <option value="uwing">U‑Wing</option>
+      <option value="arc170">ARC-170</option>
+      <option value="fangfighter">Fang Figther</option>
     </select>
     <!-- Przycisk, który dodaje statek na podstawie wyboru -->
     <button onclick="addShipByType()">Dodaj statek</button>
@@ -34,43 +37,62 @@
   <script src="xwing-rules.js"></script>
   <script src="ywing-rules.js"></script>
   <script src="awing-rules.js"></script>
+  <script src="uwing-rules.js"></script>
+  <script src="arc170-rules.js"></script>
+  <script src="fangfighter-rules.js"></script>
   <script>
     // Funkcja, która na podstawie wybranego typu statku wywoła odpowiednią metodę modułu
     function addShipByType() {
-      const select = document.getElementById("shipTypeSelect");
-      const type = select.value;
-      if (type === "xwing") {
-        xwingRules.addShip();
-      } else if (type === "awing") {
-        awingRules.addShip();
-      } else if (type === "ywing") {
-        ywingRules.addShip();
-      }
-      // Opcjonalnie zresetuj select
-      select.selectedIndex = 0;
+  const select = document.getElementById("shipTypeSelect");
+  const type = select.value;
+  if (type === "xwing") {
+    xwingRules.addShip();
+  } else if (type === "awing") {
+    awingRules.addShip();
+  } else if (type === "ywing") {
+    ywingRules.addShip();
+  } else if (type === "uwing") {
+    uwingRules.addShip();
+  } else if (type === "arc170") {
+    arc170Rules.addShip();
+  } else if (type === "fangfighter") {
+    fangfighterRules.addShip();
+  }
+  select.selectedIndex = 0;
+}
+
+function updateGlobalTotalPoints() {
+  let totalPilot = 0;
+  let totalUpgrade = 0;
+  const shipSections = document.querySelectorAll('.ship-section');
+
+  shipSections.forEach(section => {
+    if (section.classList.contains('xwing')) {
+      totalPilot += xwingRules.getPilotPoints(section);
+      totalUpgrade += xwingRules.getUpgradePoints(section);
+    } else if (section.classList.contains('awing')) {
+      totalPilot += awingRules.getPilotPoints(section);
+      totalUpgrade += awingRules.getUpgradePoints(section);
+    } else if (section.classList.contains('ywing')) {
+      totalPilot += ywingRules.getPilotPoints(section);
+      totalUpgrade += ywingRules.getUpgradePoints(section);
+    } else if (section.classList.contains('uwing')) {
+      totalPilot += uwingRules.getPilotPoints(section);
+      totalUpgrade += uwingRules.getUpgradePoints(section);
+    } else if (section.classList.contains('arc170')) {
+      totalPilot += arc170Rules.getPilotPoints(section);
+      totalUpgrade += arc170Rules.getUpgradePoints(section);
+    } else if (section.classList.contains('fangfighter')) {
+      totalPilot += fangfighterRules.getPilotPoints(section);
+      totalUpgrade += fangfighterRules.getUpgradePoints(section);
     }
-  
-    // Globalna funkcja sumująca punkty
-    function updateGlobalTotalPoints() {
-      let totalPilot = 0;
-      let totalUpgrade = 0;
-      const shipSections = document.querySelectorAll('.ship-section');
-      shipSections.forEach(section => {
-        if (section.classList.contains('xwing')) {
-          totalPilot += xwingRules.getPilotPoints(section);
-          totalUpgrade += xwingRules.getUpgradePoints(section);
-        } else if (section.classList.contains('awing')) {
-          totalPilot += awingRules.getPilotPoints(section);
-          totalUpgrade += awingRules.getUpgradePoints(section);
-        } else if (section.classList.contains('ywing')) {
-          totalPilot += ywingRules.getPilotPoints(section);
-          totalUpgrade += ywingRules.getUpgradePoints(section);
-        }
-      });
-      document.getElementById("totalPilotPoints").innerText = totalPilot;
-      document.getElementById("totalUpgradePoints").innerText = totalUpgrade;
-      document.getElementById("totalSquadPoints").innerText = `${totalPilot + totalUpgrade}/20`;
-    }
+  });
+
+  document.getElementById("totalPilotPoints").innerText = totalPilot;
+  document.getElementById("totalUpgradePoints").innerText = totalUpgrade;
+  document.getElementById("totalSquadPoints").innerText = `${totalPilot + totalUpgrade}/20`;
+}
+
     window.updateGlobalTotalPoints = updateGlobalTotalPoints;
   </script>
 </body>
