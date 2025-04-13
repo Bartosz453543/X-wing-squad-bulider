@@ -85,7 +85,36 @@ $conn = db_connect();
         <h2>Aktualności</h2>
       </section>
       <section class="content">
-        <h2>Galeria</h2>
+      <section class="galeria">
+  <h2>Galeria</h2>
+  <section class="galeria-zdjec">
+    <?php
+    $sql_zdjecia = "SELECT `id` FROM `galeria`";
+    $wynik_zdjecia = mysqli_query($conn, $sql_zdjecia);
+
+    $zdjecia = [];
+    if (mysqli_num_rows($wynik_zdjecia) > 0) {
+        while ($foto = mysqli_fetch_assoc($wynik_zdjecia)) {
+            $zdjecia[] = intval($foto["id"]);
+        }
+
+        foreach ($zdjecia as $id) {
+            echo "<section class='zdjecie'><img src='image.php?id=$id' alt='Zdjęcie'></section>";
+        }
+
+        // Duplikat pierwszego na koniec
+        if (count($zdjecia) > 0) {
+            $pierwsze = $zdjecia[0];
+            echo "<section class='zdjecie'><img src='image.php?id=$pierwsze' alt='Duplikat'></section>";
+        }
+    } else {
+        echo "<p>Brak zdjęć w galerii.</p>";
+    }
+    ?>
+  </section>
+</section>
+
+
       </section>
     </section>
   </main>
