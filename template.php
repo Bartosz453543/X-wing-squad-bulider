@@ -20,7 +20,7 @@ function getHead()
 function getHeader()
 {
     ?>
-    <header>
+        <header>
         <h1>Dzielni Piloci Weterani</h1>
         <nav class="nav">
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
@@ -33,12 +33,11 @@ function getHeader()
                 <?php 
                 // Sprawdzenie, czy użytkownik jest zalogowany
                 if (isset($_SESSION['user_id'])) : ?>
+                    <li><a href="logowanie.php">Panel użytkownika</a></li> <!-- Nowy link tylko dla zalogowanych -->
                     <li><a href="logout.php">Wyloguj się</a></li>
                 <?php else : ?>
                     <li><a href="logowanie.php">Zaloguj się</a></li>
                 <?php endif; ?>
-                
-                
             </ul>
         </nav>
     </header>
