@@ -37,7 +37,7 @@ function getHeader()
                 <?php else : ?>
                     <li><a href="logowanie.php">Zaloguj się</a></li>
                 <?php endif; ?>
-                <li><a href="panel.php">Menu</a></li>
+                
                 
             </ul>
         </nav>
