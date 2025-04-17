@@ -21,6 +21,7 @@
       <option value="fangfighter">Fang Fighter</option>
       <option value="auzituck">Auzituck Gunship</option>
       <option value="bwing">B‑Wing</option>
+      <option value="kwing">K‑Wing</option> <!-- Dodano K-Wing -->
     </select>
     <!-- Przycisk, który dodaje statek na podstawie wyboru -->
     <button onclick="addShipByType()">Dodaj statek</button>
@@ -44,6 +45,8 @@
   <script src="fangfighter-rules.js"></script>
   <script src="auzituck-rules.js"></script>
   <script src="bwing-rules.js"></script>
+  <script src="kwing-rules.js"></script> <!-- Dodano K-Wing -->
+  
   <script>
     // Funkcja, która na podstawie wybranego typu statku wywoła odpowiednią metodę modułu
     function addShipByType() {
@@ -65,6 +68,8 @@
         auzituckRules.addShip();
       } else if (type === "bwing") {
         bwingRules.addShip();
+      } else if (type === "kwing") {
+        kwingRules.addShip(); // Obsługa K-Winga
       }
       select.selectedIndex = 0;
     }
@@ -99,6 +104,9 @@
         } else if (section.classList.contains('bwing')) {
           totalPilot += bwingRules.getPilotPoints(section);
           totalUpgrade += bwingRules.getUpgradePoints(section);
+        } else if (section.classList.contains('kwing')) {
+          totalPilot += kwingRules.getPilotPoints(section);
+          totalUpgrade += kwingRules.getUpgradePoints(section);
         }
       });
 

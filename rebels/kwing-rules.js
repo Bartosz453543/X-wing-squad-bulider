@@ -1,38 +1,31 @@
 (function () {
-    // Dane dla B‑Wing – każdy pilot w osobnej linii, definicje w kompaktowej formie
+    // Dane dla K‑Wing – każdy pilot w osobnej linii, definicje w kompaktowej formie
     const ships = {
-        "B-Wing": {
-            "Hera Syndulle (Rebelia)": {cost: 7, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 1, configurationSlots: 1, upgradeLimit: 12},
-            "Gina Moonsong (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
-            "Braylen Stramma (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
-            "Ten Numb (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
-            "Netrem Pollard (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 0, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
-            "Blade Squadron Veteran (Rebelia)": {cost: 5, talentSlots: 0, sensorSlots: 2, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 0, modificationSlots: 0, titleSlots: 0, configurationSlots: 1, upgradeLimit: 10},
-            "Blue Squadron Pilot (Rebelia)": {cost: 5, talentSlots: 0, sensorSlots: 2, cannonSlots: 2, torpedoSlots: 0, missileSlots: 0, bombSlots: 1, modificationSlots: 0, titleSlots: 0, configurationSlots: 1, upgradeLimit: 10}
+        "K-Wing": {
+            "Miranda Doni": {cost: 7, torpedoSlots: 1, missileSlots: 1, crewSlots: 1, bombSlots: 2, modificationSlots: 1, gunnerSlots: 1, upgradeLimit: 12, upgrades: ["Torpedo: Proton Torpedoes", "Missile: Concussion Missiles", "Crew: R2-D2", "Bomb: Proton Bombs", "Modification: Engine Upgrade", "Gunner: Veteran Instincts"]},
+            "Esege Tuketu": {cost: 6, torpedoSlots: 1, missileSlots: 2, crewSlots: 1, bombSlots: 1, modificationSlots: 1, gunnerSlots: 1, upgradeLimit: 12, upgrades: ["Torpedo: Proton Torpedoes", "Missile: Concussion Missiles", "Missile: Seismic Charges", "Crew: R2-D2", "Bomb: Proton Bombs", "Modification: Engine Upgrade", "Gunner: Veteran Instincts"]},
+            "Warden Squadron Pilot": {cost: 5, torpedoSlots: 1, missileSlots: 1, crewSlots: 0, bombSlots: 2, modificationSlots: 0, gunnerSlots: 1, upgradeLimit: 10, upgrades: ["Torpedo: Proton Torpedoes", "Missile: Concussion Missiles", "Bomb: Proton Bombs", "Gunner: Veteran Instincts"]}
         }
     };
 
     // Kategorie ulepszeń
-    const bwingExtras = {
-        "Talent": {"Intrepid": 4, "Fearless": 3},
-        "Sensor": {"Sensor Jammer": 5},
-        "Cannon": {"Autoblaster": 3, "Heavy Laser Cannon": 4},
+    const kwingExtras = {
         "Torpedo": {"Proton Torpedoes": 5},
         "Missile": {"Concussion Missiles": 3},
+        "Crew": {"R2-D2": 4},
         "Bomb": {"Proton Bombs": 4},
-        "Modification": {"Hull Upgrade": 6, "Engine Upgrade": 4},
-        "Title": {"B6 Blade Wing Prototype": 2},
-        "Configuration": {"Stabilized S-Foils": 2}
+        "Modification": {"Engine Upgrade": 4},
+        "Gunner": {"Veteran Instincts": 2}
     };
 
     function addShip() {
         const squadronDiv = document.getElementById("squadron");
         const shipDiv = document.createElement("div");
-        shipDiv.className = "ship-section bwing";
+        shipDiv.className = "ship-section kwing";
 
         const shipSelect = document.createElement("select");
         shipSelect.className = "ship-select";
-        shipSelect.innerHTML = `<option value=\"B-Wing\">B-Wing</option>`;
+        shipSelect.innerHTML = `<option value=\"K-Wing\">K-Wing</option>`;
         shipDiv.appendChild(shipSelect);
 
         const pilotSelect = document.createElement("select");
@@ -50,7 +43,7 @@
         shipDiv.appendChild(pointsDiv);
 
         squadronDiv.appendChild(shipDiv);
-        updatePilotOptions(shipDiv, "B-Wing");
+        updatePilotOptions(shipDiv, "K-Wing");
     }
 
     function updatePilotOptions(shipDiv, selectedShip) {
@@ -73,20 +66,17 @@
         pointsDiv.innerHTML = "";
         if (!pilot) return;
 
-        const data = ships["B-Wing"][pilot];
+        const data = ships["K-Wing"][pilot];
         [
-            ["Talent", data.talentSlots],
-            ["Sensor", data.sensorSlots],
-            ["Cannon", data.cannonSlots],
             ["Torpedo", data.torpedoSlots],
             ["Missile", data.missileSlots],
+            ["Crew", data.crewSlots],
             ["Bomb", data.bombSlots],
             ["Modification", data.modificationSlots],
-            ["Title", data.titleSlots],
-            ["Configuration", data.configurationSlots]
+            ["Gunner", data.gunnerSlots]
         ].forEach(([cat, count]) => {
             for (let i = 1; i <= (count || 0); i++) {
-                createUpgradeSelect(upgradeSection, cat, bwingExtras[cat], `No ${cat} (Slot ${i})`);
+                createUpgradeSelect(upgradeSection, cat, kwingExtras[cat], `No ${cat} (Slot ${i})`);
             }
         });
 
@@ -106,7 +96,7 @@
     function updateUpgradePointsDisplay(shipDiv) {
         const pilot = shipDiv.querySelector(".pilot-select").value;
         const points = calculateUpgradePoints(shipDiv);
-        const limit = ships["B-Wing"][pilot].upgradeLimit;
+        const limit = ships["K-Wing"][pilot].upgradeLimit;
         shipDiv.querySelector(".upgrade-points").innerText = `Użyte punkty: ${points} / ${limit}`;
         if (window.updateGlobalTotalPoints) window.updateGlobalTotalPoints();
     }
@@ -115,14 +105,14 @@
         return Array.from(shipDiv.querySelectorAll(".upgrade-select")).reduce((sum, sel) => {
             const val = sel.value;
             const cat = sel.dataset.category;
-            return sum + (val && bwingExtras[cat][val] || 0);
+            return sum + (val && kwingExtras[cat][val] || 0);
         }, 0);
     }
 
     function getPilotPoints(shipDiv) {
         const pilot = shipDiv.querySelector(".pilot-select").value;
-        return ships["B-Wing"][pilot]?.cost || 0;
+        return ships["K-Wing"][pilot]?.cost || 0;
     }
 
-    window.bwingRules = { addShip, calculateUpgradePoints, getPilotPoints, getUpgradePoints: calculateUpgradePoints };
+    window.kwingRules = { addShip, calculateUpgradePoints, getPilotPoints, getUpgradePoints: calculateUpgradePoints };
 })();
