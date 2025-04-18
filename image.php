@@ -17,14 +17,15 @@ $sql = "SELECT zdjecia FROM galeria WHERE id = $id";
 $result = mysqli_query($conn, $sql);
 
 if ($row = mysqli_fetch_assoc($result)) {
-    $obraz = $row['zdjecia'];
-
-    // Ustawienie nagłówka MIME — tu zakładamy JPG, ale można dodać typ w bazie
+    // Nagłówki uniemożliwiają cache'owanie:
     header("Content-Type: image/jpeg");
-    echo $obraz;
+    header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP/1.1
+    header("Pragma: no-cache");                                   // HTTP/1.0
+    header("Expires: 0");                                         // Proxies
+
+    echo $row['zdjecia'];
 } else {
     // Obraz nie istnieje
     http_response_code(404);
     echo "Brak zdjęcia.";
 }
-?>

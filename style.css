@@ -260,13 +260,15 @@ footer
 }
 
 /* Zdjęcia responsywne */
-.galeria-zdjec img {
+.galeria-zdjec img 
+{
   width: 100%;
   display: block;
 }
 
 /* Stylowanie przycisków strzałek */
-.arrow {
+.arrow
+ {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -279,12 +281,23 @@ footer
   z-index: 2;
 }
 
-.arrow.left {
+.arrow.left 
+{
   left: 10px;
 }
 
-.arrow.right {
+.arrow.right 
+{
   right: 10px;
+}
+.zdjecie img 
+{
+  width: 300px;
+  height: 150px;
+  object-fit: cover; /* Przytnie, ale zachowa proporcje */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
 }
 /* MEDIA QUERY – dla ekranów większych niż 800px */
 @media screen and (min-width: 800px)
@@ -378,6 +391,10 @@ footer
   .login p
   {
     color: white;
+  }
+  .zdjecie img {
+    width: 600px;
+    height: 300px;
   }
 }
 

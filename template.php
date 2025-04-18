@@ -30,6 +30,7 @@ function getHeader()
                 <span></span>
             </label>
             <ul class="menu">
+                <li><a href="edytor.html">Edytor</a></li>
                 <?php 
                 // Sprawdzenie, czy użytkownik jest zalogowany
                 if (isset($_SESSION['user_id'])) : ?>
@@ -41,9 +42,8 @@ function getHeader()
             </ul>
         </nav>
     </header>
+    <script src="script.js"></script>
     <?php
-
-
     }
     function getFooter()  
     {
