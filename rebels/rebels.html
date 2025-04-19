@@ -10,8 +10,7 @@
   <div class="container">
     <h2>Squadron Builder</h2>
     <div id="squadron"></div>
-    
-    <!-- Select do wyboru typu statku -->
+
     <select id="shipTypeSelect">
       <option value="">Wybierz statek</option>
       <option value="xwing">X‑Wing</option>
@@ -24,10 +23,16 @@
       <option value="bwing">B‑Wing</option>
       <option value="kwing">K‑Wing</option>
       <option value="ewing">E‑Wing</option>
-      <option value="gauntlet">Gauntlet Fighter</option> <!-- Dodano Gauntlet Fighter -->
+      <option value="gauntlet">Gauntlet Fighter</option>
+      <option value="hwk290">HWK‑290</option>
+      <option value="falcon">Millennium Falcon</option>
+      <option value="attackshuttle">Attack Shuttle</option>
+      <option value="sheathipede">Sheathipede-class Shuttle</option>
+      <option value="tieln">TIE/ln Fighter</option>
+      <option value="vcx100">VCX-100</option>
+      <option value="yt2400">YT‑2400</option>
     </select>
 
-    <!-- Przycisk, który dodaje statek na podstawie wyboru -->
     <button onclick="addShipByType()">Dodaj statek</button>
 
     <div class="points">
@@ -40,8 +45,7 @@
       Upgrade Points: <span id="totalUpgradePoints">0</span>
     </div>
   </div>
-  
-  <!-- Dołączamy pliki z regułami -->
+
   <script src="xwing-rules.js"></script>
   <script src="ywing-rules.js"></script>
   <script src="awing-rules.js"></script>
@@ -52,10 +56,16 @@
   <script src="bwing-rules.js"></script>
   <script src="kwing-rules.js"></script>
   <script src="ewing-rules.js"></script>
-  <script src="gauntlet-rules.js"></script> <!-- Dodano Gauntlet Fighter -->
+  <script src="gauntlet-rules.js"></script>
+  <script src="hwk290-rules.js"></script>
+  <script src="millennium-falcon-rules.js"></script>
+  <script src="attack-shuttle-rules.js"></script>
+  <script src="sheathipede-shuttle-rules.js"></script>
+  <script src="tielnfighter-rules.js"></script>
+  <script src="vcx100-rules.js"></script>
+  <script src="yt2400-rules.js"></script>
 
   <script>
-    // Funkcja, która na podstawie wybranego typu statku wywoła odpowiednią metodę modułu
     function addShipByType() {
       const select = document.getElementById("shipTypeSelect");
       const type = select.value;
@@ -76,11 +86,25 @@
       } else if (type === "bwing") {
         bwingRules.addShip();
       } else if (type === "kwing") {
-        kwingRules.addShip(); // Obsługa K-Winga
+        kwingRules.addShip();
       } else if (type === "ewing") {
-        ewingRules.addShip(); // Obsługa E-Winga
+        ewingRules.addShip();
       } else if (type === "gauntlet") {
-        gauntletRules.addShip(); // Obsługa Gauntlet Fighter
+        gauntletRules.addShip();
+      } else if (type === "hwk290") {
+        hwk290Rules.addShip();
+      } else if (type === "falcon") {
+        falconRules.addShip();
+      } else if (type === "attackshuttle") {
+        attackShuttleRules.addShip();
+      } else if (type === "sheathipede") {
+        sheathipedeRules.addShip();
+      } else if (type === "tieln") {
+        tielnRules.addShip();
+      } else if (type === "vcx100") {
+        vcx100Rules.addShip();
+      } else if (type === "yt2400") {
+        yt2400Rules.addShip();
       }
       select.selectedIndex = 0;
     }
@@ -124,6 +148,30 @@
         } else if (section.classList.contains('gauntlet')) {
           totalPilot += gauntletRules.getPilotPoints(section);
           totalUpgrade += gauntletRules.getUpgradePoints(section);
+        } else if (section.classList.contains('hwk290')) {
+          totalPilot += hwk290Rules.getPilotPoints(section);
+          totalUpgrade += hwk290Rules.getUpgradePoints(section);
+        } else if (section.classList.contains('falcon')) {
+          totalPilot += falconRules.getPilotPoints(section);
+          totalUpgrade += falconRules.getUpgradePoints(section);
+        } else if (section.classList.contains('shuttle')) {
+          const pilotName = section.querySelector('.pilot-select')?.value || "";
+          if (sheathipedeRules.getPilotPoints(section) !== 0) {
+            totalPilot += sheathipedeRules.getPilotPoints(section);
+            totalUpgrade += sheathipedeRules.getUpgradePoints(section);
+          } else {
+            totalPilot += attackShuttleRules.getPilotPoints(section);
+            totalUpgrade += attackShuttleRules.getUpgradePoints(section);
+          }
+        } else if (section.classList.contains('tieln')) {
+          totalPilot += tielnRules.getPilotPoints(section);
+          totalUpgrade += tielnRules.getUpgradePoints(section);
+        } else if (section.classList.contains('vcx100')) {
+          totalPilot += vcx100Rules.getPilotPoints(section);
+          totalUpgrade += vcx100Rules.getUpgradePoints(section);
+        } else if (section.classList.contains('yt2400')) {
+          totalPilot += yt2400Rules.getPilotPoints(section);
+          totalUpgrade += yt2400Rules.getUpgradePoints(section);
         }
       });
 
