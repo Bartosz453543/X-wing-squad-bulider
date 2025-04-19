@@ -10,6 +10,7 @@
   <div class="container">
     <h2>Squadron Builder</h2>
     <div id="squadron"></div>
+    
     <!-- Select do wyboru typu statku -->
     <select id="shipTypeSelect">
       <option value="">Wybierz statek</option>
@@ -21,10 +22,14 @@
       <option value="fangfighter">Fang Fighter</option>
       <option value="auzituck">Auzituck Gunship</option>
       <option value="bwing">B‑Wing</option>
-      <option value="kwing">K‑Wing</option> <!-- Dodano K-Wing -->
+      <option value="kwing">K‑Wing</option>
+      <option value="ewing">E‑Wing</option>
+      <option value="gauntlet">Gauntlet Fighter</option> <!-- Dodano Gauntlet Fighter -->
     </select>
+
     <!-- Przycisk, który dodaje statek na podstawie wyboru -->
     <button onclick="addShipByType()">Dodaj statek</button>
+
     <div class="points">
       Total Squadron Points: <span id="totalSquadPoints">0</span>/20
     </div>
@@ -45,8 +50,10 @@
   <script src="fangfighter-rules.js"></script>
   <script src="auzituck-rules.js"></script>
   <script src="bwing-rules.js"></script>
-  <script src="kwing-rules.js"></script> <!-- Dodano K-Wing -->
-  
+  <script src="kwing-rules.js"></script>
+  <script src="ewing-rules.js"></script>
+  <script src="gauntlet-rules.js"></script> <!-- Dodano Gauntlet Fighter -->
+
   <script>
     // Funkcja, która na podstawie wybranego typu statku wywoła odpowiednią metodę modułu
     function addShipByType() {
@@ -70,6 +77,10 @@
         bwingRules.addShip();
       } else if (type === "kwing") {
         kwingRules.addShip(); // Obsługa K-Winga
+      } else if (type === "ewing") {
+        ewingRules.addShip(); // Obsługa E-Winga
+      } else if (type === "gauntlet") {
+        gauntletRules.addShip(); // Obsługa Gauntlet Fighter
       }
       select.selectedIndex = 0;
     }
@@ -107,6 +118,12 @@
         } else if (section.classList.contains('kwing')) {
           totalPilot += kwingRules.getPilotPoints(section);
           totalUpgrade += kwingRules.getUpgradePoints(section);
+        } else if (section.classList.contains('ewing')) {
+          totalPilot += ewingRules.getPilotPoints(section);
+          totalUpgrade += ewingRules.getUpgradePoints(section);
+        } else if (section.classList.contains('gauntlet')) {
+          totalPilot += gauntletRules.getPilotPoints(section);
+          totalUpgrade += gauntletRules.getUpgradePoints(section);
         }
       });
 
