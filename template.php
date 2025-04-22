@@ -45,7 +45,8 @@ function getHeader()
     {
         ?>
         <footer>
-           <p>strone stworzył Hunter</p> 
+           <a href="https://discord.gg/4UHjwwe9"><img src="CSS/dc.png" class="social" alt="Nasz discord"></a>
+           <a href="https://www.facebook.com/profile.php?id=100075737566229&locale=pl_PL"><img src="CSS/fb.png" class="social" alt="Nasz facebook"></a>
         </footer>
         <?php
     }

@@ -299,6 +299,11 @@ footer
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
 }
+footer .social
+{
+  height: 30px;
+  width: 30px;  
+}
 /* MEDIA QUERY – dla ekranów większych niż 800px */
 @media screen and (min-width: 800px)
 {
@@ -336,7 +341,6 @@ footer
     align-items: center;
     padding: 10px 20px;
   }
-
   table
   {
     background-color: #333;
