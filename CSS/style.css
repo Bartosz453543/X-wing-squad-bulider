@@ -302,13 +302,6 @@ footer
 /* MEDIA QUERY – dla ekranów większych niż 800px */
 @media screen and (min-width: 800px)
 {
-  .columns
-  {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-  }
-
   header
   {
     display: flex;

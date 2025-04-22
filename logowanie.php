@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_photo'])) {
 <html lang="pl">
 <head>
     <?php getHead(); ?>
-    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="CSS/bootstrap.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <title>Panel użytkownika</title>

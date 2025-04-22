@@ -1,22 +1,18 @@
 <?php
-// Upewnij się, że sesja jest już uruchomiona w index.php
+
 function getHead() 
 {
     ?>
-   
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Strona główna</title>
-        <link rel="stylesheet" href="reset.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel="icon" href="swz-logotreatment.jpg">
-        </head>
-    
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona główna</title>
+    <link rel="stylesheet" href="CSS/reset.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="icon" href="swz-logotreatment.jpg">
+</head>
 <?php
 }
-
 function getHeader()
 {
     ?>
@@ -34,7 +30,7 @@ function getHeader()
                 <?php 
                 // Sprawdzenie, czy użytkownik jest zalogowany
                 if (isset($_SESSION['user_id'])) : ?>
-                    <li><a href="logowanie.php">Panel użytkownika</a></li> <!-- Nowy link tylko dla zalogowanych -->
+                    <li><a href="logowanie.php">Panel użytkownika</a></li> 
                     <li><a href="logout.php">Wyloguj się</a></li>
                 <?php else : ?>
                     <li><a href="logowanie.php">Zaloguj się</a></li>
