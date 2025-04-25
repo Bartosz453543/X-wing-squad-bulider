@@ -16,7 +16,7 @@ function getHead()
 function getHeader()
 {
     ?>
-        <header>
+        <header class="main-header">
         <h1>Dzielni Piloci Weterani</h1>
         <nav class="nav">
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
@@ -44,9 +44,9 @@ function getHeader()
     function getFooter()  
     {
         ?>
-        <footer>
-           <a href="https://discord.gg/4UHjwwe9"><img src="CSS/dc.png" class="social" alt="Nasz discord"></a>
-           <a href="https://www.facebook.com/profile.php?id=100075737566229&locale=pl_PL"><img src="CSS/fb.png" class="social" alt="Nasz facebook"></a>
+        <footer class ="main-footer">
+           <a href="https://discord.gg/4UHjwwe9" target="_blank"><img src="CSS/dc.png" class="social" alt="Nasz discord"></a>
+           <a href="https://www.facebook.com/profile.php?id=100075737566229&locale=pl_PL" target="_blank"><img src="CSS/fb.png" class="social" alt="Nasz facebook"></a>
         </footer>
         <?php
     }

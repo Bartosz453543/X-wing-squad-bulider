@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_photo'])) {
 <main>
 <?php if (!isset($_SESSION['user_id'])): ?>
     <section class="login container mt-5">
-        <h2>Logowanie</h2>
+        <h2 class="login_text">Logowanie</h2>
         <?php if (!empty($login_error)) echo "<section class='alert alert-danger'>{$login_error}</section>"; ?>
         <form method="POST" action="">
             <section class="form-floating mb-3">

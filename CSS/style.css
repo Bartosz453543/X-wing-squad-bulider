@@ -14,7 +14,7 @@ body
 }
 
 /* Header */
-header
+.main-header
 {
   display: grid;
   place-items: center; /* wyśrodkowanie poziome i pionowe */
@@ -29,7 +29,7 @@ header
   text-align: center;
 }
 
-header h1
+.main-header h1
 {
   margin: 0 auto;
 }
@@ -41,7 +41,7 @@ header h1
   text-align: center;
 }
 
-header nav
+.main-header nav
 {
   text-align: right;
 }
@@ -292,12 +292,16 @@ footer
 }
 .zdjecie img 
 {
-  width: 300px;
+  
   height: 150px;
   object-fit: cover; /* Przytnie, ale zachowa proporcje */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
+}
+.login_text
+{
+  color: white;
 }
 footer .social
 {
@@ -307,11 +311,11 @@ footer .social
 /* MEDIA QUERY – dla ekranów większych niż 800px */
 @media screen and (min-width: 800px)
 {
-  header
+  .main-header
   {
     display: flex;
     font-family: 'Tie Wing', sans-serif;
-    font-size: 200%;
+    font-size: 125%;
     background-image: url('star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -328,7 +332,7 @@ footer .social
     width: 100%;
   }
 
-  footer
+  .main-footer
   {
     min-height: 150px;
     font-size: 150%;
