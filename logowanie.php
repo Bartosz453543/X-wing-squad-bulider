@@ -80,42 +80,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'], $_POST['pass
     }
 }
 
-// Zapis wyników gracza
+// Zapis wyników gracza (z zachowaniem istniejących wartości, jeśli pola są puste)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gracz'])) {
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['message' => 'Musisz się zalogować, aby zapisać dane.']);
         exit();
     }
     try {
-        // Pobranie danych (mogą być puste)
         $gracz = trim($_POST['gracz']);
-        $frakcja1 = trim($_POST['frakcja1'] ?? '');
-        $frakcja2 = trim($_POST['frakcja2'] ?? '');
-        $zniszczone_statki = trim($_POST['zniszczone_statki'] ?? '');
-        $punkty = intval($_POST['punkty'] ?? 0);
 
         // Sprawdzenie istnienia rekordu dla tego gracza
-        $check_stmt = mysqli_prepare($conn, "SELECT id FROM wyniki WHERE gracz = ?");
+        $check_stmt = mysqli_prepare($conn, "SELECT frakcja1, frakcja2, zniszczone_statki, punkty FROM wyniki WHERE gracz = ?");
         mysqli_stmt_bind_param($check_stmt, "s", $gracz);
         mysqli_stmt_execute($check_stmt);
-        mysqli_stmt_store_result($check_stmt);
+        $result = mysqli_stmt_get_result($check_stmt);
 
-        if (mysqli_stmt_num_rows($check_stmt) > 0) {
+        // Przygotuj domyślne nowe wartości na podstawie POST (mogą być puste)
+        $post_f1 = trim($_POST['frakcja1'] ?? '');
+        $post_f2 = trim($_POST['frakcja2'] ?? '');
+        $post_zs = trim($_POST['zniszczone_statki'] ?? '');
+        $post_p  = isset($_POST['punkty']) && $_POST['punkty'] !== '' ? intval($_POST['punkty']) : null;
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            // Jeśli rekord istnieje: pobierz istniejące wartości
+            $new_f1 = $post_f1 !== '' ? $post_f1 : $row['frakcja1'];
+            $new_f2 = $post_f2 !== '' ? $post_f2 : $row['frakcja2'];
+            $new_zs = $post_zs !== '' ? $post_zs : $row['zniszczone_statki'];
+            $new_p  = $post_p !== null ? $post_p : $row['punkty'];
+
             // Aktualizacja istniejącego rekordu
-            $update_stmt = mysqli_prepare($conn, "UPDATE wyniki SET frakcja1 = ?, frakcja2 = ?, zniszczone_statki = ?, punkty = ? WHERE gracz = ?");
-            mysqli_stmt_bind_param($update_stmt, "sssis", $frakcja1, $frakcja2, $zniszczone_statki, $punkty, $gracz);
+            $update_stmt = mysqli_prepare($conn, 
+                "UPDATE wyniki SET frakcja1 = ?, frakcja2 = ?, zniszczone_statki = ?, punkty = ? WHERE gracz = ?"
+            );
+            mysqli_stmt_bind_param($update_stmt, "sssis", $new_f1, $new_f2, $new_zs, $new_p, $gracz);
             mysqli_stmt_execute($update_stmt);
             mysqli_stmt_close($update_stmt);
+
             $insert_message = "Dane gracza zostały zaktualizowane.";
         } else {
-            // Wstawienie nowego rekordu
-            $insert_stmt = mysqli_prepare($conn, "INSERT INTO wyniki (gracz, frakcja1, frakcja2, zniszczone_statki, punkty) VALUES (?, ?, ?, ?, ?)");
-            mysqli_stmt_bind_param($insert_stmt, "ssssi", $gracz, $frakcja1, $frakcja2, $zniszczone_statki, $punkty);
+            // Brak rekordu: wstaw wszystkie wartości (nawet puste pola mogą zostać dodane)
+            $insert_f1 = $post_f1;
+            $insert_f2 = $post_f2;
+            $insert_zs = $post_zs;
+            $insert_p  = $post_p ?? 0;
+
+            $insert_stmt = mysqli_prepare($conn, 
+                "INSERT INTO wyniki (gracz, frakcja1, frakcja2, zniszczone_statki, punkty) VALUES (?, ?, ?, ?, ?)"
+            );
+            mysqli_stmt_bind_param($insert_stmt, "ssssi", $gracz, $insert_f1, $insert_f2, $insert_zs, $insert_p);
             mysqli_stmt_execute($insert_stmt);
             mysqli_stmt_close($insert_stmt);
+
             $insert_message = "Dane zostały dodane poprawnie!";
         }
         mysqli_stmt_close($check_stmt);
+
     } catch (Exception $e) {
         $insert_message = $e->getMessage();
     }
@@ -282,5 +301,3 @@ $(document).ready(function() {
 });
 </script>
 <?php endif; ?>
-</body>
-</html>
