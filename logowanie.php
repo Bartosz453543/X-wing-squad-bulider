@@ -157,22 +157,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_photo'])) {
 </head>
 <body>
 <?php getHeader(); ?>
-<main>
+<main class="hole">
 <?php if (!isset($_SESSION['user_id'])): ?>
+    <section class="login_text">
     <section class="login container mt-5">
         <h2>Logowanie</h2>
         <?php if (!empty($login_error)) echo "<section class='alert alert-danger'>{$login_error}</section>"; ?>
         <form method="POST" action="">
             <div class="mb-3">
                 <label for="login" class="form-label">Login</label>
-                <input type="text" name="login" id="login" class="form-control" required>
+                <input type="text" name="login" id="login" class="form-control" placeholder="login" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Hasło</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="hasło" required>
             </div>
             <button type="submit" class="btn btn-primary">Zaloguj się</button>
         </form>
+    </section>
     </section>
 <?php else: ?>
     <section class="panel container mt-5">
@@ -189,6 +191,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_photo'])) {
                     <option value="" selected>Wybierz frakcję...</option>
                     <option value="Imperium">Imperium</option>
                     <option value="Rebelia">Rebelia</option>
+                    <option value="Scumy">Scumy</option>
+                    <option value="Ruch_Oporu">Ruch Oporu</option>
+                    <option value="Najwyższy_Porządek">Najwyższy Porządek</option>
                     <option value="Republika">Republika</option>
                     <option value="Separatyści">Separatyści</option>
                 </select>
@@ -199,6 +204,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_photo'])) {
                     <option value="" selected>Wybierz frakcję...</option>
                     <option value="Imperium">Imperium</option>
                     <option value="Rebelia">Rebelia</option>
+                    <option value="Scumy">Scumy</option>
+                    <option value="Ruch_Oporu">Ruch Oporu</option>
+                    <option value="Najwyższy_Porządek">Najwyższy Porządek</option>
                     <option value="Republika">Republika</option>
                     <option value="Separatyści">Separatyści</option>
                 </select>

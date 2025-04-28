@@ -42,7 +42,7 @@ $conn = db_connect();
 
     <?php getHeader(); ?>
 
-    <main>
+    <main class="hole">
       <section class="table">
         <h2>Tabela wyników</h2>
         <?php

@@ -6,7 +6,7 @@ function getHead()
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona główna</title>
+    <title>Liga X wing</title>
     <link rel="stylesheet" href="CSS/reset.css">
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="icon" href="swz-logotreatment.jpg">
