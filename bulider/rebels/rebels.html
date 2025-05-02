@@ -31,6 +31,7 @@
       <option value="tieln">TIE/ln Fighter</option>
       <option value="vcx100">VCX-100</option>
       <option value="yt2400">YT‑2400</option>
+      <option value="z95">Z-95 Headhunter</option> <!-- NOWY -->
     </select>
 
     <button onclick="addShipByType()">Dodaj statek</button>
@@ -46,6 +47,7 @@
     </div>
   </div>
 
+  <!-- Twoje pliki zasad -->
   <script src="xwing-rules.js"></script>
   <script src="ywing-rules.js"></script>
   <script src="awing-rules.js"></script>
@@ -64,6 +66,7 @@
   <script src="tielnfighter-rules.js"></script>
   <script src="vcx100-rules.js"></script>
   <script src="yt2400-rules.js"></script>
+  <script src="z95-rules.js"></script> <!-- NOWY -->
 
   <script>
     function addShipByType() {
@@ -105,6 +108,8 @@
         vcx100Rules.addShip();
       } else if (type === "yt2400") {
         yt2400Rules.addShip();
+      } else if (type === "z95") {
+        z95Rules.addShip();
       }
       select.selectedIndex = 0;
     }
@@ -172,6 +177,9 @@
         } else if (section.classList.contains('yt2400')) {
           totalPilot += yt2400Rules.getPilotPoints(section);
           totalUpgrade += yt2400Rules.getUpgradePoints(section);
+        } else if (section.classList.contains('z95')) {
+          totalPilot += z95Rules.getPilotPoints(section);
+          totalUpgrade += z95Rules.getUpgradePoints(section);
         }
       });
 
