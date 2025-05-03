@@ -143,7 +143,8 @@
     updateUpgradePointsDisplay(shipDiv);
 }
 
- 
+    
+
   function createUpgradeSelect(container, category, optionsObj, defaultText) {
       const select = document.createElement("select");
       select.className = "upgrade-select";
