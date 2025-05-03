@@ -1,233 +1,198 @@
-(function(){
-    // Dane dla statków X‑wing
-    const ships = {
-      "T-65 X-wing": {
-        "Luke Skywalker": { cost: 6, upgradeLimit: 24, force: 2 },
-        "Wedge Antilles": { cost: 6, upgradeLimit: 20, force: 0, talentSlots: 2 },
-        "Biggs Darklighter": { cost: 5, upgradeLimit: 5, force: 0, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Wes Janson": { cost: 5, upgradeLimit: 17, force: 0, missileSlots: 1 },
-        "Corran Horn": { cost: 4, upgradeLimit: 9, force: 0, missileSlots: 1, noModifications: true },
-        "Thane Kyrell": { cost: 4, upgradeLimit: 6, force: 0, missileSlots: 1, noModifications: true },
-        "Garven Dreis": { cost: 4, upgradeLimit: 6, force: 0, missileSlots: 1, noModifications: true },
-        "Jek Porkins": { cost: 4, upgradeLimit: 6, force: 0, missileSlots: 1, noModifications: true },
-        "Kubllbee Sperado": { cost: 4, upgradeLimit: 9, force: 0, missileSlots: 1, illegalUpgrades: 1 }, 
-        "Leevan Tenza": { cost: 4, upgradeLimit: 9, force: 0, missileSlots: 1, noModifications: true },
-        "Red Squadron Veteran": { cost: 4, upgradeLimit: 8, force: 0, missileSlots: 1, noModifications: true },
-        "Blue Squadron Escort": { cost: 5, upgradeLimit: 18, force: 0, missileSlots: 1, noModifications: true },
-        "Edrio Two Tubes": { cost: 5, upgradeLimit: 18, force: 0, missileSlots: 1, noModifications: true }, 
-        "Cabern Angels Zealot": { cost: 5, upgradeLimit: 15, force: 0 } 
-      },
-    };
-  
-    const upgrades = {
-      "Force Upgrade": { "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 },
-      "Talent Upgrade": { "Outmaneuver": 6, "Lone Wolf": 4 },
-      "Torpedo Upgrade": { "Proton Torpedoes": 6, "Advanced Proton Torpedoes": 8 },
-      "Missile Upgrade": { "Concussion Missiles": 5, "Cluster Missiles": 6 },
-      "Astromech Upgrade": { "R2-D2": 5, "R5-D4": 3 },
-      "Modification Upgrade": { "Shield Upgrade": 6, "Stealth Device": 5 },
-      "Configuration Upgrade": { "S-Foils": 0 },
-      "Illegal Upgrade": { "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 }  
-    };
-  
-    // Funkcja pomocnicza do pobierania liczby slotów dla danej kategorii
-    function getSlots(pilotData, category) {
-        if (category === "Force Upgrade") {
-          return pilotData.force && pilotData.force > 0 ? pilotData.force : 0;
-        }
-        if (category === "Talent Upgrade" && pilotData.talentSlots) {
-          return pilotData.talentSlots;
-        }
-        if (category === "Torpedo Upgrade" && pilotData.torpedoSlots) {
-          return pilotData.torpedoSlots;
-        }
-        if (category === "Astromech Upgrade" && pilotData.astromechSlots) {
-          return pilotData.astromechSlots;
-        }
-        if (category === "Modification Upgrade" && pilotData.modificationSlots) {
-          return pilotData.modificationSlots;
-        }
-        if (category === "Configuration Upgrade" && pilotData.configurationSlots) {
-          return pilotData.configurationSlots;
-        }
-        if (category === "Illegal Upgrade" && pilotData.illegalUpgrades) {
-            return pilotData.illegalUpgrades; 
-        }
-        // Domyślnie 1 slot
-        return 1;
-    }
-  
-    // Funkcja dodająca statek X‑wing
-    function addShip(){
+(function () {
+  // Dane dla statków X-Wing – instrukcje dla pilotów
+  const ships = {
+      "X-Wing": {
+        "Luke Skywalker": {cost:5,upgradeLimit:5,force:2,torpedoSlots:1,astromechSlots:1,modificationSlots:1,configurationSlots:1},
+        "Wedge Antilles Battle Over Endor": { cost: 5, force: 0, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1, },
+        "Wedge Antilles": {cost:5,upgradeLimit:11,talentSlots:2,torpedoSlots:1,astromechSlots:1,modificationSlots:1,configurationSlots:1},
+        "Luke Skywalker Battle of Yavin": { cost: 5, talentSlots: 1, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Luke Skywalker Red Five": {cost: 5, talentSlots: 1, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Wedge Antilles Battle of Yavin": {cost: 5, upgradeLimit: 11, force: 0, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1, },
+        "Yendor Battle of Endor": {cost:4, upgradeLimit:9, talentSlots:1, torpedoSlots:1, astromechSlots:1, modificationSlots:1, configurationSlots:1},
+        "Wes Janson": {cost: 5, upgradeLimit: 17, talentSlots: 1, missileSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1},
+        "Corran Horn": {cost:4, upgradeLimit:9, talentSlots:1, missileSlots:1, astromechSlots:1, configurationSlots:1, },
+        "Thane Kyrell": {cost:4, upgradeLimit:6, talentSlots:1, missileSlots:1, astromechSlots:1, configurationSlots:1, },
+        "Garven Dreis Battle of Yavin": {cost:5, upgradeLimit:8, torpedoSlots:1, astromechSlots:1},
+        "Garven Dreis": {cost:5, upgradeLimit:17, talentSlots:1, torpedoSlots:1, astromechSlots:1, modificationSlots:1, configurationSlots:1},
+        "Jek Porkins Battle of Yavin": {cost:5, upgradeLimit:8, torpedoSlots:1, astromechSlots:1, modificationSlots:1},
+        "Jek Porkins": {cost:4, upgradeLimit:7, talentSlots:1, torpedoSlots:1, astromechSlots:1, configurationSlots:1},
+        "Jek Porkins Red Six": {cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1},
+        "Endy Idele Battle of Endor": {cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1},
+        "Kullbee Sperado": {cost:4, upgradeLimit:9, talentSlots:1, missileSlots:1, astromechSlots:1, illegalUpgrades:1, configurationSlots:1},
+        "Biggs Darklighter": {cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1},
+        "Biggs Darklighter Battle of Yavin": {cost:6,upgradeLimit:5,force:0,torpedoSlots:1,astromechSlots:1,modificationSlots:1,configurationSlots:1},
+        "Leevan Tenza": {cost:4, upgradeLimit:9, talentSlots:1, missileSlots:1, astromechSlots:1, illegalUpgrades:1, configurationSlots:1},
+        "Red Squadron Veteran": {cost:4, upgradeLimit:8, talentSlots:1, astromechSlots:1, configurationSlots:1},
+        "Blue Squadron Escort": {cost:5, upgradeLimit:18, astromechSlots:1, torpedoSlots:1, configurationSlots:1, modificationSlots:1},
+        "Edrio Two Tubes": {cost:5, upgradeLimit:18, missileSlots:1, illegalUpgrades:1, configurationSlots:1},
+        "Cabern Angels Zealot": {cost:5, upgradeLimit:15, astromechSlots:1, illegalUpgrades:1, configurationSlots:1, modificationSlots:1},  
+      }
+  };
+
+  const upgrades = {
+    "Force Upgrade":         { "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 },
+    "Talent Upgrade":        { "Outmaneuver": 6, "Lone Wolf": 4, "It's a Trap": 3 },
+    "Torpedo Upgrade":       { "Proton Torpedoes": 6, "Advanced Proton Torpedoes": 8 },
+    "Astromech Upgrade":     { "R2-D2": 5, "R5-D4": 3, "R2 D3": 4 },
+    "Modification Upgrade":  { "Shield Upgrade": 6, "Stealth Device": 5 },
+    "Configuration Upgrade": { "S-Foils": 0 },
+    "Illegal Upgrade":       { "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 },
+    "Missile Upgrade": { "Concussion Missiles": 5, "Cluster Missiles": 4 },
+  }
+
+  function addShip() {
       const squadronDiv = document.getElementById("squadron");
       const shipDiv = document.createElement("div");
-      // Dodajemy klasę 'ship-section' oraz identyfikator typu 'xwing'
       shipDiv.className = "ship-section xwing";
-      
-      // Select dla wyboru statku
+
       const shipSelect = document.createElement("select");
-      shipSelect.innerHTML = `<option value=''>Wybierz statek</option>`;
-      for (let ship in ships) {
-        shipSelect.innerHTML += `<option value='${ship}'>${ship}</option>`;
-      }
-      shipSelect.onchange = function() {
-        updatePilotOptions(shipDiv, shipSelect.value);
-      };
+      shipSelect.className = "ship-select";
+      shipSelect.innerHTML = `<option value="X-Wing">X-Wing</option>`;
       shipDiv.appendChild(shipSelect);
-  
-      // Select dla pilota
+
       const pilotSelect = document.createElement("select");
       pilotSelect.className = "pilot-select";
-      pilotSelect.innerHTML = `<option value=''>Wybierz pilota</option>`;
-      pilotSelect.onchange = function() {
-        updateUpgrades(shipDiv);
+      pilotSelect.innerHTML = `<option value=''>Select Pilot</option>`;
+      pilotSelect.onchange = function () {
+          updateUpgrades(shipDiv);
       };
       shipDiv.appendChild(pilotSelect);
-  
-      // Sekcja dla upgrade'ów
+
       const upgradeDiv = document.createElement("div");
       upgradeDiv.className = "upgrade-section";
       shipDiv.appendChild(upgradeDiv);
-  
-      // Miejsce na wyświetlanie punktów użytych w tym statku
+
       const pointsDiv = document.createElement("div");
       pointsDiv.className = "upgrade-points";
       shipDiv.appendChild(pointsDiv);
-  
+
       squadronDiv.appendChild(shipDiv);
-    }
-  
-    function updatePilotOptions(shipDiv, selectedShip) {
+      updatePilotOptions(shipDiv, "X-Wing");
+  }
+
+  function updatePilotOptions(shipDiv, selectedShip) {
       const pilotSelect = shipDiv.querySelector(".pilot-select");
-      pilotSelect.innerHTML = `<option value=''>Wybierz pilota</option>`;
+      pilotSelect.innerHTML = `<option value=''>Select Pilot</option>`;
       if (ships[selectedShip]) {
-        for (let pilot in ships[selectedShip]) {
-          pilotSelect.innerHTML += `<option value='${pilot}'>${pilot} (${ships[selectedShip][pilot].cost} pkt)</option>`;
-        }
+          for (let pilot in ships[selectedShip]) {
+              const pilotData = ships[selectedShip][pilot];
+              pilotSelect.innerHTML += `<option value='${pilot}'>${pilot} (${pilotData.cost} pkt)</option>`;
+          }
       }
       updateUpgrades(shipDiv);
-      // Zaktualizowane globalne punkty
-      updateGlobalTotalPoints();
+  }
+
+  function updateUpgrades(shipDiv) {
+    const pilotSelect = shipDiv.querySelector(".pilot-select");
+    const upgradeSection = shipDiv.querySelector(".upgrade-section");
+    const pointsDiv = shipDiv.querySelector(".upgrade-points");
+    upgradeSection.innerHTML = "";
+    pointsDiv.innerHTML = "";
+    if (!pilotSelect.value) return;
+
+    const pilotData = ships["X-Wing"][pilotSelect.value];
+
+    if (pilotData.talentSlots) {
+        for (let i = 1; i <= pilotData.talentSlots; i++) {
+            createUpgradeSelect(upgradeSection, "Talent Upgrade", upgrades["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
+        }
     }
-  
-    function updateUpgrades(shipDiv) {
-      const pilotSelect = shipDiv.querySelector(".pilot-select");
-      const upgradeSection = shipDiv.querySelector(".upgrade-section");
-      const pointsDiv = shipDiv.querySelector(".upgrade-points");
-      upgradeSection.innerHTML = "";
-      pointsDiv.innerHTML = "";
-  
-      if (!pilotSelect.value) return;
-  
-      const selectedShip = shipDiv.querySelector("select").value;
-      const pilotData = ships[selectedShip][pilotSelect.value];
-      let totalUpgradePointsForShip = 0;
-  
-      // Ograniczenia Pilotów
-      for (let category in upgrades) {
-       
-        if ((pilotSelect.value === "Luke Skywalker" || pilotSelect.value === "Biggs Darklighter") && category === "Talent Upgrade") { 
-          continue;
+
+    if (pilotData.astromechSlots) {
+        for (let i = 1; i <= pilotData.astromechSlots; i++) {
+            createUpgradeSelect(upgradeSection, "Astromech Upgrade", upgrades["Astromech Upgrade"], `No Astromech Upgrade (Slot ${i})`);
         }
-        
-        if ((pilotSelect.value === "Luke Skywalker" || pilotSelect.value === "Wedge Antilles" || pilotSelect.value === "Biggs Darklighter"|| pilotSelect.value === "Garven Dreis" || pilotSelect.value === "Jek Porkins" || pilotSelect.value === "Red Squadron Veteran" || pilotSelect.value === "Blue Squadron Escort" || pilotSelect.value === "Cabern Angels Zealot" ) && category === "Missile Upgrade") {
-          continue;
+    }
+
+    if (pilotData.torpedoSlots) {
+        for (let i = 1; i <= pilotData.torpedoSlots; i++) {
+            createUpgradeSelect(upgradeSection, "Torpedo Upgrade", upgrades["Torpedo Upgrade"], `No Torpedo Upgrade (Slot ${i})`);
         }
-        if ((pilotSelect.value === "Biggs Darklighter" || pilotSelect.value === "Wes Janson" || pilotSelect.value === "Corran Horn" || pilotSelect.value === "Thane Kyrell" || pilotSelect.value === "Leevan Tenza" || pilotSelect.value === "Red Squadron Veteran" || pilotSelect.value === "Edrio Two Tubes" || pilotSelect.value === "Cabern Angels Zealot") && category === "Torpedo Upgrade") {
-            continue;
+    }
+
+    if (pilotData.modificationSlots) {
+        for (let i = 1; i <= pilotData.modificationSlots; i++) {
+            createUpgradeSelect(upgradeSection, "Modification Upgrade", upgrades["Modification Upgrade"], `No Modification (Slot ${i})`);
         }
-        if ((pilotSelect.value === "Corran Horn" || pilotSelect.value === "Thane Kyrell" || pilotSelect.value === "Jek Porkins" || pilotSelect.value === "Leevan Tenza" || pilotSelect.value === "Red Squadron Veteran" || pilotSelect.value === "Edrio Two Tubes") && category === "Modification Upgrade") {
-            continue;
+    }
+
+    if (pilotData.missileSlots) {
+        for (let i = 1; i <= pilotData.missileSlots; i++) {
+            createUpgradeSelect(upgradeSection, "Missile Upgrade", upgrades["Missile Upgrade"], `No Missile Upgrade (Slot ${i})`);
         }
-        if ((pilotSelect.value === "Corran Horn" || pilotSelect.value === "Wes Janson" || pilotSelect.value === "Thane Kyrell" || pilotSelect.value === "Jek Porkins" || pilotSelect.value === "Luke Skywalker" || pilotSelect.value === "Wedge Antilles" || pilotSelect.value === "Biggs Darklighter"|| pilotSelect.value === "Garven Dreis" || pilotSelect.value === "Jek Porkins" || pilotSelect.value === "Red Squadron Veteran" || pilotSelect.value === "Blue Squadron Escort" ) && category === "Illegal Upgrade") {
-            continue;
-        } 
-        if((pilotSelect.value === "Blue Squadron Escort" || pilotSelect.value === "Edrio Two Tubes" || pilotSelect.value === "Cabern Angels Zealot" ) && category === "Talent Upgrade"){
-            continue;
+    }
+
+    if (pilotData.force) {
+        for (let i = 1; i <= pilotData.force; i++) {
+            createUpgradeSelect(upgradeSection, "Force Upgrade", upgrades["Force Upgrade"], `No Force Upgrade (Slot ${i})`);
         }
-        if((pilotSelect.value === "Edrio Two Tubes" ) && category === "Astromech Upgrade"){
-            continue;
+    }
+
+    if (pilotData.configurationSlots) {
+        for (let i = 1; i <= pilotData.configurationSlots; i++) {
+            createUpgradeSelect(upgradeSection, "Configuration Upgrade", upgrades["Configuration Upgrade"], `No Configuration (Slot ${i})`);
         }
-        // Pomijamy kategorię "Illegal Upgrade" dla wszystkich, oprócz Kubllbee Sperado
-        if (selectedShip === "T-65 X-wing" && pilotSelect.value === "Kubllbee Sperado" && category === "Illegal Upgrade") {
-            let slots = getSlots(pilotData, category);
-            for (let i = 0; i < slots; i++) {
-                const select = document.createElement("select");
-                select.className = "upgrade-select";
-                select.innerHTML = `<option value=''>No ${category} (Slot ${i+1})</option>`;
-                for (let upgrade in upgrades[category]) {
-                  select.innerHTML += `<option value='${upgrade}'>${upgrade} (${upgrades[category][upgrade]} pkt)</option>`;
-                }
-                select.onchange = function() {
-                  totalUpgradePointsForShip = calculateUpgradePoints(shipDiv);
-                  pointsDiv.innerHTML = `Użyte punkty: ${totalUpgradePointsForShip}/${pilotData.upgradeLimit}`;
-                  updateGlobalTotalPoints();
-                };
-                upgradeSection.appendChild(select);
-            }
-            continue; // Pomijamy inne upgrade'y dla Kubllbee Sperado, aby nie dodawano innych kategorii
+    }
+
+    if (pilotData.illegalUpgrades) {
+        for (let i = 1; i <= pilotData.illegalUpgrades; i++) {
+            createUpgradeSelect(upgradeSection, "Illegal Upgrade", upgrades["Illegal Upgrade"], `No Illegal Upgrade (Slot ${i})`);
         }
-         
-        // Pobieramy liczbę slotów dla danej kategorii (domyślnie 1 lub wartość z pilotData)
-        let slots = getSlots(pilotData, category);
-  
-        for (let i = 0; i < slots; i++) {
-          const select = document.createElement("select");
-          select.className = "upgrade-select";
-          select.innerHTML = `<option value=''>No ${category} (Slot ${i+1})</option>`;
-          for (let upgrade in upgrades[category]) {
-            select.innerHTML += `<option value='${upgrade}'>${upgrade} (${upgrades[category][upgrade]} pkt)</option>`;
-          }
-          select.onchange = function() {
-            totalUpgradePointsForShip = calculateUpgradePoints(shipDiv);
-            pointsDiv.innerHTML = `Użyte punkty: ${totalUpgradePointsForShip}/${pilotData.upgradeLimit}`;
-            updateGlobalTotalPoints();
-          };
-          upgradeSection.appendChild(select);
-        }
+    }
+
+    updateUpgradePointsDisplay(shipDiv);
+}
+
+ 
+  function createUpgradeSelect(container, category, optionsObj, defaultText) {
+      const select = document.createElement("select");
+      select.className = "upgrade-select";
+      select.dataset.category = category;
+      select.innerHTML = `<option value=''>${defaultText}</option>`;
+      for (let upgrade in optionsObj) {
+          select.innerHTML += `<option value='${upgrade}'>${upgrade} (${optionsObj[upgrade]} pkt)</option>`;
       }
-    }
-  
-    function calculateUpgradePoints(shipDiv) {
+      select.onchange = function () {
+          updateUpgradePointsDisplay(container.parentNode);
+      };
+      container.appendChild(select);
+  }
+
+  function updateUpgradePointsDisplay(shipDiv) {
+      const pointsDiv = shipDiv.querySelector(".upgrade-points");
+      const pilotSelect = shipDiv.querySelector(".pilot-select");
+      const upgradePoints = calculateUpgradePoints(shipDiv);
+      const upgradeLimit = ships["X-Wing"][pilotSelect.value]?.upgradeLimit || 0;
+      pointsDiv.innerHTML = `Użyte punkty: ${upgradePoints} / ${upgradeLimit}`;
+      if (typeof updateGlobalTotalPoints === 'function') {
+          updateGlobalTotalPoints();
+      }
+  }
+
+  function calculateUpgradePoints(shipDiv) {
       let total = 0;
       const selects = shipDiv.querySelectorAll(".upgrade-select");
       selects.forEach(select => {
-        if (select.value) {
-          if (select.value === 'illegal') {
-            total += 3;
-          } else {
-            for (let category in upgrades) {
-              if (upgrades[category][select.value]) {
-                total += upgrades[category][select.value];
-              }
-            }
+          const extras = upgrades[select.dataset.category];
+          if (select.value && extras && extras[select.value]) {
+              total += extras[select.value];
           }
-        }
       });
       return total;
-    }
-  
-    // Funkcje pomocnicze do globalnego sumowania punktów:
-    function getPilotPoints(shipDiv) {
-      let points = 0;
-      const shipSelect = shipDiv.querySelector("select");
+  }
+
+  function getPilotPoints(shipDiv) {
       const pilotSelect = shipDiv.querySelector(".pilot-select");
-      if (shipSelect.value && pilotSelect.value) {
-        const pilotData = ships[shipSelect.value][pilotSelect.value];
-        points = pilotData.cost;
+      if (pilotSelect && pilotSelect.value) {
+          return ships["X-Wing"][pilotSelect.value].cost;
       }
-      return points;
-    }
-    function getUpgradePoints(shipDiv) {
-      return calculateUpgradePoints(shipDiv);
-    }
-  
-    // Udostępniamy funkcje poprzez namespace xwingRules
-    window.xwingRules = {
+      return 0;
+  }
+
+  window.xwingRules = {
       addShip: addShip,
+      calculateUpgradePoints: calculateUpgradePoints,
       getPilotPoints: getPilotPoints,
-      getUpgradePoints: getUpgradePoints
-    };
-  
-    // Zakładamy, że funkcja globalna updateGlobalTotalPoints jest zdefiniowana w HTML
+      getUpgradePoints: calculateUpgradePoints
+  };
 })();

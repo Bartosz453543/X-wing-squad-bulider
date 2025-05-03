@@ -13,38 +13,34 @@
 
     <select id="shipTypeSelect">
       <option value="">Wybierz statek</option>
-      <option value="xwing">X‑Wing</option>
-      <option value="ywing">Y‑Wing</option>
-      <option value="awing">A‑Wing</option>
-      <option value="uwing">U‑Wing</option>
+      <option value="xwing">X-Wing</option>
+      <option value="ywing">Y-Wing</option>
+      <option value="awing">A-Wing</option>
+      <option value="uwing">U-Wing</option>
       <option value="arc170">ARC-170</option>
       <option value="fangfighter">Fang Fighter</option>
       <option value="auzituck">Auzituck Gunship</option>
-      <option value="bwing">B‑Wing</option>
-      <option value="kwing">K‑Wing</option>
-      <option value="ewing">E‑Wing</option>
+      <option value="bwing">B-Wing</option>
+      <option value="kwing">K-Wing</option>
+      <option value="ewing">E-Wing</option>
       <option value="gauntlet">Gauntlet Fighter</option>
-      <option value="hwk290">HWK‑290</option>
+      <option value="hwk290">HWK-290</option>
       <option value="falcon">Millennium Falcon</option>
       <option value="attackshuttle">Attack Shuttle</option>
       <option value="sheathipede">Sheathipede-class Shuttle</option>
       <option value="tieln">TIE/ln Fighter</option>
       <option value="vcx100">VCX-100</option>
-      <option value="yt2400">YT‑2400</option>
-      <option value="z95">Z-95 Headhunter</option> <!-- NOWY -->
+      <option value="yt2400">YT-2400</option>
+      <option value="z95">Z-95 Headhunter</option>
     </select>
 
     <button onclick="addShipByType()">Dodaj statek</button>
 
-    <div class="points">
-      Total Squadron Points: <span id="totalSquadPoints">0</span>/20
-    </div>
+
     <div class="points">
       Pilot Points: <span id="totalPilotPoints">0</span>
     </div>
-    <div class="points">
-      Upgrade Points: <span id="totalUpgradePoints">0</span>
-    </div>
+    
   </div>
 
   <!-- Twoje pliki zasad -->
@@ -66,7 +62,7 @@
   <script src="tielnfighter-rules.js"></script>
   <script src="vcx100-rules.js"></script>
   <script src="yt2400-rules.js"></script>
-  <script src="z95-rules.js"></script> <!-- NOWY -->
+  <script src="z95-rules.js"></script>
 
   <script>
     function addShipByType() {
@@ -74,10 +70,10 @@
       const type = select.value;
       if (type === "xwing") {
         xwingRules.addShip();
-      } else if (type === "awing") {
-        awingRules.addShip();
       } else if (type === "ywing") {
         ywingRules.addShip();
+      } else if (type === "awing") {
+        awingRules.addShip();
       } else if (type === "uwing") {
         uwingRules.addShip();
       } else if (type === "arc170") {
@@ -112,6 +108,27 @@
         z95Rules.addShip();
       }
       select.selectedIndex = 0;
+
+      // dodaj przyciski Usuń do nowych sekcji
+      addRemoveButtons();
+      updateGlobalTotalPoints();
+    }
+
+    function addRemoveButtons() {
+      document.querySelectorAll('.ship-section').forEach(section => {
+        if (!section.classList.contains('remove-added')) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.innerText = 'Usuń statek';
+          btn.className = 'remove-ship-btn';
+          btn.addEventListener('click', () => {
+            section.remove();
+            updateGlobalTotalPoints();
+          });
+          section.appendChild(btn);
+          section.classList.add('remove-added');
+        }
+      });
     }
 
     function updateGlobalTotalPoints() {
@@ -123,12 +140,12 @@
         if (section.classList.contains('xwing')) {
           totalPilot += xwingRules.getPilotPoints(section);
           totalUpgrade += xwingRules.getUpgradePoints(section);
-        } else if (section.classList.contains('awing')) {
-          totalPilot += awingRules.getPilotPoints(section);
-          totalUpgrade += awingRules.getUpgradePoints(section);
         } else if (section.classList.contains('ywing')) {
           totalPilot += ywingRules.getPilotPoints(section);
           totalUpgrade += ywingRules.getUpgradePoints(section);
+        } else if (section.classList.contains('awing')) {
+          totalPilot += awingRules.getPilotPoints(section);
+          totalUpgrade += awingRules.getUpgradePoints(section);
         } else if (section.classList.contains('uwing')) {
           totalPilot += uwingRules.getPilotPoints(section);
           totalUpgrade += uwingRules.getUpgradePoints(section);
@@ -160,7 +177,6 @@
           totalPilot += falconRules.getPilotPoints(section);
           totalUpgrade += falconRules.getUpgradePoints(section);
         } else if (section.classList.contains('shuttle')) {
-          const pilotName = section.querySelector('.pilot-select')?.value || "";
           if (sheathipedeRules.getPilotPoints(section) !== 0) {
             totalPilot += sheathipedeRules.getPilotPoints(section);
             totalUpgrade += sheathipedeRules.getUpgradePoints(section);
@@ -188,6 +204,10 @@
       document.getElementById("totalSquadPoints").innerText = `${totalPilot + totalUpgrade}/20`;
     }
 
+    window.addEventListener('DOMContentLoaded', () => {
+      addRemoveButtons();
+      updateGlobalTotalPoints();
+    });
     window.updateGlobalTotalPoints = updateGlobalTotalPoints;
   </script>
 </body>
