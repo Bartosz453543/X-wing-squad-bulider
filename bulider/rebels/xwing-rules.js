@@ -3,42 +3,42 @@
     // Dane dla statków X-Wing – instrukcje dla pilotów
     const ships = {
       "X-Wing": {
-        "Luke Skywalker":                             { cost: 5, upgradeLimit: 5, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Wedge Antilles Battle Over Endor":           { cost: 5, upgradeLimit: 11, force: 0, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Wedge Antilles":                             { cost: 5, upgradeLimit: 11, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Luke Skywalker Battle of Yavin":             { cost: 5, upgradeLimit: 5, talentSlots: 1, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Luke Skywalker Red Five":                    { cost: 5, upgradeLimit: 5, talentSlots: 1, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Wedge Antilles Battle of Yavin":             { cost: 5, upgradeLimit: 11, force: 0, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Yendor Battle of Endor":                     { cost: 4, upgradeLimit: 9, talentSlots: 1, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Wes Janson":                                 { cost: 5, upgradeLimit: 17, talentSlots: 1, missileSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Corran Horn":                                { cost: 4, upgradeLimit: 9, talentSlots: 1, missileSlots: 1, astromechSlots: 1, configurationSlots: 1 },
-        "Thane Kyrell":                               { cost: 4, upgradeLimit: 6, talentSlots: 1, missileSlots: 1, astromechSlots: 1, configurationSlots: 1 },
-        "Garven Dreis Battle of Yavin":               { cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1 },
-        "Garven Dreis":                               { cost: 5, upgradeLimit: 17, talentSlots: 1, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Jek Porkins Battle of Yavin":                { cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
-        "Jek Porkins":                                { cost: 4, upgradeLimit: 7, talentSlots: 1, torpedoSlots: 1, astromechSlots: 1, configurationSlots: 1 },
-        "Jek Porkins Red Six":                        { cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
-        "Endy Idele Battle of Endor":                 { cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
-        "Kullbee Sperado":                            { cost: 4, upgradeLimit: 9, talentSlots: 1, missileSlots: 1, astromechSlots: 1, illegalUpgrades: 1, configurationSlots: 1 },
-        "Biggs Darklighter":                          { cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
-        "Biggs Darklighter Battle of Yavin":          { cost: 6, upgradeLimit: 5, force: 0, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
-        "Leevan Tenza":                               { cost: 4, upgradeLimit: 9, talentSlots: 1, missileSlots: 1, astromechSlots: 1, illegalUpgrades: 1, configurationSlots: 1 },
-        "Red Squadron Veteran":                       { cost: 4, upgradeLimit: 8, talentSlots: 1, astromechSlots: 1, configurationSlots: 1 },
-        "Blue Squadron Escort":                       { cost: 5, upgradeLimit: 18, astromechSlots: 1, torpedoSlots: 1, configurationSlots: 1, modificationSlots: 1 },
-        "Edrio Two Tubes":                            { cost: 5, upgradeLimit: 18, missileSlots: 1, illegalUpgrades: 1, configurationSlots: 1 },
-        "Cabern Angels Zealot":                       { cost: 5, upgradeLimit: 15, astromechSlots: 1, illegalUpgrades: 1, configurationSlots: 1, modificationSlots: 1 }
+        "Luke Skywalker":{ cost: 5, upgradeLimit: 5, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Wedge Antilles Battle Over Endor":{ cost: 5, upgradeLimit: 11, force: 0, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Wedge Antilles":{ cost: 5, upgradeLimit: 11, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Luke Skywalker Battle of Yavin":{ cost: 5, upgradeLimit: 5, talentSlots: 1, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Luke Skywalker Red Five":{ cost: 5, upgradeLimit: 5, talentSlots: 1, force: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Wedge Antilles Battle of Yavin":{ cost: 5, upgradeLimit: 11, force: 0, talentSlots: 2, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Yendor Battle of Endor":{ cost: 4, upgradeLimit: 9, talentSlots: 1, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Wes Janson":{ cost: 5, upgradeLimit: 17, talentSlots: 1, missileSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Corran Horn":{ cost: 4, upgradeLimit: 9, talentSlots: 1, missileSlots: 1, astromechSlots: 1, configurationSlots: 1 },
+        "Thane Kyrell":{ cost: 4, upgradeLimit: 6, talentSlots: 1, missileSlots: 1, astromechSlots: 1, configurationSlots: 1 },
+        "Garven Dreis Battle of Yavin":{ cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1 },
+        "Garven Dreis":{ cost: 5, upgradeLimit: 17, talentSlots: 1, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Jek Porkins Battle of Yavin":{ cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
+        "Jek Porkins":{ cost: 4, upgradeLimit: 7, talentSlots: 1, torpedoSlots: 1, astromechSlots: 1, configurationSlots: 1 },
+        "Jek Porkins Red Six":{ cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
+        "Endy Idele Battle of Endor":{ cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
+        "Kullbee Sperado":{ cost: 4, upgradeLimit: 9, talentSlots: 1, missileSlots: 1, astromechSlots: 1, illegalUpgrades: 1, configurationSlots: 1 },
+        "Biggs Darklighter":{ cost: 5, upgradeLimit: 8, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1 },
+        "Biggs Darklighter Battle of Yavin":{ cost: 6, upgradeLimit: 5, force: 0, torpedoSlots: 1, astromechSlots: 1, modificationSlots: 1, configurationSlots: 1 },
+        "Leevan Tenza":{ cost: 4, upgradeLimit: 9, talentSlots: 1, missileSlots: 1, astromechSlots: 1, illegalUpgrades: 1, configurationSlots: 1 },
+        "Red Squadron Veteran":{ cost: 4, upgradeLimit: 8, talentSlots: 1, astromechSlots: 1, configurationSlots: 1 },
+        "Blue Squadron Escort":{ cost: 5, upgradeLimit: 18, astromechSlots: 1, torpedoSlots: 1, configurationSlots: 1, modificationSlots: 1 },
+        "Edrio Two Tubes":{ cost: 5, upgradeLimit: 18, missileSlots: 1, illegalUpgrades: 1, configurationSlots: 1 },
+        "Cabern Angels Zealot":{ cost: 5, upgradeLimit: 15, astromechSlots: 1, illegalUpgrades: 1, configurationSlots: 1, modificationSlots: 1 }
       }
     };
   
     const upgrades = {
-      "Force Upgrade":         { "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 },
-      "Talent Upgrade":        { "Outmaneuver": 6, "Lone Wolf": 4, "It's a Trap": 3, "Attack Speed": 7, "Predator": 5, "Marksmanship": 6, "Selfless": 3 },
-      "Torpedo Upgrade":       { "Proton Torpedoes": 6, "Advanced Proton Torpedoes": 8, "Plasma Torpedoes": 7, "Ion Missiles": 5 },
-      "Astromech Upgrade":     { "R2-D2": 5, "R5-D4": 3, "R2 D3": 4, "R2-A3": 4, "R5-K6": 3, "R5-D8": 4, "R2-F2": 5, "Modified R4-P Unit": 6, "Stabilizing Astromech": 4 },
-      "Modification Upgrade":  { "Shield Upgrade": 6, "Stealth Device": 5, "Unstable Sublight Engines": 4, "Chaff Particles": 2 },
-      "Configuration Upgrade": { "S-Foils": 0 },
-      "Illegal Upgrade":       { "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 },
-      "Missile Upgrade":       { "Concussion Missiles": 5, "Cluster Missiles": 4 }
+      "Force Upgrade":{ "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 },
+      "Talent Upgrade":{ "Outmaneuver": 6, "Lone Wolf": 4, "It's a Trap": 3, "Attack Speed": 7, "Predator": 5, "Marksmanship": 6, "Selfless": 3 },
+      "Torpedo Upgrade":{ "Proton Torpedoes": 6, "Advanced Proton Torpedoes": 8, "Plasma Torpedoes": 7, "Ion Missiles": 5 },
+      "Astromech Upgrade":{ "R2-D2": 5, "R5-D4": 3, "R2 D3": 4, "R2-A3": 4, "R5-K6": 3, "R5-D8": 4, "R2-F2": 5, "Modified R4-P Unit": 6, "Stabilizing Astromech": 4 },
+      "Modification Upgrade":{ "Shield Upgrade": 6, "Stealth Device": 5, "Unstable Sublight Engines": 4, "Chaff Particles": 2 },
+      "Configuration Upgrade":{ "S-Foils": 0 },
+      "Illegal Upgrade":{ "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 },
+      "Missile Upgrade":{ "Concussion Missiles": 5, "Cluster Missiles": 4 }
     };
   
     function addShip() {
