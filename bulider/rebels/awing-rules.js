@@ -1,263 +1,256 @@
-(function() {
-  // Dane dla statków A‑wing – instrukcje dla pilotów
+(function(){
   const ships = {
     "A-wing": {
-      "Hera Syndulla": { cost: 3, upgradeLimit: 8, force: 0, talentSlots: 2 },
-      "Ahsoka Tano": { cost: 4, upgradeLimit: 10, force: 2, forceSlots: 2, modificationSlots: 2, missileSlots: 1, configurationSlots: 1 },
-      "Tycho Celchu": { cost: 3, upgradeLimit: 8, force: 0 },
-      "Jake Farrel": { cost: 2, upgradeLimit: 6, force: 0 },
-      "Shara Bey": { cost: 3, upgradeLimit: 8, force: 0 },
-      "Wedge Antilles": { cost: 6, upgradeLimit: 20, force: 0, talentSlots: 2 },
-      "Arvel Crynyd": { cost: 3, upgradeLimit: 8, force: 0 },
-      "Green Squadron Pilot": { cost: 2, upgradeLimit: 6, force: 0 },
-      "Keo Venzee": { cost: 3, upgradeLimit: 8, force: 0 },
-      "Derek Klivian": { cost: 3, upgradeLimit: 6, force: 0 },
-      // Nowi piloci:
-      "Sabine Wren": { cost: 3, upgradeLimit: 8, force: 0 },
-      "Phoenix Squadron Pilot": { cost: 2, upgradeLimit: 6, force: 0 }
+      "Hera Syndulla": {cost:3,upgradeLimit:8,force:0,talentSlots:2},
+      "Ahsoka Tano": {cost:4,upgradeLimit:10,force:2,forceSlots:2,modificationSlots:2,missileSlots:1,configurationSlots:1},
+      "Tycho Celchu": {cost:3,upgradeLimit:8,force:0},
+      "Tycho Celchu Battle Over Endor": {cost:3,upgradeLimit:8,force:0},
+      "Jake Farrel": {cost:2,upgradeLimit:6,force:0},
+      "Jake Farrel Sage Instructor": {cost:2,upgradeLimit:6,force:0},
+      "Shara Bey": {cost:3,upgradeLimit:8,force:0},
+      "Shara Bey Green Four": {cost:3,upgradeLimit:8,force:0},
+      "Arvel Crynyd": {cost:3,upgradeLimit:8,force:0},
+      "Arvel Crynyd Green Leader": {cost:3,upgradeLimit:8,force:0},
+      "Arvel Crynyd Battle Over Endor": {cost:3,upgradeLimit:8,force:0},
+      "Wedge Antilles": {cost:6,upgradeLimit:20,force:0,talentSlots:2},
+      "Green Squadron Pilot": {cost:2,upgradeLimit:6,force:0},
+      "Keo Venzee": {cost:3,upgradeLimit:8,force:0},
+      "Derek Klivian": {cost:3,upgradeLimit:6,force:0},
+      "Sabine Wren": {cost:3,upgradeLimit:8,force:0},
+      "Phoenix Squadron Pilot": {cost:2,upgradeLimit:6,force:0},
+      "Germmer Sojan Battle Over Endor": {cost:3,upgradeLimit:8,force:0}
     }
   };
 
-  // Dostępne ulepszenia – instrukcje dla ulepszeń
   const aWingExtras = {
-    "Talent Upgrade": { "Evasive Maneuvers": 5, "Quick Reflexes": 4 },
-    "Missile Upgrade": { "Concussion Missiles": 5, "Cluster Missiles": 6 },
-    "Sensors": { "Advanced Sensors": 6, "Targeting Computer": 4 },
-    "Modification Upgrade": { "Shield Upgrade": 5, "Stealth Device": 4 },
-    "Configuration": { "Chassis Mod": 3, "Refit": 2 },
-    // Kategoria Cannon Upgrade - ma być wyświetlana tylko dla Tycho Celchu
-    "Cannon Upgrade": { "Rapid Fire": 3, "Heavy Cannon": 5 }
+    "Talent Upgrade":{"Evasive Maneuvers":5,"Quick Reflexes":4,"It's a Trap":3,"Juke":4,"Outmaneuver":6,"Elusive":3,"Hopeful":0,"Predator":5,"Heroic Sacrifice":6},
+    "Missile Upgrade":{"Concussion Missiles":5,"Cluster Missiles":6,"Proton Rockets":6,"Ion Missiles":5},
+    "Sensors":{"Advanced Sensors":6,"Targeting Computer":4},
+    "Modification Upgrade":{"Shield Upgrade":5,"Stealth Device":4,"Chaff Particles":2,"Afterburners":4},
+    "Configuration":{"Chassis Mod":3,"Refit":2},
+    "Cannon Upgrade":{"Rapid Fire":3,"Heavy Cannon":5}
   };
 
-  // Ulepszenia Force Upgrade (tylko dla Ahsoki)
-  const forceExtras = { "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 };
+  const forceExtras = {"Sense":5,"Supernatural Reflexes":10,"Brilliant Evasion":6};
 
-  // Funkcja dodająca statek A‑wing
-  function addShip() {
-    const squadronDiv = document.getElementById("squadron");
+  function addShip(){
+    const squadron = document.getElementById("squadron");
     const shipDiv = document.createElement("div");
     shipDiv.className = "ship-section awing";
 
+    // Select statku
     const shipSelect = document.createElement("select");
     shipSelect.className = "ship-select";
     shipSelect.innerHTML = `<option value="A-wing">A-wing</option>`;
     shipDiv.appendChild(shipSelect);
 
+    // Select pilota
     const pilotSelect = document.createElement("select");
     pilotSelect.className = "pilot-select";
     pilotSelect.innerHTML = `<option value=''>Select Pilot</option>`;
-    pilotSelect.onchange = function() {
-      updateUpgrades(shipDiv);
-    };
+    pilotSelect.onchange = () => updateUpgrades(shipDiv);
     shipDiv.appendChild(pilotSelect);
 
-    const upgradeDiv = document.createElement("div");
-    upgradeDiv.className = "upgrade-section";
-    shipDiv.appendChild(upgradeDiv);
+    // Sekcja na upgrade’y
+    const upgradeSection = document.createElement("div");
+    upgradeSection.className = "upgrade-section";
+    shipDiv.appendChild(upgradeSection);
 
+    // Wyświetlanie punktów
     const pointsDiv = document.createElement("div");
     pointsDiv.className = "upgrade-points";
     shipDiv.appendChild(pointsDiv);
 
-    squadronDiv.appendChild(shipDiv);
-    updatePilotOptions(shipDiv, "A-wing");
+    // Przycisk usuwania
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.innerText = "Usuń statek";
+    removeBtn.className = "remove-ship-button";
+    removeBtn.onclick = () => removeShip(removeBtn);
+    shipDiv.appendChild(removeBtn);
+
+    squadron.appendChild(shipDiv);
+
+    updatePilotOptions(shipDiv);
+
+    // Automatyczny wybór pierwszego pilota i aktualizacja
+    if (pilotSelect.options.length > 1) {
+      pilotSelect.selectedIndex = 1;
+      updateUpgrades(shipDiv);
+    }
+    if (typeof updateGlobalTotalPoints === "function") {
+      updateGlobalTotalPoints();
+    }
   }
 
-  // Aktualizacja listy pilotów
-  function updatePilotOptions(shipDiv, selectedShip) {
+  function removeShip(button){
+    const shipDiv = button.closest(".ship-section");
+    if (!shipDiv) return;
+    shipDiv.remove();
+    if (typeof updateGlobalTotalPoints === "function") {
+      updateGlobalTotalPoints();
+    }
+  }
+
+  function updatePilotOptions(shipDiv){
     const pilotSelect = shipDiv.querySelector(".pilot-select");
     pilotSelect.innerHTML = `<option value=''>Select Pilot</option>`;
-    if (ships[selectedShip]) {
-      for (let pilot in ships[selectedShip]) {
-        pilotSelect.innerHTML += `<option value='${pilot}'>${pilot} (${ships[selectedShip][pilot].cost} pkt)</option>`;
-      }
+    for(const p in ships["A-wing"]){
+      const d = ships["A-wing"][p];
+      pilotSelect.innerHTML += `<option value='${p}'>${p} (${d.cost} pkt)</option>`;
     }
     updateUpgrades(shipDiv);
   }
 
-  // Aktualizacja sekcji ulepszeń
-  function updateUpgrades(shipDiv) {
-    const pilotSelect = shipDiv.querySelector(".pilot-select");
-    const upgradeSection = shipDiv.querySelector(".upgrade-section");
-    const pointsDiv = shipDiv.querySelector(".upgrade-points");
-    upgradeSection.innerHTML = "";
-    pointsDiv.innerHTML = "";
-    if (!pilotSelect.value) return;
+  function updateUpgrades(shipDiv){
+    const pilot = shipDiv.querySelector(".pilot-select").value;
+    const upSec  = shipDiv.querySelector(".upgrade-section");
+    const ptsDiv = shipDiv.querySelector(".upgrade-points");
+    upSec.innerHTML = "";
+    ptsDiv.innerHTML = "";
+    if(!pilot) return;
+    const data = ships["A-wing"][pilot];
 
-    // Konfiguracja dla Ahsoki Tano
-    if (pilotSelect.value === "Ahsoka Tano") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Force Upgrade", forceExtras, `No Force Upgrade (Slot ${i})`);
-      }
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Modification Upgrade", aWingExtras["Modification Upgrade"], `No Modification Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    // Specjalne presety pilota
+    if(pilot === "Ahsoka Tano"){
+      [...Array(2)].forEach((_,i)=>
+        createUpgradeSelect(upSec,"Force Upgrade",forceExtras,`No Force Upgrade (Slot ${i+1})`)
+      );
+      [...Array(2)].forEach((_,i)=>
+        createUpgradeSelect(upSec,"Modification Upgrade",aWingExtras["Modification Upgrade"],`No Modification Upgrade (Slot ${i+1})`)
+      );
+      createUpgradeSelect(upSec,"Missile Upgrade",aWingExtras["Missile Upgrade"],"No Missile Upgrade");
+      createUpgradeSelect(upSec,"Configuration",aWingExtras["Configuration"],"No Configuration");
     }
-    // Konfiguracja dla Hery Syndulli (2 Talenty)
-    else if (pilotSelect.value === "Hera Syndulla") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
-      }
-      // Pomijamy Cannon Upgrade, który ma być tylko dla Tycho Celchu
-      for (let category in aWingExtras) {
-        if (category !== "Talent Upgrade" && category !== "Cannon Upgrade") {
-          createUpgradeSelect(upgradeSection, category, aWingExtras[category], `No ${category}`);
-        }
-      }
+    else if(pilot === "Hera Syndulla"){
+      [...Array(2)].forEach((_,i)=>
+        createUpgradeSelect(upSec,"Talent Upgrade",aWingExtras["Talent Upgrade"],`No Talent Upgrade (Slot ${i+1})`)
+      );
+      for(const cat in aWingExtras)
+        if(cat!=="Talent Upgrade"&&cat!=="Cannon Upgrade")
+          createUpgradeSelect(upSec,cat,aWingExtras[cat],`No ${cat}`);
     }
-    // Konfiguracja specyficzna dla Tycho Celchu:
-    // 2 Talenty, Missile Upgrade, Cannon Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Tycho Celchu") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Cannon Upgrade", aWingExtras["Cannon Upgrade"], "No Cannon Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Tycho Celchu Battle Over Endor"){
+      applyPreset(upSec, ptsDiv, data, [
+        ["Talent Upgrade","It's a Trap"],
+        ["Talent Upgrade","Juke"],
+        ["Missile Upgrade","Proton Rockets"],
+        ["Modification Upgrade","Chaff Particles"]
+      ]);
+      return;
     }
-    // Konfiguracja specyficzna dla "Jake Farrel":
-    // 2 Talenty, Missile Upgrade, Modification Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Jake Farrel") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Modification Upgrade", aWingExtras["Modification Upgrade"], "No Modification Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Tycho Celchu"){
+      [...Array(2)].forEach((_,i)=>
+        createUpgradeSelect(upSec,"Talent Upgrade",aWingExtras["Talent Upgrade"],`No Talent Upgrade (Slot ${i+1})`)
+      );
+      createUpgradeSelect(upSec,"Missile Upgrade",aWingExtras["Missile Upgrade"],"No Missile Upgrade");
+      createUpgradeSelect(upSec,"Cannon Upgrade",aWingExtras["Cannon Upgrade"],"No Cannon Upgrade");
+      createUpgradeSelect(upSec,"Configuration",aWingExtras["Configuration"],"No Configuration");
     }
-    // Konfiguracja specyficzna dla "Shara Bey":
-    // 1 Talent, Missile Upgrade, Modification Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Shara Bey") {
-      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Modification Upgrade", aWingExtras["Modification Upgrade"], "No Modification Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Jake Farrel Sage Instructor"){
+      applyPreset(upSec, ptsDiv, data, [
+        ["Talent Upgrade","Elusive"],
+        ["Talent Upgrade","Outmaneuver"],
+        ["Missile Upgrade","Ion Missiles"]
+      ]);
+      return;
     }
-    // Konfiguracja specyficzna dla "Wedge Antilles":
-    // 2 Talenty, Modification Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Wedge Antilles") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Modification Upgrade", aWingExtras["Modification Upgrade"], "No Modification Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Shara Bey Green Four"){
+      applyPreset(upSec, ptsDiv, data, [
+        ["Talent Upgrade","Hopeful"],
+        ["Missile Upgrade","Concussion Missiles"]
+      ]);
+      return;
     }
-    // Konfiguracja specyficzna dla "Keo Venzee":
-    // 1 Talent, Missile Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Keo Venzee") {
-      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Arvel Crynyd Green Leader"){
+      applyPreset(upSec, ptsDiv, data, [
+        ["Talent Upgrade","Predator"],
+        ["Modification Upgrade","Afterburners"]
+      ]);
+      return;
     }
-    // Konfiguracja specyficzna dla "Green Squadron Pilot":
-    // 2 Talenty, Missile Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Green Squadron Pilot") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Arvel Crynyd Battle Over Endor"){
+      applyPreset(upSec, ptsDiv, data, [
+        ["Talent Upgrade","It's a Trap"],
+        ["Talent Upgrade","Heroic Sacrifice"],
+        ["Missile Upgrade","Proton Rockets"]
+      ]);
+      return;
     }
-    // Konfiguracja specyficzna dla "Arvel Crynyd":
-    // 2 Talenty oraz Configuration.
-    else if (pilotSelect.value === "Arvel Crynyd") {
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
+    else if(pilot === "Germmer Sojan Battle Over Endor"){
+      applyPreset(upSec, ptsDiv, data, [
+        ["Talent Upgrade","It's a Trap"],
+        ["Cannon Upgrade","Heavy Cannon"],
+        ["Modification Upgrade","Chaff Particles"],
+        ["Modification Upgrade","Shield Upgrade"]
+      ]);
+      return;
     }
-    // Konfiguracja specyficzna dla "Derek Klivian":
-    // 1 Talent, Missile Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Derek Klivian") {
-      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
-      createUpgradeSelect(upgradeSection, "Missile Upgrade", aWingExtras["Missile Upgrade"], "No Missile Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
-    }
-    // Konfiguracja specyficzna dla "Sabine Wren":
-    // 1 Talent, 2 Modification Upgrade oraz Configuration.
-    else if (pilotSelect.value === "Sabine Wren") {
-      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
-      for (let i = 1; i <= 2; i++) {
-        createUpgradeSelect(upgradeSection, "Modification Upgrade", aWingExtras["Modification Upgrade"], `No Modification Upgrade (Slot ${i})`);
-      }
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
-    }
-    // Konfiguracja specyficzna dla "Phoenix Squadron Pilot":
-    // 1 Talent oraz Configuration.
-    else if (pilotSelect.value === "Phoenix Squadron Pilot") {
-      createUpgradeSelect(upgradeSection, "Talent Upgrade", aWingExtras["Talent Upgrade"], "No Talent Upgrade");
-      createUpgradeSelect(upgradeSection, "Configuration", aWingExtras["Configuration"], "No Configuration");
-    }
-    // Standardowa konfiguracja dla pozostałych pilotów - pomijamy Cannon Upgrade
     else {
-      for (let category in aWingExtras) {
-        if (category !== "Cannon Upgrade") {
-          createUpgradeSelect(upgradeSection, category, aWingExtras[category], `No ${category}`);
-        }
-      }
+      for(const cat in aWingExtras)
+        if(cat!=="Cannon Upgrade")
+          createUpgradeSelect(upSec,cat,aWingExtras[cat],`No ${cat}`);
     }
 
     updateUpgradePointsDisplay(shipDiv);
   }
 
-  // Funkcja tworząca pojedynczy select dla danej kategorii ulepszenia
-  function createUpgradeSelect(container, category, optionsObj, defaultText) {
-    const select = document.createElement("select");
-    select.className = "upgrade-select";
-    select.dataset.category = category;
-    select.innerHTML = `<option value=''>${defaultText}</option>`;
-    for (let upgrade in optionsObj) {
-      select.innerHTML += `<option value='${upgrade}'>${upgrade} (${optionsObj[upgrade]} pkt)</option>`;
-    }
-    select.onchange = function() {
-      updateUpgradePointsDisplay(container.parentNode);
-    };
-    container.appendChild(select);
-  }
-
-  // Oblicza i wyświetla punkty ulepszeń
-  function updateUpgradePointsDisplay(shipDiv) {
-    const pointsDiv = shipDiv.querySelector(".upgrade-points");
-    const pilotSelect = shipDiv.querySelector(".pilot-select");
-    const upgradePoints = calculateUpgradePoints(shipDiv);
-    const upgradeLimit = ships["A-wing"][pilotSelect.value]?.upgradeLimit || 0;
-    pointsDiv.innerHTML = `Użyte punkty: ${upgradePoints} / ${upgradeLimit}`;
-    if (typeof updateGlobalTotalPoints === 'function') {
-      updateGlobalTotalPoints();
-    }
-  }
-
-  // Obliczanie łącznych punktów ulepszeń
-  function calculateUpgradePoints(shipDiv) {
+  function applyPreset(container, ptsDiv, data, presets){
     let total = 0;
-    const selects = shipDiv.querySelectorAll(".upgrade-select");
-    selects.forEach(select => {
-      let extras = select.dataset.category === "Force Upgrade" ? forceExtras : aWingExtras[select.dataset.category];
-      if (select.value && extras && extras[select.value]) {
-        total += extras[select.value];
-      }
+    presets.forEach(([cat,val])=>{
+      const sel = document.createElement("select");
+      sel.className="upgrade-select"; sel.disabled=true; sel.dataset.category=cat;
+      sel.innerHTML = `<option>${val}</option>`;
+      const map = (cat==="Force Upgrade" ? forceExtras : aWingExtras[cat]);
+      total += map[val] || 0;
+      container.appendChild(sel);
     });
-    return total;
+    ptsDiv.innerText = `Użyte punkty: ${total} / ${data.upgradeLimit}`;
   }
 
-  // Pobiera punkty bazowe pilota
-  function getPilotPoints(shipDiv) {
-    let points = 0;
-    const pilotSelect = shipDiv.querySelector(".pilot-select");
-    if (pilotSelect && pilotSelect.value) {
-      const pilotData = ships["A-wing"][pilotSelect.value];
-      points = pilotData.cost;
-    }
-    return points;
+  function createUpgradeSelect(container,category,opts,defaultText){
+    const sel = document.createElement("select");
+    sel.className="upgrade-select"; sel.dataset.category=category;
+    sel.innerHTML = `<option value=''>${defaultText}</option>` +
+      Object.entries(opts).map(([u,c])=>`<option value='${u}'>${u} (${c} pkt)</option>`).join("");
+    sel.onchange = () => updateUpgradePointsDisplay(container.closest('.awing'));
+    container.appendChild(sel);
   }
 
-  // Eksport modułu awingRules
+  function updateUpgradePointsDisplay(div){
+    const pts = div.querySelector(".upgrade-points");
+    const used = calculateUpgradePoints(div);
+    const lim = ships["A-wing"][div.querySelector(".pilot-select").value].upgradeLimit;
+    pts.innerText = `Użyte punkty: ${used} / ${lim}`;
+    if(typeof updateGlobalTotalPoints==="function") updateGlobalTotalPoints();
+  }
+
+  function calculateUpgradePoints(div){
+    let sum = 0;
+    div.querySelectorAll(".upgrade-select").forEach(sel=>{
+      const map = (sel.dataset.category==="Force Upgrade"?forceExtras:aWingExtras[sel.dataset.category]);
+      if(sel.value && map[sel.value]) sum += map[sel.value];
+    });
+    return sum;
+  }
+
+  function getPilotPoints(div){
+    const p = div.querySelector(".pilot-select").value;
+    return p ? ships["A-wing"][p].cost : 0;
+  }
+
   window.awingRules = {
-    addShip: addShip,
-    calculateUpgradePoints: calculateUpgradePoints,
-    getPilotPoints: getPilotPoints,
+    addShip,
+    calculateUpgradePoints,
+    getPilotPoints,
     getUpgradePoints: calculateUpgradePoints
+  };
+
+  // funkcja globalna do sumy
+  window.updateGlobalTotalPoints = function(){
+    const total = Array.from(document.querySelectorAll(".ship-section"))
+      .reduce((sum, sec) => sum + getPilotPoints(sec) + calculateUpgradePoints(sec), 0);
+    const globalDiv = document.getElementById("global-points");
+    if (globalDiv) globalDiv.innerText = `Suma punktów: ${total}`;
   };
 })();
