@@ -1,23 +1,26 @@
 (function () {
-    const ships={
-        "Millennium Falcon":{
-            "Han Solo":{cost:75,talentSlots:1,missileSlots:1,crewSlots:2,gunnerSlots:1,modificationSlots:2,titleSlots:1,illicitSlots:1,upgradeLimit:16},
-            "Lando Calrissian":{cost:75,talentSlots:1,missileSlots:1,crewSlots:2,gunnerSlots:1,modificationSlots:2,titleSlots:1,illicitSlots:1,upgradeLimit:16},
-            "Leia Organa":{cost:75,forceSlots:1,missileSlots:1,crewSlots:2,gunnerSlots:1,modificationSlots:2,titleSlots:1,illicitSlots:1,upgradeLimit:16},
-            "Chewbacca":{cost:75,talentSlots:1,missileSlots:1,crewSlots:2,gunnerSlots:1,modificationSlots:2,titleSlots:1,illicitSlots:1,upgradeLimit:16},
-            "Outer Rim Smuggler":{cost:45,missileSlots:1,crewSlots:1,gunnerSlots:1,modificationSlots:1,upgradeLimit:10}
+    const ships = {
+        "Millennium Falcon": {
+            "Han Solo": { cost: 75, talentSlots: 1, missileSlots: 1, crewSlots: 2, gunnerSlots: 1, modificationSlots: 2, titleSlots: 1, illicitSlots: 1, upgradeLimit: 16 },
+            "Lando Calrissian": { cost: 75, talentSlots: 1, missileSlots: 1, crewSlots: 2, gunnerSlots: 1, modificationSlots: 2, titleSlots: 1, illicitSlots: 1, upgradeLimit: 16 },
+            "Leia Organa": { cost: 75, forceSlots: 1, missileSlots: 1, crewSlots: 2, gunnerSlots: 1, modificationSlots: 2, titleSlots: 1, illicitSlots: 1, upgradeLimit: 16 },
+            "Chewbacca": { cost: 75, talentSlots: 1, missileSlots: 1, crewSlots: 2, gunnerSlots: 1, modificationSlots: 2, titleSlots: 1, illicitSlots: 1, upgradeLimit: 16 },
+            "Outer Rim Smuggler": { cost: 45, missileSlots: 1, crewSlots: 1, gunnerSlots: 1, modificationSlots: 1, upgradeLimit: 10 },
+            "Han Solo Battle of Yavin": { cost: 75, upgradeLimit: 16 },
+            "Lando Calrissian Battle Over Endor": { cost: 75, upgradeLimit: 16 }
         }
     };
 
-    const mfExtras={
-        "Talent Upgrade":{"Veteran Instincts":3,"Outmaneuver":4},
-        "Missile Upgrade":{"Concussion Missiles":3,"Seismic Charges":4},
-        "Crew Upgrade":{"Chewbacca":5,"L3-37":3},
-        "Gunner Upgrade":{"Rebel Gunner":3},
-        "Modification Upgrade":{"Shield Upgrade":4,"Engine Upgrade":3},
-        "Title Upgrade":{"Millennium Falcon":0},
-        "Illicit Upgrade":{"Hondo Ohnaka":4,"Hotshot Copilot":3},
-        "Force Upgrade":{"Sense":4,"Supernatural Reflexes":6}
+    const mfExtras = {
+        "Talent Upgrade": { "Veteran Instincts": 3, "Outmaneuver": 4, "Ace In the Hole": 1, "It's a Trap": 2 },
+        "Missile Upgrade": { "Concussion Missiles": 3, "Seismic Charges": 4 },
+        "Crew Upgrade": { "Chewbacca": 5, "L3-37": 3, "Nien Nunb": 2 },
+        "Gunner Upgrade": { "Rebel Gunner": 3, "Airen Cracken": 2 },
+        "Modification Upgrade": { "Shield Upgrade": 4, "Engine Upgrade": 3 },
+        "Title Upgrade": { "Millennium Falcon": 0 },
+        "Illicit Upgrade": { "Hondo Ohnaka": 4, "Hotshot Copilot": 3, "Rigged Cargo Chute": 1 },
+        "Force Upgrade": { "Sense": 4, "Supernatural Reflexes": 6 },
+        "Configuration Upgrade": { "L3-37 S": 3 }
     };
 
     function addShip() {
@@ -61,18 +64,64 @@
         if (!pilot) return;
 
         const data = ships["Millennium Falcon"][pilot];
+
+        if (pilot === "Han Solo Battle of Yavin") {
+            const presets = [
+                ["Crew Upgrade", "Chewbacca"],
+                ["Illicit Upgrade", "Rigged Cargo Chute"],
+                ["Title Upgrade", "Millennium Falcon"],
+                ["Configuration Upgrade", "L3-37 S"]
+            ];
+            let total = 0;
+            presets.forEach(([cat, val]) => {
+                const sel = document.createElement("select");
+                sel.className = "upgrade-select";
+                sel.disabled = true;
+                sel.dataset.category = cat;
+                sel.innerHTML = `<option>${val}</option>`;
+                total += mfExtras[cat][val] || 0;
+                upgradeSection.appendChild(sel);
+            });
+            pointsDiv.innerText = `Użyte punkty: ${total} / ${data.upgradeLimit}`;
+            if (window.updateGlobalTotalPoints) window.updateGlobalTotalPoints();
+            return;
+        }
+
+        if (pilot === "Lando Calrissian Battle Over Endor") {
+            const presets = [
+                ["Talent Upgrade", "Ace In the Hole"],
+                ["Talent Upgrade", "It's a Trap"],
+                ["Crew Upgrade", "Nien Nunb"],
+                ["Gunner Upgrade", "Airen Cracken"],
+                ["Title Upgrade", "Millennium Falcon"]
+            ];
+            let total = 0;
+            presets.forEach(([cat, val]) => {
+                const sel = document.createElement("select");
+                sel.className = "upgrade-select";
+                sel.disabled = true;
+                sel.dataset.category = cat;
+                sel.innerHTML = `<option>${val}</option>`;
+                total += mfExtras[cat][val] || 0;
+                upgradeSection.appendChild(sel);
+            });
+            pointsDiv.innerText = `Użyte punkty: ${total} / ${data.upgradeLimit}`;
+            if (window.updateGlobalTotalPoints) window.updateGlobalTotalPoints();
+            return;
+        }
+
         [
-            ["Talent Upgrade",       data.talentSlots],
-            ["Force Upgrade",        data.forceSlots],
-            ["Missile Upgrade",      data.missileSlots],
-            ["Crew Upgrade",         data.crewSlots],
-            ["Gunner Upgrade",       data.gunnerSlots],
+            ["Talent Upgrade", data.talentSlots],
+            ["Force Upgrade", data.forceSlots],
+            ["Missile Upgrade", data.missileSlots],
+            ["Crew Upgrade", data.crewSlots],
+            ["Gunner Upgrade", data.gunnerSlots],
             ["Modification Upgrade", data.modificationSlots],
-            ["Illicit Upgrade",      data.illicitSlots],
-            ["Configuration Upgrade",data.configurationSlots],
-            ["Title Upgrade",        data.titleSlots]
+            ["Illicit Upgrade", data.illicitSlots],
+            ["Configuration Upgrade", data.configurationSlots],
+            ["Title Upgrade", data.titleSlots]
         ].forEach(([cat, count]) => {
-            for (let i = 1; i <= count; i++) {
+            for (let i = 1; i <= (count || 0); i++) {
                 createUpgradeSelect(upgradeSection, cat, mfExtras[cat], `No ${cat} (Slot ${i})`);
             }
         });
