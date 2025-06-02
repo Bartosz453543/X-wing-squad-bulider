@@ -10,15 +10,40 @@
     };
 
     const arc170Extras = {
-        "Talent Upgrade": { "Predator": 3, "Expert Handling": 2, "Swarm Tactics": 2, "R2-D2": 3 },
-        "Crew Upgrade": { "C-3PO": 4, "R2-D2": 3, "R5-P8": 2 },
-        "Torpedo Upgrade": { "Proton Torpedoes": 4, "Concussion Missiles": 3 },
-        "Missile Upgrade": { "Homing Missiles": 3 },
-        "Gunner Upgrade": { "Wedge Antilles": 5, "Luke Skywalker": 4 },
-        "Astromech Upgrade": { "R2-D2": 3, "R5-P8": 2 },
-        "Modification Upgrade": { "Hull Upgrade": 5, "Shield Upgrade": 4 },
-        "Configuration Upgrade": { "ARC-170 Configuration": 0 },
-        "Cannon Upgrade": { "Laser Cannon": 4, "Ion Cannon": 3 } // Zmieniona kategoria: Cannon Upgrade
+        "Talent Upgrade": 
+        { "Composure": 1, "Deadeye Shot" : 1, "Hopeful": 1, "Marg Sable Closure" : 1,"Expert Handling": 2,       
+           "Marksmanship": 2, "Debris Gambit" : 3,"Lone Wolf" : 3, "Predator": 3, "Elusive": 4,
+          "Enduring" : 4, "Selfess" : 4, "Squad Leader" : 4, "Trick a shot": 4, "Crack Shot" : 5, "Intimidation" : 7,
+          "Juke" : 7, "Snap shot" : 7, "Swarm Tactics" : 7, "Outmaneuver" : 9
+        },
+        "Torpedo Upgrade": 
+        { 
+            "Homing Torpedoes": 4,"Ion Torpedoes":5, "Plasma Torpedoes" : 7, "Adv Proton Torpedoes" : 9, "Proton Torpedoes" : 14
+        },
+        "Missile Upgrade": 
+        { 
+            "Ion Missiles":3, "XX-23 S-Thread Tracers":4, "Homing Missiles":5, "Cluster Missiles" : 6, "Proton Rocket" : 6, "Concussion Missiles":7,
+            "Mag-Pulse Warheads":7
+        },
+        "Gunner Upgrade": 
+        { 
+            "Sabine Wren": 2, "Skilled Bombardier": 2, "Agile Gunner": 4, "Hotshot Gunner": 5, 
+            "Veteran Tail Gunner": 6, "Suppressive Gunner": 7,"Ezra Bridger" : 9, "Han Solo" : 10, "Bistan": 12,
+            "Luke Skywalker" : 12
+        },
+        "Astromech Upgrade": 
+        { 
+            "Chopper": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R5-D8": 9, "R2 D2" : 10
+        },
+        "Modification Upgrade":
+        { 
+            "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Ablative Plating":2, 
+            "Electronic Baffle": 2, "Tactical Scrambler": 2, "Stealth Device": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
+        },
+        "Cannon Upgrade": 
+        { 
+            "Jamming Beam": 1,  "Heavy Laser Cannon": 5, "Ion Cannon": 6, "Tractor Beam": 6, "Autoblasters": 7
+        } 
     };
 
     function addShip() {

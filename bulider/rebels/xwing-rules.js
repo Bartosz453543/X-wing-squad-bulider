@@ -32,13 +32,33 @@
   
     const upgrades = {
       "Force Upgrade":{ "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 },
-      "Talent Upgrade":{ "Outmaneuver": 6, "Lone Wolf": 4, "It's a Trap": 3, "Attack Speed": 7, "Predator": 5, "Marksmanship": 6, "Selfless": 3 },
-      "Torpedo Upgrade":{ "Proton Torpedoes": 6, "Advanced Proton Torpedoes": 8, "Plasma Torpedoes": 7, "Ion Missiles": 5 },
-      "Astromech Upgrade":{ "R2-D2": 5, "R5-D4": 3, "R2 D3": 4, "R2-A3": 4, "R5-K6": 3, "R5-D8": 4, "R2-F2": 5, "Modified R4-P Unit": 6, "Stabilizing Astromech": 4 },
-      "Modification Upgrade":{ "Shield Upgrade": 6, "Stealth Device": 5, "Unstable Sublight Engines": 4, "Chaff Particles": 2 },
+      "Talent Upgrade":
+      { 
+        "Blackwards Tailslide" : 1,"Composure": 1, "Deadeye Shot" : 1, "Hopeful": 1, "Marg Sable Closure" : 1,      
+        "Marksmanship": 2, "Debris Gambit" : 3,"Lone Wolf" : 3, "Predator": 3,"Daredevil" : 4, "Elusive": 4,
+        "Enduring" : 4, "Selfess" : 4, "Squad Leader" : 4, "Trick a shot": 4, "Crack Shot" : 5, "Intimidation" : 7,
+        "Juke" : 7, "Snap shot" : 7, "Swarm Tactics" : 7, "Outmaneuver" : 9
+       },
+      "Torpedo Upgrade":
+      { 
+        "Homing Torpedoes": 4,"Ion Torpedoes":5, "Plasma Torpedoes" : 7, "Adv Proton Torpedoes" : 9, "Proton Torpedoes" : 14
+      },
+      "Astromech Upgrade":
+      { 
+         "Chopper": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R5-D8": 9, "R2 D2" : 10
+      },
+      "Modification Upgrade":
+      {
+         "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Ablative Plating":2, 
+         "Electronic Baffle": 2, "Tactical Scrambler": 2, "Stealth Device": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
+      },
       "Configuration Upgrade":{ "S-Foils": 0 },
       "Illegal Upgrade":{ "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 },
-      "Missile Upgrade":{ "Concussion Missiles": 5, "Cluster Missiles": 4 }
+      "Missile Upgrade":
+      { 
+        "Ion Missiles":3, "XX-23 S-Thread Tracers":4, "Homing Missiles":5, "Cluster Missiles" : 6, "Proton Rocket" : 6, "Concussion Missiles":7,
+        "Mag-Pulse Warheads":7
+      }
     };
   
     function addShip() {
