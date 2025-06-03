@@ -31,7 +31,12 @@
     };
   
     const upgrades = {
-      "Force Upgrade":{ "Sense": 5, "Supernatural Reflexes": 10, "Brilliant Evasion": 6 },
+      "Force Upgrade":
+      { 
+        "Compassion": 1, "Predictive Shot": 1, "Brilliant Evasion": 2, "Instinctive Aim": 2, "Patience": 2,
+        "Shattering Shot": 3,"Extreme Maneuvers": 5, "Heightened Perception": 5,
+        "Foresight" : 6, "Sense" : 10, "Precognitive Reflex" : 15, "Supernatural Reflex" : 24   
+      },
       "Talent Upgrade":
       { 
         "Blackwards Tailslide" : 1,"Composure": 1, "Deadeye Shot" : 1, "Hopeful": 1, "Marg Sable Closure" : 1,      
@@ -53,7 +58,11 @@
          "Electronic Baffle": 2, "Tactical Scrambler": 2, "Stealth Device": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
       },
       "Configuration Upgrade":{ "S-Foils": 0 },
-      "Illegal Upgrade":{ "Illegal Upgrade 1": 10, "Illegal Upgrade 2": 12 },
+      "Illegal Upgrade":
+      { 
+         "Deadman's Switch": 2, "Contraband Cybernetics": 3, "Overtuned Modulators": 3, "Feedback Array": 4, "Feedback Array" : 4,
+         "False Transponder Codes" :5, "Cloakind Device" : 8,"Inertial Dampeners" : 8 
+      },
       "Missile Upgrade":
       { 
         "Ion Missiles":3, "XX-23 S-Thread Tracers":4, "Homing Missiles":5, "Cluster Missiles" : 6, "Proton Rocket" : 6, "Concussion Missiles":7,

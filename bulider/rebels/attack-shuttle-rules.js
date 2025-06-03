@@ -1,21 +1,45 @@
 (function () {
     const ships = {
         "Attack Shuttle": {
-            "Hera Syndulla":     {cost:42, talentSlots:1, turretSlots:1, crewSlots:1, modificationSlots:1, titleSlots:1, upgradeLimit:10},
-            "Ezra Bridger":      {cost:39, forceSlots:1, turretSlots:1, crewSlots:1, modificationSlots:1, titleSlots:1, upgradeLimit:10},
-            "Sabine Wren":       {cost:37, talentSlots:1, turretSlots:1, crewSlots:1, modificationSlots:1, titleSlots:1, upgradeLimit:10},
-            "Zeb Orrelios":      {cost:36, talentSlots:1, turretSlots:1, crewSlots:1, modificationSlots:1, titleSlots:1, upgradeLimit:10}
+            "Hera Syndulla": { cost: 42, talentSlots: 1, turretSlots: 1, crewSlots: 1, modificationSlots: 1, titleSlots: 1, upgradeLimit: 10 },
+            "Ezra Bridger": { cost: 39, forceSlots: 1, turretSlots: 1, crewSlots: 1, modificationSlots: 1, titleSlots: 1, upgradeLimit: 10 },
+            "Sabine Wren": { cost: 37, talentSlots: 1, turretSlots: 1, crewSlots: 1, modificationSlots: 1, titleSlots: 1, upgradeLimit: 10 },
+            "Zeb Orrelios": { cost: 36, talentSlots: 1, turretSlots: 1, crewSlots: 1, modificationSlots: 1, titleSlots: 1, upgradeLimit: 10 }
         }
     };
 
     const shuttleExtras = {
-        "Talent Upgrade": {"Veteran Instincts":3,"Outmaneuver":4},
-        "Force Upgrade": {"Sense":4,"Supernatural Reflexes":6},
-        "Crew Upgrade": {"Chewbacca":5,"L3-37":3},
-        "Gunner Upgrade": {"Rebel Gunner":3},
-        "Turret Upgrade": {"Dorsal Turret":4,"Ion Cannon Turret":5},
-        "Modification Upgrade": {"Shield Upgrade":4,"Engine Upgrade":3},
-        "Title Upgrade": {"Phantom":0}
+        "Talent Upgrade":
+        {
+            "Composure": 1, "Deadeye Shot": 1, "Hopeful": 1, "Marg Sable Closure": 1,
+            "Marksmanship": 2, "Debris Gambit": 3, "Lone Wolf": 3, "Predator": 3, "Elusive": 4,
+            "Enduring": 4, "Selfess": 4, "Squad Leader": 4, "Trick a shot": 4, "Crack Shot": 5, "Intimidation": 7,
+            "Juke": 7, "Snap shot": 7, "Swarm Tactics": 7, "Outmaneuver": 9
+        },
+        "Force Upgrade":
+        {
+            "Compassion": 1, "Predictive Shot": 1, "Brilliant Evasion": 2, "Instinctive Aim": 2, "Patience": 2,
+            "Shattering Shot": 3, "Heightened Perception": 5,
+            "Foresight": 6, "Sense": 10, "Precognitive Reflex": 15, "Supernatural Reflex": 24
+        },
+        "Crew Upgrade":
+        {
+            "Chopper": 1, "Zeb Orrelios": 1, "Lando Calrissian": 2, "Novice Technician": 2, "Tristan Wren": 2, "Chewbacca": 3,     // "Tactical Officer": 3, 
+            "Freelance Slicer": 3, "Bo-Katan Kryze": 4, "Hera Syndulla": 4, "GNK “Gonk” Droid": 5, "Magva Yarro": 5, "Nien Nunb": 5,                  
+            "Sabine Wren": 5, "Informant": 6, "Baze Malbus": 7,"C-3PO": 7, "Cassian Andor": 7, "Fenn Rau": 7,  "Jyn Erso": 7,
+            "Leia Organa": 7, "Seasoned Navigator": 7, "The Child": 7,  "Hondo Ohnaka": 8, "K-2SO": 8, "Perceptive Copilot": 8, 
+            "R2-D2": 8, "Ursa Wren": 6, "Saw Gerrera": 9, "Kanan Jarrus": 12, "Maul": 12
+        },
+        "Turret Upgrade":
+        {
+            "Dorsal Turret": 4, "Ion Cannon Turret": 5
+        },
+        "Modification Upgrade":
+        {
+            "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1,
+            "Electronic Baffle": 2, "Afterburners": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes": 12
+        },
+        "Title Upgrade": { "Phantom": 0 }
     };
 
     function addShuttle() {
@@ -60,30 +84,35 @@
 
         const data = ships["Attack Shuttle"][pilot] || {};
         [
-            ["Talent Upgrade",       data.talentSlots || 0],
-            ["Force Upgrade",        data.forceSlots || 0],
-            ["Crew Upgrade",         data.crewSlots || 0],
-            ["Gunner Upgrade",       data.gunnerSlots || 0],
-            ["Turret Upgrade",       data.turretSlots || 0],
+            ["Talent Upgrade", data.talentSlots || 0],
+            ["Force Upgrade", data.forceSlots || 0],
+            ["Crew Upgrade", data.crewSlots || 0],
+            ["Gunner Upgrade", data.gunnerSlots || 0],
+            ["Turret Upgrade", data.turretSlots || 0],
             ["Modification Upgrade", data.modificationSlots || 0],
-            ["Title Upgrade",        data.titleSlots || 0]
+            ["Title Upgrade", data.titleSlots || 0]
         ].forEach(([cat, count]) => {
             for (let i = 1; i <= count; i++) {
-                createUpgradeSelect(upgradeSection, cat, shuttleExtras[cat], `No ${cat} (Slot ${i})`);
+                createUpgradeSelect(upgradeSection, cat, shuttleExtras[cat], `No ${cat} (Slot ${i})`, pilot);
             }
         });
 
         updateShuttlePointsDisplay(shipDiv);
     }
 
-    function createUpgradeSelect(container, category, options, defaultText) {
+    function createUpgradeSelect(container, category, options, defaultText, selectedPilot = "") {
         const select = document.createElement("select");
         select.className = "upgrade-select";
         select.dataset.category = category;
         select.innerHTML = `<option value="">${defaultText}</option>`;
+
         for (let key in options) {
+            if (category === "Crew Upgrade" && key === "Maul" && selectedPilot !== "Ezra Bridger") {
+                continue; // ukryj Maula jeśli pilot to nie Ezra
+            }
             select.innerHTML += `<option value="${key}">${key} (${options[key]} pkt)</option>`;
         }
+
         select.onchange = () => updateShuttlePointsDisplay(container.parentNode);
         container.appendChild(select);
     }

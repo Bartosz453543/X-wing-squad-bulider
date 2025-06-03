@@ -23,9 +23,22 @@
   };
 
   const aWingExtras = {
-    "Talent Upgrade":{"Evasive Maneuvers":5,"Quick Reflexes":4,"It's a Trap":3,"Juke":4,"Outmaneuver":6,"Elusive":3,"Hopeful":0,"Predator":5,"Heroic Sacrifice":6},
-    "Missile Upgrade":{"Concussion Missiles":5,"Cluster Missiles":6,"Proton Rockets":6,"Ion Missiles":5},
-    "Sensors":{"Advanced Sensors":6,"Targeting Computer":4},
+    "Talent Upgrade":
+    {
+      "Composure": 1, "Deadeye Shot": 1, "Hopeful": 1, "Marg Sable Closure": 1, "Starbird Slash" : 1,
+      "Marksmanship": 2, "Debris Gambit": 3, "Lone Wolf": 3, "Predator": 3,"Daredevil" : 4, "Elusive": 4,
+      "Enduring": 4, "Selfess": 4, "Squad Leader": 4, "Trick a shot": 4, "Crack Shot": 5, "Intimidation": 7,
+      "Juke": 7, "Snap shot": 7, "Swarm Tactics": 7, "Outmaneuver": 9
+    },
+    "Missile Upgrade":
+    {
+      "Ion Missiles":3, "XX-23 S-Thread Tracers":4, "Homing Missiles":5, "Cluster Missiles" : 6, "Proton Rocket" : 6, "Concussion Missiles":7,
+      "Mag-Pulse Warheads":7
+    },
+    "Sensors":
+    {
+      "Fire-Control System": 2, "Passive Sensors": 5, "Collision Detector": 7, "Advanced Sensors": 8, "Trajectory Simulator": 10
+    },
     "Modification Upgrade":{"Shield Upgrade":5,"Stealth Device":4,"Chaff Particles":2,"Afterburners":4},
     "Configuration":{"Chassis Mod":3,"Refit":2},
     "Cannon Upgrade":{"Rapid Fire":3,"Heavy Cannon":5}

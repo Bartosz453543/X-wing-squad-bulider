@@ -11,10 +11,11 @@
 
     const arc170Extras = {
         "Talent Upgrade": 
-        { "Composure": 1, "Deadeye Shot" : 1, "Hopeful": 1, "Marg Sable Closure" : 1,"Expert Handling": 2,       
-           "Marksmanship": 2, "Debris Gambit" : 3,"Lone Wolf" : 3, "Predator": 3, "Elusive": 4,
-          "Enduring" : 4, "Selfess" : 4, "Squad Leader" : 4, "Trick a shot": 4, "Crack Shot" : 5, "Intimidation" : 7,
-          "Juke" : 7, "Snap shot" : 7, "Swarm Tactics" : 7, "Outmaneuver" : 9
+        { 
+            "Composure": 1, "Deadeye Shot" : 1, "Hopeful": 1, "Marg Sable Closure" : 1,"Expert Handling": 2,       
+            "Marksmanship": 2, "Debris Gambit" : 3,"Lone Wolf" : 3, "Predator": 3, "Elusive": 4,
+            "Enduring" : 4, "Selfess" : 4, "Squad Leader" : 4, "Trick a shot": 4, "Crack Shot" : 5, "Intimidation" : 7,
+            "Juke" : 7, "Snap shot" : 7, "Swarm Tactics" : 7, "Outmaneuver" : 9
         },
         "Torpedo Upgrade": 
         { 
