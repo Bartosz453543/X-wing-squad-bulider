@@ -386,6 +386,8 @@
     }
   
     // Eksport API
+    window.maulRule.apply(); 
+
     window.xwingRules = {
       addShip,
       getPilotPoints,

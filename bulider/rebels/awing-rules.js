@@ -39,9 +39,16 @@
     {
       "Fire-Control System": 2, "Passive Sensors": 5, "Collision Detector": 7, "Advanced Sensors": 8, "Trajectory Simulator": 10
     },
-    "Modification Upgrade":{"Shield Upgrade":5,"Stealth Device":4,"Chaff Particles":2,"Afterburners":4},
-    "Configuration":{"Chassis Mod":3,"Refit":2},
-    "Cannon Upgrade":{"Rapid Fire":3,"Heavy Cannon":5}
+    "Modification Upgrade":
+    {
+     "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1,
+      "Electronic Baffle": 2, "Afterburners": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes": 12
+    },
+    "Configuration":{"Vectored Cannons":0,},
+    "Cannon Upgrade":
+    {
+      "Jamming Beam": 1,  "Heavy Laser Cannon": 5, "Ion Cannon": 6, "Tractor Beam": 6, "Autoblasters": 7
+    }
   };
 
   const forceExtras = {"Sense":5,"Supernatural Reflexes":10,"Brilliant Evasion":6};

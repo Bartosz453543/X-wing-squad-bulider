@@ -1,27 +1,48 @@
 (function () {
     const ships = {
         "B-Wing": {
-            "Hera Syndulle (Rebelia)": {cost: 7, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 1, configurationSlots: 1, upgradeLimit: 12},
-            "Gina Moonsong (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
+            "Hera Syndulle": {cost: 7, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 1, configurationSlots: 1, upgradeLimit: 12},
+            "Gina Moonsong": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
             "Gina Moonsong Battle Over Endor": {cost: 6, talentSlots: 2, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 13},
-            "Braylen Stramma (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
+            "Braylen Stramma": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
             "Braylen Stramma Battle Over Endor": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 0, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
             "Adon Fox Battle Over Endor": {cost: 6, talentSlots: 2, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 0, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 12},
-            "Ten Numb (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
-            "Netrem Pollard (Rebelia)": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 0, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
-            "Blade Squadron Veteran (Rebelia)": {cost: 5, talentSlots: 0, sensorSlots: 2, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 0, modificationSlots: 0, titleSlots: 0, configurationSlots: 1, upgradeLimit: 10},
-            "Blue Squadron Pilot (Rebelia)": {cost: 5, talentSlots: 0, sensorSlots: 2, cannonSlots: 2, torpedoSlots: 0, missileSlots: 0, bombSlots: 1, modificationSlots: 0, titleSlots: 0, configurationSlots: 1, upgradeLimit: 10}
+            "Ten Numb": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
+            "Netrem Pollard": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 0, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
+            "Blade Squadron Veteran ": {cost: 5, talentSlots: 0, sensorSlots: 2, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 0, modificationSlots: 0, titleSlots: 0, configurationSlots: 1, upgradeLimit: 10},
+            "Blue Squadron Pilot": {cost: 5, talentSlots: 0, sensorSlots: 2, cannonSlots: 2, torpedoSlots: 0, missileSlots: 0, bombSlots: 1, modificationSlots: 0, titleSlots: 0, configurationSlots: 1, upgradeLimit: 10}
         }
     };
 
     const bwingExtras = {
-        "Talent": {"Intrepid": 4, "Fearless": 3, "It's a Trap": 3, "Juke": 2, "Parting Gift": 2},
-        "Sensor": {"Sensor Jammer": 5},
-        "Cannon": {"Autoblaster": 3, "Heavy Laser Cannon": 4},
-        "Torpedo": {"Proton Torpedoes": 5},
-        "Missile": {"Concussion Missiles": 3, "Homing Missiles": 4, "Proton Racket": 5},
-        "Bomb": {"Proton Bombs": 4, "Ion Bombs": 3},
-        "Modification": {"Hull Upgrade": 6, "Engine Upgrade": 4, "Delayed Fuses": 1},
+        "Talent": {
+            "Composure": 1, "Deadeye Shot": 1, "Hopeful": 1, "Marg Sable Closure": 1,
+            "Marksmanship": 2, "Debris Gambit": 3, "Lone Wolf": 3, "Predator": 3, "Elusive": 4,
+            "Enduring": 4, "Saturation Salvo": 4, "Selfess": 4, "Squad Leader": 4, "Trick a shot": 4, "Crack Shot": 5, "Intimidation": 7,
+            "Juke": 7, "Snap shot": 7, "Swarm Tactics": 7, "Outmaneuver": 9
+        },
+        "Sensor": {
+            "Fire-Control System": 2, "Passive Sensors": 5, "Collision Detector": 7, "Advanced Sensors": 8, "Trajectory Simulator": 10
+        },
+        "Cannon": {
+            "Jamming Beam": 1, "Heavy Laser Cannon": 5, "Proton Cannons": 5, "Ion Cannon": 6,
+            "Synced Laser Cannons": 6, "Tractor Beam": 6, "Autoblasters": 7
+        },
+        "Torpedo": {
+            "Homing Torpedoes": 4, "Ion Torpedoes": 5, "Plasma Torpedoes": 7, "Adv Proton Torpedoes": 9, "Proton Torpedoes": 14
+        },
+        "Missile": {
+            "Ion Missiles": 3, "XX-23 S-Thread Tracers": 4, "Homing Missiles": 5, "Cluster Missiles": 6, "Proton Rocket": 6, "Concussion Missiles": 7,
+            "Mag-Pulse Warheads": 7, "Electro-Chaff Missles": 11
+        },
+        "Bomb": {
+            "Seismic Charges": 3, "Ion Bombs": 4, "Blazer Bomb": 5, "Concussion Bombs": 5, "Conner Net": 4, "Proton Bombs": 5,
+            "Thermal Detonators": 3, "Cluster Mines": 4, "Electro-Proton Bomb": 8, "Proximity Mines": 3
+        },
+        "Modification": 
+        { 
+            "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1,  "Electronic Baffle": 2,
+            "Afterburners": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12},
         "Title": {"B6 Blade Wing Prototype": 2},
         "Configuration": {"Stabilized S-Foils": 2}
     };
@@ -93,7 +114,7 @@
             "Adon Fox Battle Over Endor": [
                 ["Talent", "It's a Trap"],
                 ["Talent", "Parting Gift"],
-                ["Missile", "Proton Racket"],
+                ["Missile", "Proton Rocket"],
                 ["Bomb", "Proton Bombs"]
             ]
         };
@@ -113,6 +134,12 @@
             return;
         }
 
+        // Przygotowujemy tablice na selecty Missile, Bomb, Modification i Cannon
+        const missileSelects = [];
+        const bombSelects = [];
+        const modificationSelects = [];
+        const cannonSelects = [];
+
         [
             ["Talent", data.talentSlots],
             ["Sensor", data.sensorSlots],
@@ -125,8 +152,78 @@
             ["Configuration", data.configurationSlots]
         ].forEach(([cat, count]) => {
             for (let i = 1; i <= (count || 0); i++) {
-                createUpgradeSelect(upgradeSection, cat, bwingExtras[cat], `No ${cat} (Slot ${i})`);
+                const select = createUpgradeSelect(upgradeSection, cat, bwingExtras[cat], `No ${cat} (Slot ${i})`);
+
+                if (cat === "Cannon") {
+                    cannonSelects.push(select);
+                }
+                if (cat === "Missile") {
+                    missileSelects.push(select);
+                }
+                if (cat === "Bomb") {
+                    bombSelects.push(select);
+                }
+                if (cat === "Modification") {
+                    modificationSelects.push(select);
+                }
             }
+        });
+
+        // Blokada drugiego Cannona, jeśli pierwszy to Proton Cannons lub Synced Laser Cannons
+        if (cannonSelects.length === 2) {
+            cannonSelects[0].onchange = () => {
+                const val = cannonSelects[0].value;
+                const lock = (val === "Proton Cannons" || val === "Synced Laser Cannons");
+                cannonSelects[1].disabled = lock;
+                if (lock) cannonSelects[1].value = "";
+                updateUpgradePointsDisplay(shipDiv);
+            };
+            cannonSelects[1].onchange = () => updateUpgradePointsDisplay(shipDiv);
+        }
+
+        // Blokada slotów Bomb, jeśli wybrano "Electro-Chaff Missles" w dowolnym slocie Missile
+        missileSelects.forEach(msel => {
+            msel.onchange = () => {
+                const anyElectro = missileSelects.some(s => s.value === "Electro-Chaff Missles");
+                if (anyElectro) {
+                    bombSelects.forEach(bs => {
+                        bs.disabled = true;
+                        if (bs.value) {
+                            bs.value = "";
+                        }
+                    });
+                } else {
+                    bombSelects.forEach(bs => {
+                        bs.disabled = false;
+                    });
+                }
+                updateUpgradePointsDisplay(shipDiv);
+            };
+        });
+
+        // Blokada slotów Modification, jeśli wybrano "Electro-Proton Bomb" w dowolnym slocie Bomb
+        bombSelects.forEach(bs => {
+            bs.onchange = () => {
+                const anyEPB = bombSelects.some(s => s.value === "Electro-Proton Bomb");
+                if (anyEPB) {
+                    modificationSelects.forEach(ms => {
+                        ms.disabled = true;
+                        if (ms.value) {
+                            ms.value = "";
+                        }
+                    });
+                } else {
+                    modificationSelects.forEach(ms => {
+                        ms.disabled = false;
+                    });
+                }
+                updateUpgradePointsDisplay(shipDiv);
+            };
+        });
+
+        // Każda zmiana w slotach Bomb lub Modification odświeża punkty:
+        modificationSelects.forEach(ms => {
+            ms.onchange = () => updateUpgradePointsDisplay(shipDiv);
         });
 
         updateUpgradePointsDisplay(shipDiv);
@@ -137,9 +234,17 @@
         select.className = "upgrade-select";
         select.dataset.category = category;
         select.innerHTML = `<option value="">${defaultText}</option>`;
-        for (let key in options) select.innerHTML += `<option value="${key}">${key} (${options[key]} pkt)</option>`;
-        select.onchange = () => updateUpgradePointsDisplay(container.parentNode);
+        for (let key in options) {
+            select.innerHTML += `<option value="${key}">${key} (${options[key]} pkt)</option>`;
+        }
         container.appendChild(select);
+
+        // Domyślnie każdy select przy zmianie po prostu odświeża liczbę punktów:
+        select.onchange = () => {
+            updateUpgradePointsDisplay(container.parentElement);
+        };
+
+        return select;
     }
 
     function updateUpgradePointsDisplay(shipDiv) {
