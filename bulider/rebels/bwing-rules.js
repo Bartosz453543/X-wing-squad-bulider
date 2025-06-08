@@ -1,7 +1,7 @@
 (function () {
     const ships = {
         "B-Wing": {
-            "Hera Syndulle": {cost: 7, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 1, configurationSlots: 1, upgradeLimit: 12},
+            "Hera Syndulla": {cost: 7, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 1, bombSlots: 1, modificationSlots: 1, titleSlots: 1, configurationSlots: 1, upgradeLimit: 12},
             "Gina Moonsong": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
             "Gina Moonsong Battle Over Endor": {cost: 6, talentSlots: 2, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 13},
             "Braylen Stramma": {cost: 6, talentSlots: 1, sensorSlots: 1, cannonSlots: 2, torpedoSlots: 1, missileSlots: 0, bombSlots: 1, modificationSlots: 1, titleSlots: 0, configurationSlots: 1, upgradeLimit: 11},
@@ -33,7 +33,7 @@
         },
         "Missile": {
             "Ion Missiles": 3, "XX-23 S-Thread Tracers": 4, "Homing Missiles": 5, "Cluster Missiles": 6, "Proton Rocket": 6, "Concussion Missiles": 7,
-            "Mag-Pulse Warheads": 7, "Electro-Chaff Missles": 11
+            "Mag-Pulse Warheads": 7, "Electro-Chaff Missiles": 11
         },
         "Bomb": {
             "Seismic Charges": 3, "Ion Bombs": 4, "Blazer Bomb": 5, "Concussion Bombs": 5, "Conner Net": 4, "Proton Bombs": 5,
@@ -196,10 +196,10 @@
             cannonSelects[1].onchange = () => updateUpgradePointsDisplay(shipDiv);
         }
 
-        // Blokada slotów Bomb, jeśli wybrano "Electro-Chaff Missles" w dowolnym slocie Missile
+        // Blokada slotów Bomb, jeśli wybrano "Electro-Chaff Missiles" w dowolnym slocie Missile
         missileSelects.forEach(msel => {
             msel.onchange = () => {
-                const anyElectro = missileSelects.some(s => s.value === "Electro-Chaff Missles");
+                const anyElectro = missileSelects.some(s => s.value === "Electro-Chaff Missiles");
                 if (anyElectro) {
                     bombSelects.forEach(bs => {
                         bs.disabled = true;
