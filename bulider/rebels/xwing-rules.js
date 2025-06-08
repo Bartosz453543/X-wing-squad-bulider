@@ -1,4 +1,3 @@
-// Script JavaScript do zarządzania flotą X-Wing (z presetami, bez funkcji usuwania statku)
 (function () {
     // Dane dla statków X-Wing – instrukcje dla pilotów
     const ships = {
@@ -385,8 +384,7 @@
       if (globalDiv) globalDiv.innerText = `Suma punktów: ${total}`;
     }
   
-    // Eksport API
-    window.maulRule.apply(); 
+    
 
     window.xwingRules = {
       addShip,

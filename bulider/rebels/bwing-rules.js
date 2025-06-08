@@ -39,12 +39,22 @@
             "Seismic Charges": 3, "Ion Bombs": 4, "Blazer Bomb": 5, "Concussion Bombs": 5, "Conner Net": 4, "Proton Bombs": 5,
             "Thermal Detonators": 3, "Cluster Mines": 4, "Electro-Proton Bomb": 8, "Proximity Mines": 3
         },
-        "Modification": 
+        "Modification": {
+            "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Electronic Baffle": 2,
+            "Afterburners": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes": 12
+        },
+        "Title": {
+            "B6 Blade Wing Prototype": 2
+        },
+          "Gunner Upgrade": 
         { 
-            "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1,  "Electronic Baffle": 2,
-            "Afterburners": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12},
-        "Title": {"B6 Blade Wing Prototype": 2},
-        "Configuration": {"Stabilized S-Foils": 2}
+            "Sabine Wren": 2, "Skilled Bombardier": 2, "Agile Gunner": 4, "Hotshot Gunner": 5, 
+            "Veteran Tail Gunner": 6, "Suppressive Gunner": 7,"Ezra Bridger" : 9, "Han Solo" : 10, "Bistan": 12,
+            "Luke Skywalker" : 12
+        },
+        "Configuration": {
+            "Stabilized S-Foils": 2
+        }
     };
 
     function addShip() {
@@ -134,11 +144,13 @@
             return;
         }
 
-        // Przygotowujemy tablice na selecty Missile, Bomb, Modification i Cannon
+        // Przygotowujemy tablice na selecty Missile, Bomb, Modification, Cannon, Title i ewentualnie Gunner
         const missileSelects = [];
         const bombSelects = [];
         const modificationSelects = [];
         const cannonSelects = [];
+        const titleSelects = [];
+        let gunnerSelects = []; // Miejsce na opcjonalny slot Gunner
 
         [
             ["Talent", data.talentSlots],
@@ -165,6 +177,9 @@
                 }
                 if (cat === "Modification") {
                     modificationSelects.push(select);
+                }
+                if (cat === "Title") {
+                    titleSelects.push(select);
                 }
             }
         });
@@ -221,9 +236,38 @@
             };
         });
 
-        // Każda zmiana w slotach Bomb lub Modification odświeża punkty:
+        // NOWA LOGIKA: gdy w slocie Title wybierzesz "B6 Blade Wing Prototype", dodaj slot Gunner Upgrade
+        titleSelects.forEach(tsel => {
+            tsel.onchange = () => {
+                const val = tsel.value;
+                const hasB6 = (val === "B6 Blade Wing Prototype");
+
+                if (hasB6) {
+                    // jeśli jeszcze nie mamy slotu Gunner, to dodajemy
+                    if (gunnerSelects.length === 0) {
+                        // Tworzymy nowy select dla Gunner Upgrade
+                        const gunnerSelect = createUpgradeSelect(upgradeSection, "Gunner Upgrade", bwingExtras["Gunner Upgrade"], "No Gunner(added by B6 Title)");
+                        gunnerSelects.push(gunnerSelect);
+                        // Z każdorazową zmianą slotu Gunner odświeżamy punkty
+                        gunnerSelect.onchange = () => updateUpgradePointsDisplay(shipDiv);
+                    }
+                } else {
+                    // jeśli B6 nie jest wybrane, usuwamy wszystkie stworzone sloty Gunner
+                    gunnerSelects.forEach(cs => {
+                        cs.remove();
+                    });
+                    gunnerSelects = [];
+                }
+                updateUpgradePointsDisplay(shipDiv);
+            };
+        });
+
+        // Każda zmiana w slotach Bomb, Modification, Gunner odświeża punkty:
         modificationSelects.forEach(ms => {
             ms.onchange = () => updateUpgradePointsDisplay(shipDiv);
+        });
+        bombSelects.forEach(bs => {
+            bs.onchange = () => updateUpgradePointsDisplay(shipDiv);
         });
 
         updateUpgradePointsDisplay(shipDiv);
