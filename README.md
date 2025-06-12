@@ -6,7 +6,7 @@
 
 
 # Specyfikacja i cel projetku
-## informacje podstawoe 
+## informacje podstawowe 
 ### 1 Nazwa projetku
 Strona ligowa dla "Dzielni Piloci Weterani".
 Strona ta będzie przedstawiać ranking i punkty turniejowe wzorowane m.in,
