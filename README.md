@@ -1,2 +1,8 @@
 # X-wing-squad-bulider
-Specyfikacja i cel projetku
+
+
+
+
+
+
+# Specyfikacja i cel projetku
