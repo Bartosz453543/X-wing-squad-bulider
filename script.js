@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Funkcja przejścia do następnego slajdu
   function nextSlide() {
-    if (currentIndex >= totalSlides - 1) {
+    if (currentIndex >= totalSlides - 1) {//test
       currentIndex = 0;
       updateSlider(false);
       setTimeout(() => updateSlider(), 20);
