@@ -126,21 +126,20 @@
         };
 
         if (presets[pilot]) {
-            let total=0;
-            presets[pilot].forEach(([cat,val])=>{
-                const s=document.createElement("select");
-                s.className="upgrade-select"; s.disabled=true;
-                s.dataset.category=cat;
-                s.innerHTML=`<option>${val}</option>`;
-                total+=bwingExtras[cat][val]||0;
+            let total = 0;
+            presets[pilot].forEach(([cat,val]) => {
+                const s = document.createElement("select");
+                s.className = "upgrade-select"; s.disabled = true;
+                s.dataset.category = cat;
+                s.innerHTML = `<option>${val}</option>`;
+                total += bwingExtras[cat][val] || 0;
                 upSec.appendChild(s);
             });
-            pts.innerText=`Użyte punkty: ${total}/${data.upgradeLimit}`;
+            pts.innerText = `Użyte punkty: ${total}/${data.upgradeLimit}`;
             return;
         }
 
-        const missileSelects=[], bombSelects=[], modificationSelects=[], cannonSelects=[], titleSelects=[];
-        let gunnerSelects=[];
+        const missileSelects = [], bombSelects = [], modificationSelects = [], cannonSelects = [], titleSelects = [], gunnerSelects = [];
 
         [
             ["Talent",data.talentSlots],
@@ -152,63 +151,78 @@
             ["Modification",data.modificationSlots],
             ["Title",data.titleSlots],
             ["Configuration",data.configurationSlots]
-        ].forEach(([cat,count])=>{
-            for(let i=1;i<=count;i++){
-                const sel=createUpgradeSelect(upSec,cat,bwingExtras[cat],`No ${cat} (Slot ${i})`);
-                if(cat==="Missile") missileSelects.push(sel);
-                if(cat==="Bomb") bombSelects.push(sel);
-                if(cat==="Modification") modificationSelects.push(sel);
-                if(cat==="Cannon") cannonSelects.push(sel);
-                if(cat==="Title") titleSelects.push(sel);
+        ].forEach(([cat,count]) => {
+            for (let i = 1; i <= count; i++) {
+                const sel = createUpgradeSelect(upSec, cat, bwingExtras[cat], `No ${cat} (Slot ${i})`);
+                if (cat === "Missile") missileSelects.push(sel);
+                if (cat === "Bomb") bombSelects.push(sel);
+                if (cat === "Modification") modificationSelects.push(sel);
+                if (cat === "Cannon") cannonSelects.push(sel);
+                if (cat === "Title") titleSelects.push(sel);
             }
         });
 
         function enforceSpecialConstraints() {
-            const blockBombs = missileSelects.some(s=>s.value==="Electro-Chaff Missiles");
-            bombSelects.forEach(bs=>{
-                bs.disabled=blockBombs;
-                if(blockBombs) bs.value="";
+            const blockBombs = missileSelects.some(s => s.value === "Electro-Chaff Missiles");
+            bombSelects.forEach(bs => {
+                bs.disabled = blockBombs;
+                if (blockBombs) bs.value = "";
             });
 
-            const blockMods = bombSelects.some(s=>s.value==="Electro-Proton Bomb");
-            modificationSelects.forEach(ms=>{
-                ms.disabled=blockMods;
-                if(blockMods) ms.value="";
+            const blockMods = bombSelects.some(s => s.value === "Electro-Proton Bomb");
+            modificationSelects.forEach(ms => {
+                ms.disabled = blockMods;
+                if (blockMods) ms.value = "";
             });
         }
 
-        missileSelects.forEach(s=>s.onchange=()=>{
-            enforceSpecialConstraints();
-            updateUpgradePointsDisplay(div);
-        });
-        bombSelects.forEach(s=>s.onchange=()=>{
-            enforceSpecialConstraints();
-            updateUpgradePointsDisplay(div);
-        });
-        modificationSelects.forEach(s=>s.onchange=()=>updateUpgradePointsDisplay(div));
-
-        if(cannonSelects.length===2){
-            cannonSelects[0].onchange=()=>{
-                const v=cannonSelects[0].value;
-                const lock=(v==="Proton Cannons"||v==="Synced Laser Cannons");
-                cannonSelects[1].disabled=lock;
-                if(lock) cannonSelects[1].value="";
+        // Obsługa blokady slotów cannon w obu kierunkach
+        if (cannonSelects.length === 2) {
+            // Gdy zmienia się pierwszy slot → blokada drugiego (jak było)
+            cannonSelects[0].onchange = () => {
+                const v = cannonSelects[0].value;
+                const lock2 = v === "Proton Cannons" || v === "Synced Laser Cannons";
+                cannonSelects[1].disabled = lock2;
+                if (lock2) cannonSelects[1].value = "";
                 updateUpgradePointsDisplay(div);
             };
-            cannonSelects[1].onchange=()=>updateUpgradePointsDisplay(div);
+            // Gdy zmienia się drugi slot → blokada pierwszego (nowość)
+            cannonSelects[1].onchange = () => {
+                const v2 = cannonSelects[1].value;
+                const lock1 = v2 === "Proton Cannons" || v2 === "Synced Laser Cannons";
+                cannonSelects[0].disabled = lock1;
+                if (lock1) cannonSelects[0].value = "";
+                updateUpgradePointsDisplay(div);
+            };
         }
 
-        titleSelects.forEach(tsel=>{
-            tsel.onchange=()=>{
-                const hasB6=tsel.value==="B6 Blade Wing Prototype";
-                if(hasB6 && !gunnerSelects.length){
-                    const g=createUpgradeSelect(upSec,"Gunner Upgrade",bwingExtras["Gunner Upgrade"],"No Gunner (added)");
-                    g.onchange=()=>updateUpgradePointsDisplay(div);
+        missileSelects.forEach(s => {
+            s.onchange = () => {
+                enforceSpecialConstraints();
+                updateUpgradePointsDisplay(div);
+            };
+        });
+        bombSelects.forEach(s => {
+            s.onchange = () => {
+                enforceSpecialConstraints();
+                updateUpgradePointsDisplay(div);
+            };
+        });
+        modificationSelects.forEach(s => {
+            s.onchange = () => updateUpgradePointsDisplay(div);
+        });
+
+        titleSelects.forEach(tsel => {
+            tsel.onchange = () => {
+                const hasB6 = tsel.value === "B6 Blade Wing Prototype";
+                if (hasB6 && !gunnerSelects.length) {
+                    const g = createUpgradeSelect(upSec, "Gunner Upgrade", bwingExtras["Gunner Upgrade"], "No Gunner (added)");
+                    g.onchange = () => updateUpgradePointsDisplay(div);
                     gunnerSelects.push(g);
                 }
-                if(!hasB6 && gunnerSelects.length){
-                    gunnerSelects.forEach(x=>x.remove());
-                    gunnerSelects=[];
+                if (!hasB6 && gunnerSelects.length) {
+                    gunnerSelects.forEach(x => x.remove());
+                    gunnerSelects.length = 0;
                 }
                 updateUpgradePointsDisplay(div);
             };
@@ -219,34 +233,34 @@
     }
 
     function createUpgradeSelect(container, category, options, defaultText) {
-        const sel=document.createElement("select");
-        sel.className="upgrade-select";
-        sel.dataset.category=category;
-        sel.innerHTML=`<option value="">${defaultText}</option>`;
-        Object.keys(options).forEach(opt=>{
-            sel.innerHTML+=`<option value="${opt}">${opt} (${options[opt]} pkt)</option>`;
+        const sel = document.createElement("select");
+        sel.className = "upgrade-select";
+        sel.dataset.category = category;
+        sel.innerHTML = `<option value="">${defaultText}</option>`;
+        Object.keys(options).forEach(opt => {
+            sel.innerHTML += `<option value="${opt}">${opt} (${options[opt]} pkt)</option>`;
         });
         container.appendChild(sel);
-        sel.onchange=()=>updateUpgradePointsDisplay(container.parentElement);
+        sel.onchange = () => updateUpgradePointsDisplay(container.parentElement);
         return sel;
     }
 
     function updateUpgradePointsDisplay(div) {
-        const pilot=div.querySelector(".pilot-select").value;
-        const out=div.querySelector(".upgrade-points");
-        if(!pilot) return out.innerText="Użyte punkty: 0 / -";
-        const used=calculateUpgradePoints(div);
-        const limit=ships["B-Wing"][pilot].upgradeLimit;
-        out.innerText=`Użyte punkty: ${used} / ${limit}`;
-        if(window.updateGlobalTotalPoints) window.updateGlobalTotalPoints();
+        const pilot = div.querySelector(".pilot-select").value;
+        const out = div.querySelector(".upgrade-points");
+        if (!pilot) return out.innerText = "Użyte punkty: 0 / -";
+        const used = calculateUpgradePoints(div);
+        const limit = ships["B-Wing"][pilot].upgradeLimit;
+        out.innerText = `Użyte punkty: ${used} / ${limit}`;
+        if (window.updateGlobalTotalPoints) window.updateGlobalTotalPoints();
     }
 
     function calculateUpgradePoints(div) {
         return Array.from(div.querySelectorAll(".upgrade-select"))
-            .reduce((sum,sel)=>{
-                const v=sel.value,cat=sel.dataset.category;
+            .reduce((sum, sel) => {
+                const v = sel.value, cat = sel.dataset.category;
                 return sum + (v ? bwingExtras[cat][v] : 0);
-            },0);
+            }, 0);
     }
 
     window.bwingRules = {
