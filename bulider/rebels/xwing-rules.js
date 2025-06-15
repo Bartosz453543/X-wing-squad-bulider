@@ -49,12 +49,12 @@
       },
       "Astromech Upgrade":
       { 
-         "Chopper": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R5-D8": 9, "R2 D2" : 10
+         "Chopper": 2, "R4 Astromech": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R2 Astromech" : 8, "R5-D8": 9, "R2 D2" : 10
       },
       "Modification Upgrade":
       {
-         "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Ablative Plating":2, 
-         "Electronic Baffle": 2, "Tactical Scrambler": 2, "Stealth Device": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
+        "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Electronic Baffle": 2, "Afterburners":8, 
+         "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
       },
       "Configuration Upgrade":{ "S-Foils": 0 },
       "Illegal Upgrade":

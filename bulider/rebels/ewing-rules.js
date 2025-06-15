@@ -10,12 +10,34 @@
     };
   
     const ewingExtras = {
-      "Talent Upgrade": { "Elusive": 2, "Predator": 2 },
-      "Sensor Upgrade": { "Passive Sensors": 3, "Fire-Control System": 2 },
-      "Torpedo Upgrade": { "Proton Torpedoes": 6, "Ion Torpedoes": 4 },
-      "Tech Upgrade": { "Advanced Optics": 4, "Sensor Buoy Suite": 3 },
-      "Astromech Upgrade": { "R2-D2": 5, "R5 Astromech": 3 },
-      "Modification Upgrade": { "Hull Upgrade": 3, "Shield Upgrade": 4 }
+      "Talent Upgrade": 
+        {
+             "Composure": 1, "Deadeye Shot": 1, "Hopeful": 1, "Marg Sable Closure": 1,
+              "Marksmanship": 2, "Debris Gambit": 3, "Lone Wolf": 3, "Predator": 3,"Daredevil" : 4, "Elusive": 4,
+              "Enduring": 4, "Selfess": 4, "Squad Leader": 4, "Trick a shot": 4, "Crack Shot": 5, "Intimidation": 7,
+              "Juke": 7, "Snap shot": 7, "Swarm Tactics": 7, "Outmaneuver": 9
+        },
+      "Sensor Upgrade": 
+        {
+              "Fire-Control System":2, "Passive Sensors":5, "Collision Detector":7, "Advanced Sensors":8, "Trajectory Simulator":10
+        },
+      "Torpedo Upgrade": 
+        { 
+          "Homing Torpedoes":4, "Ion Torpedoes":5, "Plasma Torpedoes":7, "Adv Proton Torpedoes":9, "Proton Torpedoes":14
+        },
+      "Tech Upgrade": 
+        { 
+        "Targeting Synchronizer": 3, "Advanced Optics": 4, "Pattern Analyzer": 5 , "Primed Thrusters" : 6
+        },
+      "Astromech Upgrade": 
+        {
+          "Chopper": 2, "R4 Astromech": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R2 Astromech" : 8, "R5-D8": 9, "R2 D2" : 10
+        },
+      "Modification Upgrade": 
+       {
+         "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Electronic Baffle": 2, "Afterburners":8, 
+         "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
+       }
     };
   
     function addShip() {

@@ -34,7 +34,7 @@
         },
         "Astromech Upgrade": 
         { 
-            "Chopper": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R5-D8": 9, "R2 D2" : 10
+            "Chopper": 2, "Watchful Astromech": 2, "R3 Astromech": 3, "R5 Astromech": 7, "R2 Astromech" : 8, "R5-D8": 9, "R2 D2" : 10
         },
         "Modification Upgrade":
         { 

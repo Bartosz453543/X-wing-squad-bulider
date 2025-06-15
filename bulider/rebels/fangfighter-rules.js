@@ -2,18 +2,32 @@
     // Dane dla Rebel Fang Fighter – tablice/obiekty zapisane w wielu liniach
     const ships = {
         "Fang Fighter": {
-            "Fenn Rau (Rebelia)": { cost: 5, talentSlots: 2, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 8 },
-            "Bodica Venj (Rebelia)": { cost: 5, talentSlots: 2, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 8 },
-            "Clan Wren Volunteer (Rebelia)": { cost: 4, talentSlots: 1, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 7 },
-            "Dirk Ullodin (Rebelia)": { cost: 4, talentSlots: 0, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 6 }
+            "Fenn Rau ": { cost: 5, talentSlots: 2, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 8 },
+            "Bodica Venj ": { cost: 5, talentSlots: 2, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 8 },
+            "Clan Wren Volunteer ": { cost: 4, talentSlots: 1, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 7 },
+            "Dirk Ullodin": { cost: 4, talentSlots: 0, torpedoSlots: 1, modificationSlots: 2, upgradeLimit: 6 }
         }
     };
 
     // Kategorie ulepszeń
     const fangExtras = {
-        "Talent Upgrade": { "Predator": 3, "Outmaneuver": 4, "Lone Wolf": 4 },
-        "Modification Upgrade": { "Hull Upgrade": 5, "Shield Upgrade": 4 },
-        "Torpedo Upgrade": { "Proton Torpedo": 4, "Plasma Torpedo": 3 }
+        "Talent Upgrade": 
+        { 
+             "Clan Traning" : 1,"Composure": 1, "Deadeye Shot" : 1, "Hopeful": 1, "Marg Sable Closure" : 1,      
+             "Marksmanship": 2, "Debris Gambit" : 3,"Lone Wolf" : 3, "Predator": 3,"Daredevil" : 4, "Elusive": 4,
+             "Enduring" : 4, "Selfess" : 4, "Squad Leader" : 4, "Trick a shot": 4, "Crack Shot" : 5, "Intimidation" : 7,
+             "Juke" : 7, "Snap shot" : 7, "Swarm Tactics" : 7, "Outmaneuver" : 9
+        },
+        "Modification Upgrade": 
+        { 
+             "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Electronic Baffle": 2,
+             "Mandaloiran Optics" : 3, "Beskar Reinforced Plating": 6,
+             "Afterburners":8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes" : 12
+        },
+        "Torpedo Upgrade": 
+        { 
+            "Homing Torpedoes": 4,"Ion Torpedoes":5, "Plasma Torpedoes" : 7, "Adv Proton Torpedoes" : 9, "Proton Torpedoes" : 14
+        }
     };
 
     function addShip() {
