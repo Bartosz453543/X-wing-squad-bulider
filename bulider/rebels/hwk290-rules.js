@@ -16,7 +16,14 @@
             "Enduring":4, "Saturation Salvo":4, "Selfess":4, "Squad Leader":4, "Trick a shot":4, "Crack Shot":5, "Intimidation":7,
             "Juke":7, "Snap shot":7, "Swarm Tactics":7, "Outmaneuver":9
         },
-        "Crew Upgrade":{ "Cassian Andor": 3, "K-2SO": 2 },
+        "Crew Upgrade":
+        {
+            "Chopper": 1, "Zeb Orrelios": 1, "Lando Calrissian": 2, "Novice Technician": 2, "Tristan Wren": 2, "Chewbacca": 3,
+            "Freelance Slicer": 3, "Bo-Katan Kryze": 4, "Hera Syndulla": 4, "GNK “Gonk” Droid": 5, "Magva Yarro": 5, "Nien Nunb": 5,
+            "Sabine Wren": 5, "Informant": 6, "Baze Malbus": 7, "C-3PO": 7, "Cassian Andor": 7, "Fenn Rau": 7, "Jyn Erso": 7,
+            "Leia Organa": 7, "Seasoned Navigator": 7, "The Child": 7, "Hondo Ohnaka": 8, "K-2SO": 8, "Perceptive Copilot": 8,
+            "R2-D2": 8, "Ursa Wren": 6, "Saw Gerrera": 9, "Kanan Jarrus": 12, "Maul": 12
+        },
         "Turret Upgrade":{ "Dorsal Turret": 2, "Ion Cannon Turret": 3 },
         "Bomb Upgrade":{ "Proton Bombs": 4, "Seismic Charges": 3 },
         "Illicit Upgrade":{ "Contraband Cybernetics": 2, "Deadman's Switch": 3 },

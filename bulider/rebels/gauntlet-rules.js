@@ -1,8 +1,8 @@
 (function () {
     const ships = {
         "Gauntlet Fighter": {
-            "Ezra Bridger": { cost: 56, forceSlots: 2, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 2, configurationSlots: 1, titleSlots: 1, upgradeLimit: 13 },
-            "Chopper":              { cost: 50, forceSlots: 0, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 2, configurationSlots: 1, titleSlots: 1, upgradeLimit: 12 },
+            "Ezra Bridger": { cost: 56, forceSlots: 2, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 1, upgradeLimit: 13 },
+            "Chopper":              { cost: 50, forceSlots: 0, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 1, upgradeLimit: 12 },
             "Mandalorian Resistance Pilot": { cost: 47, forceSlots: 0, talentSlots: 1, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 0, upgradeLimit: 9 }
         }
     };
@@ -36,9 +36,9 @@
             "False Transponder Codes": 5, "Cloaking Device": 8, "Inertial Dampeners": 8
         },
         "Modification Upgrade": {
-            "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Ablative Plating": 2,
-            "Drop-Seat Bay": 2, "Electronic Baffle": 2, "Tactical Scrambler": 2, "Stealth Device": 8,
-            "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Discharge Vanes": 12
+            "Delayed Fuses": 1, "Drop-Seat Bay": 1, "Munitions Failsafe": 1, "Tactical Scrambler": 1,
+            "Electronic Baffle": 2, "Targeting Computer": 2, "Ablative Plating": 3, "Static Discharge Vanes": 4,
+            "Hull Upgrade": 5, "Shield Upgrade": 6, "Stealth Device": 6
         },
         "Configuration Upgrade": { "Swivel Wing": 0 },
         "Title Upgrade": { "Nightbrother": 1 },
@@ -58,9 +58,11 @@
 
     function squadronHasEzra() {
         return Array.from(document.querySelectorAll('#squadron .ship-section'))
-            .some(ship => ship.querySelector('.pilot-select').value === 'Ezra Bridger'
-                || Array.from(ship.querySelectorAll('.upgrade-select[data-category="Gunner Upgrade"]'))
-                    .some(sel => sel.value === 'Ezra Bridger'));
+            .some(ship =>
+                ship.querySelector('.pilot-select').value === 'Ezra Bridger' ||
+                Array.from(ship.querySelectorAll('.upgrade-select[data-category="Gunner Upgrade"]'))
+                    .some(sel => sel.value === 'Ezra Bridger')
+            );
     }
 
     function squadronHasMaul() {
@@ -81,7 +83,6 @@
 
             select.innerHTML = `<option value="">${select.dataset.defaultText}</option>`;
 
-            // Dodajemy Clan Wren Commandos tylko gdy łącznie mamy >=2 sloty
             const all = { ...gauntletExtras['Crew Upgrade'] };
             if (totalSlots >= 2) {
                 all['Clan Wren Commandos'] = 8;
@@ -122,17 +123,16 @@
         const ezraPresent = squadronHasEzra();
         const pilot = container.closest('.ship-section').querySelector('.pilot-select').value;
         const shipName = container.closest('.ship-section').querySelector('.ship-select').value;
-        const extraMods = (category === 'Modification Upgrade' && conditionalModifications[pilot]) 
-                            ? conditionalModifications[pilot] 
-                            : {};
+        const extraMods = (category === 'Modification Upgrade' && conditionalModifications[pilot])
+            ? conditionalModifications[pilot]
+            : {};
         const combinedOptions = { ...options, ...extraMods };
 
-        // teraz liczymy także bonusowe sloty
+        // dodaj Clan Wren Commandos, jeśli slotów załogi ≥ 2
         if (category === 'Crew Upgrade') {
-            const baseSlots  = ships[shipName][pilot]?.crewSlots || 0;
+            const baseSlots = ships[shipName][pilot]?.crewSlots || 0;
             const bonusSlots = container.closest('.ship-section').querySelectorAll('.upgrade-select.bonus-crew').length;
-            const totalSlots = baseSlots + bonusSlots;
-            if (totalSlots >= 2) {
+            if (baseSlots + bonusSlots >= 2) {
                 combinedOptions['Clan Wren Commandos'] = 8;
             }
         }
@@ -149,7 +149,7 @@
                 refreshForceUpgradeOptions();
             }
 
-            // bonusowy slot przy Nightbrother
+            // Title Upgrade: Nightbrother
             if (category === 'Title Upgrade') {
                 const shipDiv = container.closest('.ship-section');
                 const upgSection = shipDiv.querySelector('.upgrade-section');
@@ -161,6 +161,36 @@
                     refreshCrewUpgradeOptions();
                 } else if (select.value !== 'Nightbrother' && prevBonus) {
                     prevBonus.remove();
+                }
+
+                // blokada modyfikacji przy Nightbrother
+                shipDiv.querySelectorAll('.upgrade-select[data-category="Modification Upgrade"]')
+                    .forEach(m => m.disabled = (select.value === 'Nightbrother'));
+            }
+
+            // Modification Upgrade: Drop-Seat Bay
+            if (category === 'Modification Upgrade') {
+                const shipDiv = container.closest('.ship-section');
+                const upgSection = shipDiv.querySelector('.upgrade-section');
+                const dropCrew = shipDiv.querySelectorAll('.upgrade-select.bonus-crew.mod-from-dropseat');
+                const bombSelects = shipDiv.querySelectorAll('.upgrade-select[data-category="Bomb Upgrade"]');
+
+                if (select.value === 'Drop-Seat Bay') {
+                    // zablokuj bomby
+                    bombSelects.forEach(b => b.disabled = true);
+                    // dodaj 2 bonusowe sloty załogi (typu Drop-Seat)
+                    if (dropCrew.length === 0) {
+                        for (let i = 0; i < 2; i++) {
+                            createUpgradeSelect(upgSection, 'Crew Upgrade', gauntletExtras['Crew Upgrade'], 'No Crew Upgrade (Drop-Seat Bonus)');
+                            const last = upgSection.lastElementChild;
+                            last.classList.add('bonus-crew', 'mod-from-dropseat');
+                        }
+                        refreshCrewUpgradeOptions();
+                    }
+                } else if (dropCrew.length > 0) {
+                    // odblokuj bomby i usuń bonusowe załogi
+                    bombSelects.forEach(b => b.disabled = false);
+                    dropCrew.forEach(e => e.remove());
                 }
             }
 
@@ -259,11 +289,7 @@
     window.gauntletRules = {
         addShip,
         calculateUpgradePoints,
-        getPilotPoints: shipDiv => {
-            const p = shipDiv.querySelector(".pilot-select").value;
-            const s = shipDiv.querySelector(".ship-select").value;
-            return ships[s][p]?.cost || 0;
-        },
+        getPilotPoints: shipDiv => ships[shipDiv.querySelector('.ship-select').value][shipDiv.querySelector('.pilot-select').value]?.cost || 0,
         getUpgradePoints: calculateUpgradePoints
     };
 })();
