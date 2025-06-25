@@ -2,7 +2,7 @@
     const ships = {
         "Gauntlet Fighter": {
             "Ezra Bridger": { cost: 56, forceSlots: 2, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 2, configurationSlots: 1, titleSlots: 1, upgradeLimit: 13 },
-            "Chopper": { cost: 50, forceSlots: 0, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 2, configurationSlots: 1, titleSlots: 1, upgradeLimit: 12 },
+            "Chopper":              { cost: 50, forceSlots: 0, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 2, configurationSlots: 1, titleSlots: 1, upgradeLimit: 12 },
             "Mandalorian Resistance Pilot": { cost: 47, forceSlots: 0, talentSlots: 1, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 0, upgradeLimit: 9 }
         }
     };
@@ -57,11 +57,10 @@
     };
 
     function squadronHasEzra() {
-        return Array.from(document.querySelectorAll('#squadron .ship-section')).some(ship => {
-            if (ship.querySelector('.pilot-select').value === 'Ezra Bridger') return true;
-            return Array.from(ship.querySelectorAll('.upgrade-select[data-category="Gunner Upgrade"]'))
-                .some(sel => sel.value === 'Ezra Bridger');
-        });
+        return Array.from(document.querySelectorAll('#squadron .ship-section'))
+            .some(ship => ship.querySelector('.pilot-select').value === 'Ezra Bridger'
+                || Array.from(ship.querySelectorAll('.upgrade-select[data-category="Gunner Upgrade"]'))
+                    .some(sel => sel.value === 'Ezra Bridger'));
     }
 
     function squadronHasMaul() {
@@ -73,11 +72,26 @@
         const ezraPresent = squadronHasEzra();
         document.querySelectorAll('.upgrade-select[data-category="Crew Upgrade"]').forEach(select => {
             const prev = select.value;
+            const shipDiv = select.closest('.ship-section');
+            const pilot = shipDiv.querySelector('.pilot-select').value;
+            const shipName = shipDiv.querySelector('.ship-select').value;
+            const baseSlots = ships[shipName][pilot]?.crewSlots || 0;
+            const bonusSlots = shipDiv.querySelectorAll('.upgrade-select.bonus-crew').length;
+            const totalSlots = baseSlots + bonusSlots;
+
             select.innerHTML = `<option value="">${select.dataset.defaultText}</option>`;
-            Object.keys(gauntletExtras['Crew Upgrade']).forEach(key => {
+
+            // Dodajemy Clan Wren Commandos tylko gdy łącznie mamy >=2 sloty
+            const all = { ...gauntletExtras['Crew Upgrade'] };
+            if (totalSlots >= 2) {
+                all['Clan Wren Commandos'] = 8;
+            }
+
+            Object.entries(all).forEach(([key, pts]) => {
                 if (key === 'Maul' && !ezraPresent) return;
-                select.innerHTML += `<option value="${key}">${key} (${gauntletExtras['Crew Upgrade'][key]} pkt)</option>`;
+                select.innerHTML += `<option value="${key}">${key} (${pts} pkt)</option>`;
             });
+
             select.value = (prev && select.querySelector(`option[value="${prev}"]`)) ? prev : '';
         });
     }
@@ -106,10 +120,22 @@
         select.innerHTML = `<option value="">${defaultText}</option>`;
 
         const ezraPresent = squadronHasEzra();
-        const pilot = container.closest('.ship-section').querySelector('.pilot-select')?.value;
-
-        const extraMods = (category === 'Modification Upgrade' && pilot && conditionalModifications[pilot]) ? conditionalModifications[pilot] : {};
+        const pilot = container.closest('.ship-section').querySelector('.pilot-select').value;
+        const shipName = container.closest('.ship-section').querySelector('.ship-select').value;
+        const extraMods = (category === 'Modification Upgrade' && conditionalModifications[pilot]) 
+                            ? conditionalModifications[pilot] 
+                            : {};
         const combinedOptions = { ...options, ...extraMods };
+
+        // teraz liczymy także bonusowe sloty
+        if (category === 'Crew Upgrade') {
+            const baseSlots  = ships[shipName][pilot]?.crewSlots || 0;
+            const bonusSlots = container.closest('.ship-section').querySelectorAll('.upgrade-select.bonus-crew').length;
+            const totalSlots = baseSlots + bonusSlots;
+            if (totalSlots >= 2) {
+                combinedOptions['Clan Wren Commandos'] = 8;
+            }
+        }
 
         Object.entries(combinedOptions).forEach(([key, pts]) => {
             if (category === 'Crew Upgrade' && key === 'Maul' && !ezraPresent) return;
@@ -122,6 +148,22 @@
                 refreshCrewUpgradeOptions();
                 refreshForceUpgradeOptions();
             }
+
+            // bonusowy slot przy Nightbrother
+            if (category === 'Title Upgrade') {
+                const shipDiv = container.closest('.ship-section');
+                const upgSection = shipDiv.querySelector('.upgrade-section');
+                const prevBonus = shipDiv.querySelector('.upgrade-select.bonus-crew');
+
+                if (select.value === 'Nightbrother' && !prevBonus) {
+                    createUpgradeSelect(upgSection, 'Crew Upgrade', gauntletExtras['Crew Upgrade'], 'No Crew Upgrade (Bonus Slot)');
+                    upgSection.lastElementChild.classList.add('bonus-crew');
+                    refreshCrewUpgradeOptions();
+                } else if (select.value !== 'Nightbrother' && prevBonus) {
+                    prevBonus.remove();
+                }
+            }
+
             updateUpgradePointsDisplay(container.parentNode);
         };
 
@@ -165,9 +207,7 @@
     function updateUpgrades(shipDiv) {
         const pilot = shipDiv.querySelector(".pilot-select").value;
         const upgradeSection = shipDiv.querySelector(".upgrade-section");
-        const pointsDiv = shipDiv.querySelector(".upgrade-points");
         upgradeSection.innerHTML = "";
-        pointsDiv.innerHTML = "";
         if (!pilot) return;
 
         const shipName = shipDiv.querySelector(".ship-select").value;
@@ -206,22 +246,24 @@
         return Array.from(shipDiv.querySelectorAll(".upgrade-select")).reduce((sum, sel) => {
             const val = sel.value;
             const cat = sel.dataset.category;
+            if (!val) return sum;
             if (val === "Malice") return sum + 4;
             if (val === "Hate") return sum + 5;
-            return sum + (val && (gauntletExtras[cat]?.[val] ?? conditionalModifications["Mandalorian Resistance Pilot"]?.[val]) || 0);
+            const pilot = shipDiv.querySelector('.pilot-select').value;
+            const extraMods = conditionalModifications[pilot] || {};
+            const cost = (gauntletExtras[cat]?.[val]) ?? (extraMods[val]) ?? 0;
+            return sum + cost;
         }, 0);
-    }
-
-    function getPilotPoints(shipDiv) {
-        const pilot = shipDiv.querySelector(".pilot-select").value;
-        const shipName = shipDiv.querySelector(".ship-select").value;
-        return ships[shipName][pilot]?.cost || 0;
     }
 
     window.gauntletRules = {
         addShip,
         calculateUpgradePoints,
-        getPilotPoints,
+        getPilotPoints: shipDiv => {
+            const p = shipDiv.querySelector(".pilot-select").value;
+            const s = shipDiv.querySelector(".ship-select").value;
+            return ships[s][p]?.cost || 0;
+        },
         getUpgradePoints: calculateUpgradePoints
     };
 })();

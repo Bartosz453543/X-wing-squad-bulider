@@ -9,7 +9,13 @@
     };
 
     const hwkExtras = {
-        "Talent Upgrade":{ "Veteran Instincts": 3, "Outmaneuver": 4 },
+        "Talent Upgrade":
+        { 
+            "Composure":1, "Deadeye Shot":1, "Hopeful":1, "Marg Sable Closure":1,
+            "Marksmanship":2, "Debris Gambit":3, "Lone Wolf":3, "Predator":3, "Elusive":4,
+            "Enduring":4, "Saturation Salvo":4, "Selfess":4, "Squad Leader":4, "Trick a shot":4, "Crack Shot":5, "Intimidation":7,
+            "Juke":7, "Snap shot":7, "Swarm Tactics":7, "Outmaneuver":9
+        },
         "Crew Upgrade":{ "Cassian Andor": 3, "K-2SO": 2 },
         "Turret Upgrade":{ "Dorsal Turret": 2, "Ion Cannon Turret": 3 },
         "Bomb Upgrade":{ "Proton Bombs": 4, "Seismic Charges": 3 },

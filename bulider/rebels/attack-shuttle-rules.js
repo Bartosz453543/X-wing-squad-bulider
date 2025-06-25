@@ -1,4 +1,4 @@
-(() => {
+(function () {
     const ships = {
         "Attack Shuttle": {
             "Hera Syndulla": { cost: 42, talentSlots: 1, turretSlots: 1, crewSlots: 1, modificationSlots: 1, titleSlots: 1, upgradeLimit: 10 },
@@ -8,7 +8,7 @@
         }
     };
 
-    const shuttleExtras = {
+    const attackShuttleExtras = {
         "Talent Upgrade": {
             "Composure": 1, "Deadeye Shot": 1, "Hopeful": 1, "Marg Sable Closure": 1,
             "Marksmanship": 2, "Debris Gambit": 3, "Lone Wolf": 3, "Predator": 3, "Elusive": 4,
@@ -37,133 +37,166 @@
         "Title Upgrade": { "Phantom": 0 }
     };
 
-    function squadronHasEzra() {
-        return Array.from(document.querySelectorAll('#squadron .ship-section')).some(ship => {
-            // check pilot
-            if (ship.querySelector('.pilot-select').value === 'Ezra Bridger') return true;
-            // check gunner slots
-            return Array.from(ship.querySelectorAll('.upgrade-select[data-category="Gunner Upgrade"]')).some(sel => sel.value === 'Ezra Bridger');
-        });
+    function addShip() {
+        const squadronDiv = document.getElementById("squadron");
+        const shipDiv = document.createElement("div");
+        shipDiv.className = "ship-section attack-shuttle";
+
+        // Ship selector
+        const shipSelect = document.createElement("select");
+        shipSelect.className = "ship-select";
+        shipSelect.innerHTML = `<option value="Attack Shuttle">Attack Shuttle</option>`;
+        shipDiv.appendChild(shipSelect);
+
+        // Pilot selector
+        const pilotSelect = document.createElement("select");
+        pilotSelect.className = "pilot-select";
+        pilotSelect.innerHTML = `<option value=''>Select Pilot</option>`;
+        pilotSelect.onchange = () => updateUpgrades(shipDiv);
+        shipDiv.appendChild(pilotSelect);
+
+        // Upgrades & points
+        const upgradeDiv = document.createElement("div");
+        upgradeDiv.className = "upgrade-section";
+        shipDiv.appendChild(upgradeDiv);
+
+        const pointsDiv = document.createElement("div");
+        pointsDiv.className = "upgrade-points";
+        shipDiv.appendChild(pointsDiv);
+
+        squadronDiv.appendChild(shipDiv);
+        updatePilotOptions(shipDiv, "Attack Shuttle");
     }
 
-    function refreshCrewUpgradeOptions() {
-        const ezraPresent = squadronHasEzra();
-        document.querySelectorAll('.upgrade-select[data-category="Crew Upgrade"]').forEach(select => {
-            const prev = select.value;
-            select.innerHTML = `<option value="">${select.dataset.defaultText}</option>`;
-            Object.keys(shuttleExtras['Crew Upgrade']).forEach(key => {
-                if (key === 'Maul' && !ezraPresent) return;
-                select.innerHTML += `<option value="${key}">${key} (${shuttleExtras['Crew Upgrade'][key]} pkt)</option>`;
-            });
-            if (!ezraPresent && prev === 'Maul') select.value = '';
-            else select.value = prev;
-        });
+    function updatePilotOptions(shipDiv, selectedShip) {
+        const pilotSelect = shipDiv.querySelector(".pilot-select");
+        pilotSelect.innerHTML = `<option value=''>Select Pilot</option>`;
+        for (let pilot in ships[selectedShip]) {
+            const p = ships[selectedShip][pilot];
+            pilotSelect.innerHTML += `<option value='${pilot}'>${pilot} (${p.cost} pkt)</option>`;
+        }
+        updateUpgrades(shipDiv);
     }
 
-    function createUpgradeSelect(container, category, options, defaultText) {
-        const select = document.createElement('select');
-        select.className = 'upgrade-select';
+    function isEzraBridgerSelectedElsewhere(currentShipDiv) {
+        const allShips = Array.from(document.querySelectorAll(".ship-section"));
+        for (const ship of allShips) {
+            if (ship === currentShipDiv) continue;
+
+            const pilot = ship.querySelector(".pilot-select")?.value;
+            if (pilot === "Ezra Bridger") return true;
+
+            const upgradeSelects = ship.querySelectorAll(".upgrade-select");
+            for (const select of upgradeSelects) {
+                if (select.dataset.category === "Gunner Upgrade" && select.value === "Ezra Bridger") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function updateUpgrades(shipDiv) {
+        const pilot = shipDiv.querySelector(".pilot-select").value;
+        const upgradeSection = shipDiv.querySelector(".upgrade-section");
+        upgradeSection.innerHTML = "";
+        if (!pilot) return;
+
+        const pilotData = ships["Attack Shuttle"][pilot];
+        const ezraSelectedElsewhere = isEzraBridgerSelectedElsewhere(shipDiv);
+
+        // Talent
+        if (pilotData.talentSlots) {
+            for (let i = 1; i <= pilotData.talentSlots; i++) {
+                createUpgradeSelect(upgradeSection, "Talent Upgrade", attackShuttleExtras["Talent Upgrade"], `No Talent Upgrade (Slot ${i})`);
+            }
+        }
+
+        // Force
+        if (pilotData.forceSlots) {
+            for (let i = 1; i <= pilotData.forceSlots; i++) {
+                createUpgradeSelect(upgradeSection, "Force Upgrade", attackShuttleExtras["Force Upgrade"], `No Force Upgrade (Slot ${i})`);
+            }
+        }
+
+        // Crew (Maul only if Ezra is somewhere)
+        if (pilotData.crewSlots) {
+            const baseCrew = { ...attackShuttleExtras["Crew Upgrade"] };
+            if (!ezraSelectedElsewhere && pilot !== "Ezra Bridger") {
+                delete baseCrew["Maul"];
+            }
+            for (let i = 1; i <= pilotData.crewSlots; i++) {
+                createUpgradeSelect(upgradeSection, "Crew Upgrade", baseCrew, `No Crew Upgrade (Slot ${i})`);
+            }
+        }
+
+        // Turret
+        if (pilotData.turretSlots) {
+            for (let i = 1; i <= pilotData.turretSlots; i++) {
+                createUpgradeSelect(upgradeSection, "Turret Upgrade", attackShuttleExtras["Turret Upgrade"], `No Turret Upgrade (Slot ${i})`);
+            }
+        }
+
+        // Modification
+        if (pilotData.modificationSlots) {
+            for (let i = 1; i <= pilotData.modificationSlots; i++) {
+                createUpgradeSelect(upgradeSection, "Modification Upgrade", attackShuttleExtras["Modification Upgrade"], `No Modification (Slot ${i})`);
+            }
+        }
+
+        // Title
+        if (pilotData.titleSlots) {
+            for (let i = 1; i <= pilotData.titleSlots; i++) {
+                createUpgradeSelect(upgradeSection, "Title Upgrade", attackShuttleExtras["Title Upgrade"], `No Title Upgrade (Slot ${i})`);
+            }
+        }
+
+        updateUpgradePointsDisplay(shipDiv);
+    }
+
+    function createUpgradeSelect(container, category, optionsObj, defaultText) {
+        const select = document.createElement("select");
+        select.className = "upgrade-select";
         select.dataset.category = category;
-        select.dataset.defaultText = defaultText;
-        select.innerHTML = `<option value="">${defaultText}</option>`;
-        const ezraPresent = squadronHasEzra();
-        Object.entries(options).forEach(([key, pts]) => {
-            if (category === 'Crew Upgrade' && key === 'Maul' && !ezraPresent) return;
-            select.innerHTML += `<option value="${key}">${key} (${pts} pkt)</option>`;
-        });
-        select.onchange = () => {
-            if (category === 'Gunner Upgrade') refreshCrewUpgradeOptions();
-            updateShuttlePointsDisplay(container.parentNode);
-        };
+        select.innerHTML = `<option value=''>${defaultText}</option>`;
+        for (const [upgrade, cost] of Object.entries(optionsObj)) {
+            select.innerHTML += `<option value='${upgrade}'>${upgrade} (${cost} pkt)</option>`;
+        }
+        select.onchange = () => updateUpgradePointsDisplay(container.parentNode);
         container.appendChild(select);
     }
 
-    function updateShuttleUpgrades(shipDiv) {
-        const pilot = shipDiv.querySelector('.pilot-select').value;
-        const upgradeSection = shipDiv.querySelector('.upgrade-section');
-        upgradeSection.innerHTML = '';
-        if (!pilot) return;
-        const data = ships['Attack Shuttle'][pilot] || {};
-        [
-            ['Talent Upgrade', data.talentSlots || 0],
-            ['Force Upgrade', data.forceSlots || 0],
-            ['Crew Upgrade', data.crewSlots || 0],
-            ['Gunner Upgrade', data.gunnerSlots || 0],
-            ['Turret Upgrade', data.turretSlots || 0],
-            ['Modification Upgrade', data.modificationSlots || 0],
-            ['Title Upgrade', data.titleSlots || 0]
-        ].forEach(([cat, cnt]) => {
-            for (let i = 1; i <= cnt; i++) {
-                createUpgradeSelect(upgradeSection, cat, shuttleExtras[cat], `No ${cat} (Slot ${i})`);
+    function updateUpgradePointsDisplay(shipDiv) {
+        const pointsDiv = shipDiv.querySelector(".upgrade-points");
+        const pilotSelect = shipDiv.querySelector(".pilot-select");
+        const upgradePoints = calculateUpgradePoints(shipDiv);
+        const upgradeLimit = ships["Attack Shuttle"][pilotSelect.value]?.upgradeLimit || 0;
+        pointsDiv.innerHTML = `Użyte punkty: ${upgradePoints} / ${upgradeLimit}`;
+        if (typeof updateGlobalTotalPoints === 'function') {
+            updateGlobalTotalPoints();
+        }
+    }
+
+    function calculateUpgradePoints(shipDiv) {
+        let total = 0;
+        shipDiv.querySelectorAll(".upgrade-select").forEach(select => {
+            const extras = attackShuttleExtras[select.dataset.category];
+            if (select.value && extras?.[select.value]) {
+                total += extras[select.value];
             }
         });
-        refreshCrewUpgradeOptions();
-        updateShuttlePointsDisplay(shipDiv);
+        return total;
     }
 
-    function calculateShuttlePoints(shipDiv) {
-        return Array.from(shipDiv.querySelectorAll('.upgrade-select')).reduce((sum, sel) => {
-            return sum + (sel.value ? shuttleExtras[sel.dataset.category][sel.value] : 0);
-        }, 0);
+    function getPilotPoints(shipDiv) {
+        const pilotSelect = shipDiv.querySelector(".pilot-select");
+        return ships["Attack Shuttle"][pilotSelect.value]?.cost || 0;
     }
-
-    function updateShuttlePointsDisplay(shipDiv) {
-        const pilot = shipDiv.querySelector('.pilot-select').value;
-        const used = calculateShuttlePoints(shipDiv);
-        const limit = ships['Attack Shuttle'][pilot]?.upgradeLimit || 0;
-        shipDiv.querySelector('.upgrade-points').innerText = `Użyte punkty: ${used} / ${limit}`;
-        if (window.updateGlobalTotalPoints) window.updateGlobalTotalPoints();
-    }
-
-    function addShuttle() {
-        const squad = document.getElementById('squadron');
-        const shipDiv = document.createElement('div');
-        shipDiv.className = 'ship-section shuttle';
-
-        // Ship type
-        const typeSel = document.createElement('select');
-        typeSel.className = 'ship-select';
-        typeSel.innerHTML = '<option value="Attack Shuttle">Attack Shuttle</option>';
-        shipDiv.appendChild(typeSel);
-
-        // Pilot
-        const pilotSel = document.createElement('select');
-        pilotSel.className = 'pilot-select';
-        pilotSel.innerHTML = '<option value="">Select Pilot</option>' +
-            Object.keys(ships['Attack Shuttle']).map(p => `<option value="${p}">${p} (${ships['Attack Shuttle'][p].cost} pkt)</option>`).join('');
-        pilotSel.onchange = () => {
-            updateShuttleUpgrades(shipDiv);
-            refreshCrewUpgradeOptions();
-        };
-        shipDiv.appendChild(pilotSel);
-
-        // Upgrades container
-        const upgDiv = document.createElement('div');
-        upgDiv.className = 'upgrade-section';
-        shipDiv.appendChild(upgDiv);
-
-        // Points display
-        const ptsDiv = document.createElement('div');
-        ptsDiv.className = 'upgrade-points';
-        shipDiv.appendChild(ptsDiv);
-
-    
-        squad.appendChild(shipDiv);
-        updateShuttleUpgrades(shipDiv);
-        refreshCrewUpgradeOptions();
-    }
-
-    // Attach event delegation for any dynamic changes
-    document.getElementById('squadron').addEventListener('change', event => {
-        if (event.target.matches('.pilot-select, .upgrade-select')) {
-            refreshCrewUpgradeOptions();
-        }
-    });
 
     window.attackShuttleRules = {
-        addShip: addShuttle,
-        calculateUpgradePoints: calculateShuttlePoints,
-        getPilotPoints: shipDiv => ships['Attack Shuttle'][shipDiv.querySelector('.pilot-select').value]?.cost || 0,
-        getUpgradePoints: calculateShuttlePoints
+        addShip,
+        calculateUpgradePoints,
+        getPilotPoints,
+        getUpgradePoints: calculateUpgradePoints
     };
 })();

@@ -1,3 +1,4 @@
+
 (function () {
     // Dane dla Auzituck Gunship
     const ships = {
@@ -22,7 +23,7 @@
             "Magva Yarro": 5, "Nien Nunb": 5, "Sabine Wren": 5, "Informant": 6, "Baze Malbus": 7,
             "C-3PO": 7, "Cassian Andor": 7, "Fenn Rau": 7, "Jyn Erso": 7, "Leia Organa": 7,
             "Seasoned Navigator": 7, "The Child": 7, "Hondo Ohnaka": 8, "K-2SO": 8, "Perceptive Copilot": 8,
-            "R2-D2": 8, "Ursa Wren": 6, "Saw Gerrera": 9, "Kanan Jarrus": 12, "Maul": 12
+            "R2-D2": 8, "Ursa Wren": 8,  "Saw Gerrera": 9, "Kanan Jarrus": 12, "Maul": 12
         },
         "Modification Upgrade": {
             "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1,

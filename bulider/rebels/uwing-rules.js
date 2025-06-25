@@ -16,7 +16,7 @@
 
     const uWingExtras = {
         "Talent Upgrade": { "Trick Shot": 3, "Selfless": 4 },
-        "Crew Upgrade": { "Leia Organa": 6, "K-2SO": 5, "Jyn Erso": 4 },
+        "Crew Upgrade": { "Leia Organa": 6, "K-2SO": 5, "Jyn Erso": 4, "Maul" : 12},
         "Sensor Upgrade": { "Perceptive Copilot": 5, "Advanced Sensors": 6 },
         "Illicit Upgrade": { "Deadman’s Switch": 2, "False Transponder Codes": 3 },
         "Modification": { "Shield Upgrade": 6, "Hull Upgrade": 5 },
