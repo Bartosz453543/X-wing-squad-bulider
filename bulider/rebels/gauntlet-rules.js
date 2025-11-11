@@ -1,9 +1,9 @@
 (function () {
     const ships = {
         "Gauntlet Fighter": {
-            "Ezra Bridger": { cost: 56, forceSlots: 2, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 1, upgradeLimit: 13 },
-            "Chopper":              { cost: 50, forceSlots: 0, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 1, upgradeLimit: 12 },
-            "Mandalorian Resistance Pilot": { cost: 47, forceSlots: 0, talentSlots: 1, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 0, upgradeLimit: 9 }
+            "Ezra Bridger": { cost: 6, forceSlots: 2, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 1, upgradeLimit: 13 },
+            "Chopper": { cost: 6, forceSlots: 0, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 1, upgradeLimit: 12 },
+            "Mandalorian Resistance Pilot": { cost: 6, forceSlots: 0, talentSlots: 1, crewSlots: 1, gunnerSlots: 1, bombSlots: 1, illicitSlots: 1, modificationSlots: 1, configurationSlots: 1, titleSlots: 0, upgradeLimit: 9 }
         }
     };
 

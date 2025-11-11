@@ -24,10 +24,17 @@
             "Leia Organa": 7, "Seasoned Navigator": 7, "The Child": 7, "Hondo Ohnaka": 8, "K-2SO": 8, "Perceptive Copilot": 8,
             "R2-D2": 8, "Ursa Wren": 6, "Saw Gerrera": 9, "Kanan Jarrus": 12, "Maul": 12
         },
-        "Turret Upgrade":{ "Dorsal Turret": 2, "Ion Cannon Turret": 3 },
-        "Bomb Upgrade":{ "Proton Bombs": 4, "Seismic Charges": 3 },
-        "Illicit Upgrade":{ "Contraband Cybernetics": 2, "Deadman's Switch": 3 },
-        "Modification Upgrade":{ "Engine Upgrade": 3, "Shield Upgrade": 4 },
+        "Bomb Upgrade":
+        { 
+            "Seismic Charges": 3, "Ion Bombs": 4, "Blazer Bomb": 5, "Concussion Bombs": 5,
+            "Conner Net": 4, "Proton Bombs": 5, "Thermal Detonators": 3, "Cluster Mines": 4,
+            "Electro-Proton Bomb": 8, "Proximity Mines": 3
+        },
+        "Modification Upgrade":
+        { 
+            "Angled Deflectors": 1, "Delayed Fuses": 1, "Munitions Failsafe": 1, "Targeting Computer": 1, "Electronic Baffle": 2, "Engine Upgrade" : 3,
+            "Afterburners": 8, "Hull Upgrade": 9, "Shield Upgrade": 10, "Static Descharge Vanes": 12
+        },
         "Title Upgrade":{ "Moldy Crow": 2 }
     };
 

@@ -34,6 +34,16 @@ body
   margin: 0 auto;
 }
 
+/* Link w nagłówku – żółty i bez podkreślenia */
+.main-header h1 a {
+    color: yellow !important;
+    text-decoration: none !important;
+}
+
+.main-header h1 a:hover {
+    text-decoration: none !important;
+}
+
 /* Inne sekcje */
 .bulider,
 .word
@@ -52,7 +62,6 @@ body
   min-height: 300px;
   text-align: center;
   margin: 20px;
- 
   color: white;
 }
 
@@ -237,10 +246,12 @@ footer
 {
   transform: translateY(-11px) rotate(-45deg);
 }
+
 .panel
 {
   color: white;
 }
+
 .galeria-zdjec-wrapper {
   position: relative;
   width: 100%;
@@ -269,7 +280,7 @@ footer
 
 /* Stylowanie przycisków strzałek */
 .arrow
- {
+{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -291,24 +302,27 @@ footer
 {
   right: 10px;
 }
+
 .zdjecie img 
 {
-  
   height: 150px;
   object-fit: cover; /* Przytnie, ale zachowa proporcje */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
 }
+
 .login_text
 {
   color: white;
 }
+
 footer .social
 {
   height: 30px;
   width: 30px;  
 }
+
 /* MEDIA QUERY – dla ekranów większych niż 800px */
 @media screen and (min-width: 800px)
 {
@@ -328,6 +342,7 @@ footer .social
     align-items: center;
     padding: 10px 20px;
   }
+
   .zdjecie img 
   {
     width: 100%;
@@ -346,6 +361,7 @@ footer .social
     align-items: center;
     padding: 10px 20px;
   }
+
   table
   {
     background-color: #333;
@@ -384,20 +400,21 @@ footer .social
     font-size: 18px;
     color: #FFE81F;
   }
+
   .login 
   {
     margin-left: 30%;
     max-width: 700px;
     margin-top: 15%;
   }
+
   .login p
   {
     color: white;
   }
+
   .zdjecie img {
     width: 600px;
     height: 300px;
   }
 }
-
-
